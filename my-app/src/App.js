@@ -11,7 +11,9 @@ function App() {
           <div className="App-subheader">
             <p1>Navigating Tomorrow's Housing Landscape, Today</p1>
           </div>
-          <p1>Choose your map!</p1>
+          <div className="App-paragraph">
+            <p1>Choose your map!</p1>
+          </div>
           <button>Congestion Map</button>
           <button>House Price Map</button>
           <button>Accessibility</button>
