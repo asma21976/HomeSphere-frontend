@@ -14,7 +14,7 @@
 }
 
 .App-header {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, -0.5)), url('/Users/asmahashmi/Documents/Capstone/HomeSphere-frontend/my-app/src/images/calgary13.jpeg');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, -0.5)), url('images/calgary13.jpeg');
   min-height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
