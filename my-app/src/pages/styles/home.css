@@ -1,64 +1,64 @@
 .App {
-    text-align: center;
-  }
-  
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    height: 40vmin;
-    pointer-events: none;
+    animation: App-logo-spin infinite 20s linear;
   }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
-    }
+}
+
+.App-header {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, -0.5)), url('../../images/calgary13.jpeg');
+  min-height: 100vh;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+.App-options {
+  position: absolute;
+  top: 230px;
+  right: 100px;
+  width: 25%;
+  height: 45%;
+  background-color: #ededed;
+  padding: 20px;
+  justify-content: center;
+  align-items: stretch;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  border-radius: 2px;
+
+}
+.App-subheader {
+  font-size: 20px;
+}
+.App-name {
+  text-align: left;
+  padding: 10px 0px 0px 40px;
+  margin: 0;
+  color: white;
+}
+.App-paragraph {
+  align-self: center;
+  font-size: 17px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
   }
-  
-  .App-header {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, -0.5)), url('/src/images/calgary13.jpeg');
-    min-height: 100vh;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+  to {
+    transform: rotate(360deg);
   }
-  .App-options {
-    position: absolute;
-    top: 230px;
-    right: 100px;
-    width: 25%;
-    height: 45%;
-    background-color: #ededed;
-    padding: 20px;
-    justify-content: center;
-    align-items: stretch;
-    display: flex;
-    gap: 20px;
-    flex-direction: column;
-    border-radius: 2px;
-  
-  }
-  .App-subheader {
-    font-size: 20px;
-  }
-  .App-name {
-    text-align: left;
-    padding: 10px 0px 0px 40px;
-    margin: 0;
-    color: white;
-  }
-  .App-paragraph {
-    align-self: center;
-    font-size: 17px;
-  }
-  
-  .App-link {
-    color: #61dafb;
-  }
-  
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
+}

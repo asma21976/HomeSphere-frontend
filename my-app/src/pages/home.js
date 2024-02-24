@@ -1,74 +1,37 @@
-// import React from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import './styles/home.css';
-
-// function Home() {
-//   const navigate = useNavigate();
-
-//   const handleButtonClick = async (mapType) => {
-//     try {
-//         const response = await fetch(`http://localhost:3000/api/community_vacancy`);
-
-//       if (!response.ok) {
-//         throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
-
-//       const data = await response.json();
-//       console.log(data);
-
-//       // Example navigation to '/map' - Adjust this based on your route setup
-//       navigate('/map');
-//     } catch (error) {
-//       console.error('Error fetching map data:', error);
-//     }
-//   };
-
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <button onClick={() => handleButtonClick('community_vacancy')}>Community Vacancy</button>
-//         {/* ... (other buttons) */}
-//       </header>
-//     </div>
-//   );
-// }
-
-// export default Home;
-
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import './styles/home.css';
+import { Link } from 'react-router-dom'
+import './styles/Home.css';
 
 function Home() {
-  const navigate = useNavigate();
-
-  const handleButtonClick = async (mapType) => {
-    try {
-      const response = await fetch(`http://localhost:5000/api/${mapType}`);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log(data);
-
-      // Example navigation to '/map' - Adjust this based on your route setup
-      navigate('/map');
-    } catch (error) {
-      console.error('Error fetching map data:', error);
-    }
-  };
-
   return (
     <div className="App">
       <header className="App-header">
-        <button onClick={() => handleButtonClick('community_vacancy')}>Community Vacancy</button>
-        <button onClick={() => handleButtonClick('congestion_map')}>Congestion Map</button>
-        <button onClick={() => handleButtonClick('house_price_map')}>House Price Map</button>
-        <button onClick={() => handleButtonClick('accessibility')}>Accessibility</button>
-        <button onClick={() => handleButtonClick('housing_development_zone')}>Housing Development Zone</button>
-        {/* Add more buttons with their respective map types */}
+        <div className="App-name">
+          <h1>HomeSphere</h1>
+        </div>
+        <div className="App-options">
+          <div className="App-subheader">
+            <p>Navigating Tomorrow's Housing Landscape, Today</p>
+          </div>
+          <div className="App-paragraph">
+            <p>Choose your map!</p>
+          </div>
+          <Link to="/maps/community_vacancy">
+            <button>Community Vacancy</button>
+          </Link>
+          <Link to="/maps/congestion_map">
+            <button>Congestion Map</button>
+          </Link>
+          <Link to="/maps/house_price_map">
+            <button>House Price Map</button>
+          </Link>
+          <Link to="/maps/accessibility">
+            <button>Accessibility</button>
+          </Link>
+          <Link to="/maps/housing_development_zone">
+            <button>Housing Development Zone</button>
+          </Link>
+        </div>
       </header>
     </div>
   );
