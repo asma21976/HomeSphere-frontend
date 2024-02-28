@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./styles/home.css";
+import React from 'react';
+import { Link } from 'react-router-dom'
+import './styles/home.css';
 
 function Home() {
   return (
@@ -24,9 +24,6 @@ function Home() {
           </Link>
           <Link to="/maps/house_price_map">
             <button>House Price Map</button>
-          </Link>
-          <Link to="/maps/accessibility">
-            <button>Accessibility</button>
           </Link>
           <Link to="/maps/housing_development_zone">
             <button>Housing Development Zone</button>

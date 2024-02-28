@@ -7,8 +7,8 @@ function Maps() {
   const [mapData, setMapData] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/${mapType}`)
-      .then((data) => data.json())
+	fetch(`http://127.0.0.1:5000/api/${mapType}`)
+	  .then((data) => data.json())
       .then((data) => {
         setMapData(JSON.parse(data));
       })
