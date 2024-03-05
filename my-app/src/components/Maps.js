@@ -5,18 +5,43 @@ import { useParams } from "react-router-dom";
 function Maps() {
   const { mapType } = useParams();
   const [mapData, setMapData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-	fetch(`http://127.0.0.1:5000/api/${mapType}`)
-	  .then((data) => data.json())
-      .then((data) => {
-        setMapData(JSON.parse(data));
-      })
-      .catch((err) => console.error("Err:", err));
+    setLoading(true);
+    setError(null);
+
+    // Replaced with fastAPI endpoint
+    fetch(`https://home-sphere.ca/api/maps/${mapType}`, {
+      headers: {
+        'AccessToken': '<Kvwf<IQ5qV]nlPooW@>'
+      }
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setMapData(data);
+    })
+    .catch((err) => {
+      console.error("Error fetching data:", err);
+      setError(err.message);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
   }, [mapType]);
 
   return (
-    <div>{mapData && <Plot data={mapData.data} layout={mapData.layout} />}</div>
+    <div>
+      {loading && <div>Loading...</div>}
+      {error && <div>Error: {error}</div>}
+      {mapData && <Plot data={mapData.data} layout={mapData.layout} />}
+    </div>
   );
 }
 
