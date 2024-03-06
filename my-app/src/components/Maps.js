@@ -15,7 +15,7 @@ function Maps() {
     // Replaced with fastAPI endpoint
     fetch(`https://home-sphere.ca/api/maps/${mapType}`, {
       headers: {
-        'AccessToken': '<Kvwf<IQ5qV]nlPooW@>'
+        'AccessToken': 'Kvwf<IQ5qV]nlPooW@'
       }
     })
     .then((response) => {
