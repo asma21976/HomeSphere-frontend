@@ -31,20 +31,30 @@
   justify-content: center;
   align-items: stretch;
   display: flex;
-  gap: 20px;
+  gap: 10px;
   flex-direction: column;
-  border-radius: 2px;
+  border-radius: 13px;
 
 }
+
+.App-options button {
+  font-size: 15px;
+  border-radius: 7px;
+  border-color: #3846cb;
+}
+
 .App-subheader {
   font-size: 20px;
+  color: #3846cb;
 }
+
 .App-name {
   text-align: left;
   padding: 10px 0px 0px 40px;
   margin: 0;
   color: white;
 }
+
 .App-paragraph {
   align-self: center;
   font-size: 17px;
