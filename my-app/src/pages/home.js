@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "./styles/home.css";
+import React from 'react';
+import { Link } from 'react-router-dom'
+import './styles/home.css';
 
 function Home() {
   return (
@@ -16,17 +16,14 @@ function Home() {
           <div className="App-paragraph">
             <p>Choose your map!</p>
           </div>
-          <Link to="/maps/community_vacancy">
+          <Link to="/maps/vacancy_per_community">
             <button>Community Vacancy</button>
           </Link>
-          <Link to="/maps/congestion_map">
+          <Link to="/maps/congestion">
             <button>Congestion Map</button>
           </Link>
-          <Link to="/maps/house_price_map">
+          <Link to="/maps/property_value_per_community">
             <button>House Price Map</button>
-          </Link>
-          <Link to="/maps/accessibility">
-            <button>Accessibility</button>
           </Link>
           <Link to="/maps/housing_development_zone">
             <button>Housing Development Zone</button>
