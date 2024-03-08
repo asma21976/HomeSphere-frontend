@@ -10,7 +10,6 @@ import {
   faMapMarkerAlt,
   faSquarePollVertical,
   faBars,
-  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
@@ -87,14 +86,14 @@ function Maps() {
     ],
   };
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/api/${mapType}`)
-      .then((data) => data.json())
-      .then((data) => {
-        setMapData(JSON.parse(data));
-      })
-      .catch((err) => console.error("Err:", err));
-  }, [mapType]);
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/api/${mapType}`)
+  //     .then((data) => data.json())
+  //     .then((data) => {
+  //       setMapData(JSON.parse(data));
+  //     })
+  //     .catch((err) => console.error("Err:", err));
+  // }, [mapType]);
 
   console.log(mapData);
   return (
