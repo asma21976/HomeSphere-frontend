@@ -13,7 +13,7 @@ function CommunityVacancy() {
     "pk.eyJ1Ijoia2FhamJvbGFuZCIsImEiOiJjbG5kejg0emIwOGRyMmxsZW9vaXYyMGswIn0.Rhnj7A5aOZh0JBebF4WaFQ";
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/community_vacancy")
+    fetch("http://127.0.0.1:8000/api/community_vacancy")
       .then((response) => response.json())
       .then((data) => {
         mapData = {

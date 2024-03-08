@@ -88,7 +88,7 @@ function Maps() {
   };
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/${mapType}`)
+    fetch(`http://127.0.0.1:8000/api/${mapType}`)
       .then((data) => data.json())
       .then((data) => {
         setMapData(JSON.parse(data));
