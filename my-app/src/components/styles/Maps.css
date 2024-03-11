@@ -1,0 +1,215 @@
+
+.menu-button {
+    margin-top: 18px;
+    height: 100px;
+    width: 100%;
+    border:none;
+    border-radius: 8%;
+}
+
+.short {
+    width: 5%;
+    text-align: center;
+    height: fit-content;
+    padding-bottom: 12px;
+
+    .title {
+        display: none;
+    }
+    .menu-button {
+        height: 60px;
+    }
+
+    .menu-button p {
+        display: none;
+    }
+    .menu-button .fa-svg-icon {
+        font-size: 1.5rem; 
+    } 
+}
+
+.menu-button .fa-svg-icon {
+    font-size: 2.5rem; 
+} 
+
+.selected{
+    background-color: #3846cb;
+    color: white;
+}
+
+.map-feature-button {
+    border-radius: 8%;
+    color: #3846cb;
+}
+
+#buttons-container p {
+    margin: 0;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    font-family: Poppins;
+}
+
+.machine-learning-window {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(106, 119, 234, 0.9);
+    z-index: 1;
+    top: 0;
+    padding: 1rem;
+    /* text-align: center; */
+    color: white;
+    /* padding-top: 20vh; */
+
+  }
+  .disclaimer {
+    margin-top: 5px;
+    padding-right: 100px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .cancelML {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 10px;
+    right: 70px;
+    color: white;
+    font-size: 1.5rem;
+    font-family: Poppins;
+    box-shadow: rgba(62, 62, 62, 0.2) 0px 8px 24px;
+    cursor: pointer;
+  }
+
+.features {
+display: grid;
+
+}
+
+.slider-component {
+    color: white;
+}
+.sidebar {
+    width: 250px;
+    height: 100vh; 
+    background-color: #f0f0f0;
+    transition: width 0.3s ease;
+    position: fixed; 
+    left: 0; 
+    top: 0; 
+  }
+  
+  #content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 250px; 
+  }
+  
+
+.menu-button {
+    margin-top: 18px;
+    height: 100px;
+    width: 100%;
+    border:none;
+    border-radius: 8%;
+}
+
+.short {
+    width: 5%;
+    text-align: center;
+    height: fit-content;
+    padding-bottom: 12px;
+
+    .title {
+        display: none;
+    }
+    .menu-button {
+        height: 60px;
+    }
+
+    .menu-button p {
+        display: none;
+    }
+    .menu-button .fa-svg-icon {
+        font-size: 1.5rem; 
+    } 
+}
+
+.menu-button .fa-svg-icon {
+    font-size: 2.5rem; 
+} 
+
+.selected{
+    background-color: #3846cb;
+    color: white;
+}
+
+.map-feature-button {
+    border-radius: 8%;
+    color: #3846cb;
+}
+
+#buttons-container p {
+    margin: 0;
+    margin-top: 10px;
+    font-size: 0.8rem;
+    font-family: Poppins;
+}
+
+.machine-learning-window {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(106, 119, 234, 0.9);
+    z-index: 1;
+    top: 0;
+    padding: 1rem;
+    /* text-align: center; */
+    color: white;
+    /* padding-top: 20vh; */
+
+  }
+  .disclaimer {
+    margin-top: 5px;
+    padding-right: 100px;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .cancelML {
+    border: none;
+    background-color: transparent;
+    position: absolute;
+    top: 10px;
+    right: 70px;
+    color: white;
+    font-size: 1.5rem;
+    font-family: Poppins;
+    box-shadow: rgba(62, 62, 62, 0.2) 0px 8px 24px;
+    cursor: pointer;
+  }
+
+.features {
+display: grid;
+
+}
+
+.slider-component {
+    color: white;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .mapContainer {
+    min-height: 400px; 
+    min-width: 600px; 
+  }
