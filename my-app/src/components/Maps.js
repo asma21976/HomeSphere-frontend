@@ -1,7 +1,7 @@
 import Plot from "react-plotly.js";
 import React, { useState, useEffect } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
-import "./Maps.css";
+import "./styles/Maps.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowUpRightDots,
@@ -39,7 +39,7 @@ function Maps() {
   }
 
   useEffect(() => {
-    fetch(`http://localhost:3000//api/maps/${mapType}`, {
+    fetch(`https://home-sphere.ca/api/maps/${mapType}`, {
       headers: {
         'AccessToken': 'Kvwf<IQ5qV]nlPooW@'
       }
@@ -60,24 +60,14 @@ function Maps() {
 
   console.log(mapData);
   return (
-    <div>
-      <div id="homeBar" className="homeBar">
-        <h1>
-          <FontAwesomeIcon
-            icon={faBars}
-            className="hamburger"
-            onClick={handleToggleSidebar}
-          />
-          HOMESPHERE
-        </h1>
-      </div>
+    <div className="container">
       <div id="sidebar" className={`sidebar ${collapsed ? "short" : ""}`}>
         <div id="buttons-container">
-          <Link to="/maps/congestion_map">
+          <Link to="/maps/congestion">
             <button
               id="population-button"
               className={`menu-button ${
-                isSelected("congestion_map") ? "selected" : "map-feature-button"
+                isSelected("congestion") ? "selected" : "map-feature-button"
               }`}
             >
               <FontAwesomeIcon
@@ -91,22 +81,18 @@ function Maps() {
           {/* Other menu buttons */}
         </div>
       </div>
-      <div id="mapContainer">
-        {mapData && (
-          <Plot
-            data={mapData.data}
-            layout={mapData.layout}
-            useResizeHandler={true}
-            style={{ width: "100%", height: "100vh" }}
-            responsive={true}
-          />
-        )}
-      </div>
-      <div
-        id="machine-learning-window"
-        className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
-      >
-        {/* Machine learning window content */}
+      <div id="content">
+        <div id="mapContainer" className="mapContainer">
+          {mapData && (
+            <Plot
+              data={mapData.data}
+              layout={mapData.layout}
+              useResizeHandler={true}
+              style={{ width: "100%", height: "80vh" }} // Adjust map height as needed
+              responsive={true}
+            />
+          )}
+        </div>
       </div>
     </div>
   );

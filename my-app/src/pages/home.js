@@ -19,7 +19,7 @@ function Home() {
           <Link to="/maps/community_vacancy">
             <button>Community Vacancy</button>
           </Link>
-          <Link to="/maps/congestion_map">
+          <Link to="/maps/congestion">
             <button>Congestion Map</button>
           </Link>
           <Link to="/maps/house_price_map">
