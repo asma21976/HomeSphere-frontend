@@ -9,7 +9,7 @@ function Home() {
         <div className="App-name">
           <h1>HomeSphere</h1>
         </div>
-        <div className="App-options">
+        {/* <div className="App-options">
           <div className="App-subheader">
             <p>Navigating Tomorrow's Housing Landscape, Today</p>
           </div>
@@ -31,8 +31,16 @@ function Home() {
           <Link to="/maps/housing_development_zone">
             <button>Housing Development Zone</button>
           </Link>
-        </div>
+        </div> */}
       </header>
+      <body>
+        <div className="center-content">
+          <h1 className="slogan">Shaping Calgary's Future:</h1>
+          <Link to="/maps/congestion_map">
+            <button className="get-started">Get Started</button>
+          </Link>
+        </div>
+      </body>
     </div>
   );
 }

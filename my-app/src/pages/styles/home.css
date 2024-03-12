@@ -14,11 +14,28 @@
 }
 
 .App-header {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, -0.5)), url('../../images/calgary13.jpeg');
-  min-height: 100vh;
+  background-image: linear-gradient(to bottom, rgb(37, 47, 95) 0%, rgba(50, 50, 50, 0) 100%);
+  opacity: 0.95;
+  padding-bottom: 5px;
+}
+
+.App-header h1 {
+  margin-bottom: 0;
+  font-family: "Poppins";
+}
+
+body h1 {
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+.App {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../../images/home-bg.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  min-height: 100vh;
+  /* filter: grayscale(40%); */
+  opacity: 0.95;
 }
 .App-options {
   position: absolute;
@@ -62,3 +79,54 @@
     transform: rotate(360deg);
   }
 }
+
+.slogan {
+  width: 100%;
+  font-size: 4.5rem;
+  /* -webkit-text-stroke: 0.8px white; */
+  color: transparent;
+  background-image: linear-gradient(#fff, #fff);
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-position: -1250px, 0;
+  animation: bgcolor 5s linear infinite alternate;
+  font-family: "Poppins";
+
+}
+
+@keyframes bgcolor {
+  100%{
+    background-position: -100px 0;
+  }
+
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 88vh;
+}
+
+.get-started {
+  font-family: "Montserrat", "PT Sans";
+  font-size: 2.3rem;
+  border-radius: 12px;
+  padding: 19px;
+  background-color: #3846cb;
+  border: none;
+  color: white;
+  font-weight: 500;
+filter: drop-shadow(0px 4px 4px rgba(94, 86, 86, 0.5));
+}
+
+
+/* Auto layout */
+/* display: flex;
+flex-direction: column;
+align-items: flex-start;
+padding: 0px;
+gap: 10px;
+isolation: isolate; */
+
