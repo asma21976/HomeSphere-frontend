@@ -150,7 +150,7 @@ display: grid;
 
 .mapContainer{
     margin-left: var(--sidebar-width);
-    width: calc(100vw - (var(--sidebar-width) + 50px));
+    margin-right: 20px;
     height: 100vh;
     transition: margin-left 0.5s ease-in-out, width 0.5s ease-in-out;
   }
