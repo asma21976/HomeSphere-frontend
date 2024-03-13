@@ -218,9 +218,9 @@ function Maps() {
           </button>
         </div>
       </div>
-      {loading && <div className="error-message">Loading...</div>}
+      {loading && <div className="screen-message">Loading...</div>}
       {error && (
-        <div className="error-message">
+        <div className="screen-message">
           <p>{error}</p>
         </div>
       )}
