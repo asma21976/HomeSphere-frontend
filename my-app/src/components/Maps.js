@@ -93,6 +93,7 @@ function Maps() {
   useEffect(() => {
     setLoading(true);
     setError(null);
+    setMapData(null);
 
     fetch(`https://home-sphere.ca/api/maps/${mapType}`, {
       headers: {
@@ -118,8 +119,6 @@ function Maps() {
     });
   }, [mapType]);
 
-  console.log(mapData);
-
   return (
     <div>
       <div id="homeBar" className="homeBar">
@@ -134,11 +133,11 @@ function Maps() {
       </div>
       <div id="sidebar" className={`sidebar ${collapsed ? "short" : ""}`}>
         <div id="buttons-container">
-          <Link to="/maps/congestion_map">
+          <Link to="/maps/congestion">
             <button
               id="population-button"
               className={`menu-button ${
-                isSelected("congestion_map") ? "selected" : "map-feature-button"
+                isSelected("congestion") ? "selected" : "map-feature-button"
               }`}
             >
               <FontAwesomeIcon
@@ -150,11 +149,11 @@ function Maps() {
               {/* Congestion */}
             </button>
           </Link>
-          <Link to="/maps/community_vacancy">
+          <Link to="/maps/vacancy_per_community">
             <button
               id="vacancy-button"
               className={`menu-button ${
-                isSelected("community_vacancy")
+                isSelected("vacancy_per_community")
                   ? "selected"
                   : "map-feature-button"
               }`}
@@ -186,11 +185,11 @@ function Maps() {
               <p>Permits</p>
             </button>
           </Link>
-          <Link to="/maps/house_price_map">
+          <Link to="/maps/property_value_per_community">
             <button
               id="pricing-button"
               className={`menu-button ${
-                isSelected("house_price_map")
+                isSelected("property_value_per_community")
                   ? "selected"
                   : "map-feature-button"
               }`}
@@ -219,7 +218,7 @@ function Maps() {
           </button>
         </div>
       </div>
-      {loading && <div>Loading...</div>}
+      {loading && <div className="error-message">Loading...</div>}
       {error && (
         <div className="error-message">
           <p>{error}</p>
@@ -241,7 +240,7 @@ function Maps() {
         className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
       >
         {/* Machine learning window content */}
-        <button type="button" class="cancelML" onClick={toggleMLWindow}>
+        <button type="button" className="cancelML" onClick={toggleMLWindow}>
           X
         </button>
         <p className="disclaimer">
