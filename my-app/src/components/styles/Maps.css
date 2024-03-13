@@ -1,3 +1,7 @@
+:root {
+    --sidebar-width: 250px; /* Default sidebar width */
+  }
+
 #homeBar {
     background-color: #3846cb;
     padding-top: 10px;
@@ -9,7 +13,7 @@
 }
 
 .sidebar {
-    width: 11%;
+    width: var(--sidebar-width);
     padding: 0px 15px;
     background-color: white;
     height: 100vh;
@@ -47,7 +51,8 @@ font-size: 1.rem;
 }
 
 .short {
-    width: 5%;
+    --sidebar-width: 50px;
+    width: var(--sidebar-width);
     text-align: center;
     height: fit-content;
     padding-bottom: 12px;
@@ -143,88 +148,13 @@ display: grid;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* 
-
-#buttons-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-
-}
-#buttons-container p {
-    margin: 0;
-    margin-top: 10px;
-}
-
-
-.menu-button {
-    height: 100px;
-    width: 115px;
-    border:none;
-    border-radius: 8%;
-}
-.selected{
-    background-color: #3846cb;
-    color: white;
-}
-
-.map-feature-button {
-    border-radius: 8%;
-    color: #3846cb;
-}
-
-.sidebar {
-    width: 10%;
-    padding: 0px 13px;
-    background-color: white;
-    position: absolute;
-    z-index: 1;
+.mapContainer{
+    margin-left: var(--sidebar-width);
+    width: calc(100vw - (var(--sidebar-width) + 50px));
     height: 100vh;
-    padding-bottom: 30px;
-    border-bottom-right-radius: 5%;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-}
-
-#sidebar-content {
-    padding: 0px 8px;
-}
-
-.map-container {
-    height: 500px;
-    }
-
-
-.menu-button .fa-svg-icon {
-    font-size: 2rem; 
-} */
-
-/* a, a:hover, a:focus, a:active {
-    text-decoration: none;
-    color: inherit; 
-  } */
-/* 
-  .machine-learning-window {
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(106, 119, 234, 0.9);
-    z-index: 2;
-    top: 0;
-    padding: 1rem;
-    text-align: center;
-    color: white;
-    padding-top: 20vh;
-
+    transition: margin-left 0.5s ease-in-out, width 0.5s ease-in-out;
   }
 
-  .hidden {
-    display: none;
+.shortMap{
+    --sidebar-width: 50px;
   }
-  
-  #machine-learning-window button {
-    background-color: #3846cb;
-    border-radius: 8%;
-    border: none;
-    color: white;
-
-  } */

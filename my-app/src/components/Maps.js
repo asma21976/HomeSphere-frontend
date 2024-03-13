@@ -224,13 +224,13 @@ function Maps() {
           <p>{error}</p>
         </div>
       )}
-      <div id="mapContainer">
+      <div id="mapContainer" key={collapsed ? "short" : "full"} className={`mapContainer ${collapsed ? "shortMap" : ""}`}>
         {mapData && (
           <Plot
             data={mapData.data}
             layout={mapData.layout}
             useResizeHandler={true}
-            style={{ width: "100%", height: "100vh" }}
+            style={{ width: '100%', height: '100%' }}
             responsive={true}
           />
         )}
