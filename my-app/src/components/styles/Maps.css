@@ -6,6 +6,7 @@
     background-color: #3846cb;
     padding-top: 10px;
     padding-bottom: 3px;
+    display: none;
 }
 #homeBar h1 {
     margin: 0;
@@ -38,10 +39,15 @@ font-size: 1.rem;
 
 .menu-button {
     margin-top: 18px;
-    height: 100px;
-    width: 100%;
+    height: 40px;
+    width: 40px;
     border:none;
-    border-radius: 8%;
+    border-radius: 50%;
+}
+
+.menu-button svg {
+    width: 55%;
+    height: 100%;
 }
 
 .homeBar .hamburger {
@@ -82,7 +88,6 @@ font-size: 1.rem;
 }
 
 .map-feature-button {
-    border-radius: 8%;
     color: #3846cb;
 }
 
@@ -91,6 +96,12 @@ font-size: 1.rem;
     margin-top: 10px;
     font-size: 0.8rem;
     font-family: Poppins;
+}
+
+#buttons-container {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 50px;
 }
 
 .machine-learning-window {
@@ -158,3 +169,17 @@ display: grid;
 .shortMap{
     --sidebar-width: 50px;
   }
+
+.close-sidebar-btn {
+    position: absolute;
+    right: 10px;
+    margin-top: 15px;
+    margin-right: 7px;
+}
+.HomeSphere-Title {
+    position: absolute;
+    margin-top: 17px;
+    font-size: 8px;
+    margin-left: 4px;
+    color: #3846cb;
+}

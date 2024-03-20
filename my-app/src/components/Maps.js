@@ -132,6 +132,12 @@ function Maps() {
         </h1>
       </div>
       <div id="sidebar" className={`sidebar ${collapsed ? "short" : ""}`}>
+        <div className="HomeSphere-Title">
+          <h1>HOMESPHERE</h1>
+        </div>
+        <div className="close-sidebar-btn" onClick={handleToggleSidebar}>
+            <button type="button">X</button>
+        </div>
         <div id="buttons-container">
           <Link to="/maps/congestion">
             <button
@@ -145,7 +151,6 @@ function Maps() {
                 title="Community Population"
                 className="fa-svg-icon"
               />
-              <p>Population</p>
               {/* Congestion */}
             </button>
           </Link>
@@ -164,7 +169,6 @@ function Maps() {
                 title="Land Vacancy"
                 className="fa-svg-icon"
               />
-              <p>Vacancy</p>
             </button>
           </Link>
           <Link to="/maps/housing_development_zone">
@@ -182,7 +186,6 @@ function Maps() {
                 title="Building Permits"
                 className="fa-svg-icon"
               />
-              <p>Permits</p>
             </button>
           </Link>
           <Link to="/maps/property_value_per_community">
@@ -199,7 +202,6 @@ function Maps() {
                 title="House Prices"
                 className="fa-svg-icon"
               />
-              <p>House Prices</p>
             </button>
           </Link>
           <button
@@ -214,7 +216,7 @@ function Maps() {
               title="Machine Learning Housing Analaysis"
               className="fa-svg-icon"
             />
-            <p>Housing Analysis</p>
+            {/* <p>Housing Analysis</p> */}
           </button>
         </div>
       </div>
