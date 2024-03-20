@@ -139,9 +139,9 @@ function Maps() {
       </div>
       <div
         id="sidebar"
-        className={`sidebar ${
-          collapsed && !lastButtonExpanded ? "short" : "expanded"
-        } ${collapseLeft ? "hidden" : ""}`}
+        className={`sidebar ${!lastButtonExpanded ? "shortened" : ""} ${
+          collapseLeft ? "hidden" : ""
+        }`}
       >
         <div className="HomeSphere-Title">
           <h1>HOMESPHERE</h1>

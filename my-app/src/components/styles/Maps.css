@@ -58,6 +58,7 @@ font-size: 1.rem;
     .menu-button .fa-svg-icon {
         font-size: 1.5rem; 
     } 
+
 }
 
 .menu-button .fa-svg-icon {
@@ -147,9 +148,10 @@ display: grid;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   /* transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
   transform-origin: top left; */
-  overflow: scroll;
+  overflow-y: scroll;
   scrollbar-width: thin;
   border-bottom-right-radius: 7px;
+  max-height: 100vh;
 }
 
 
@@ -250,6 +252,10 @@ color: #3846cb;
 
 .sidebar-btn {
     height: 30px;
+}
+
+.sidebar.shortened {
+    overflow: hidden;
 }
 
 .collapse-expand-left-btn{
