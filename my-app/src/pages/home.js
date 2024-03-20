@@ -32,8 +32,13 @@ function Home() {
       </header>
       <body>
         <div className="center-content">
+<<<<<<< HEAD
           <h1 className="slogan">Shaping Calgary's Future:</h1>
           <Link to="/maps/congestion">
+=======
+          <h1 className="slogan">Shaping Calgary's Future!</h1>
+          <Link to="/maps/congestion_map">
+>>>>>>> f0af1086b5101ad826937b2376e9d05f76d2dca1
             <button className="get-started">Get Started</button>
           </Link>
         </div>

@@ -137,37 +137,18 @@ function Maps() {
           HOMESPHERE
         </h1>
       </div>
-<<<<<<< Updated upstream
-
-    <div id="sidebar" className={`sidebar ${collapsed && !lastButtonExpanded ? "short" : "expanded"}`}>
-      <div className="HomeSphere-Title">
-        <h1>HOMESPHERE</h1>
-      </div>
-      {/* <div className="close-sidebar-btn" onClick={handleToggleSidebar}>
-        <button type="button">X</button>
-      </div> */}
-      <div id="buttons-container">
-        <Link to="/maps/congestion">
-          <button
-            id="population-button"
-            className={`menu-button ${
-              isSelected("congestion") ? "selected" : "map-feature-button"
-            }`}
-          >
-            <span className="button-name"> Community <br/> Population</span>
-=======
       <div
         id="sidebar"
-        className={`sidebar ${collapsed ? "short" : ""} ${
-          collapseLeft ? "hidden" : ""
-        }`}
+        className={`sidebar ${
+          collapsed && !lastButtonExpanded ? "short" : "expanded"
+        } ${collapseLeft ? "hidden" : ""}`}
       >
         <div className="HomeSphere-Title">
           <h1>HOMESPHERE</h1>
         </div>
-        <div className="close-sidebar-btn" onClick={handleToggleSidebar}>
-          <button type="button">X</button>
-        </div>
+        {/* <div className="close-sidebar-btn" onClick={handleToggleSidebar}>
+        <button type="button">X</button>
+      </div> */}
         <div id="buttons-container">
           <Link to="/maps/congestion">
             <button
@@ -176,12 +157,15 @@ function Maps() {
                 isSelected("congestion") ? "selected" : "map-feature-button"
               }`}
             >
+              <span className="button-name">
+                {" "}
+                Community <br /> Population
+              </span>
               <FontAwesomeIcon
                 icon={faArrowUpRightDots}
                 title="Community Population"
                 className="fa-svg-icon"
               />
-              {/* Congestion */}
             </button>
           </Link>
           <Link to="/maps/vacancy_per_community">
@@ -194,80 +178,104 @@ function Maps() {
               }`}
             >
               {/* Community  */}
->>>>>>> Stashed changes
               <FontAwesomeIcon
-              icon={faArrowUpRightDots}
-              title="Community Population"
-              className="fa-svg-icon"
-            />
-          </button>
-        </Link>
-        <Link to="/maps/vacancy_per_community">
+                icon={faArrowUpRightDots}
+                title="Community Population"
+                className="fa-svg-icon"
+              />
+            </button>
+          </Link>
+          <Link to="/maps/vacancy_per_community">
+            <button
+              id="vacancy-button"
+              className={`menu-button ${
+                isSelected("vacancy_per_community")
+                  ? "selected"
+                  : "map-feature-button"
+              }`}
+            >
+              <span className="button-name">
+                {" "}
+                Community
+                <br />
+                Vacancy
+              </span>
+              <FontAwesomeIcon
+                icon={faMapMarkerAlt}
+                title="Land Vacancy"
+                className="fa-svg-icon"
+              />
+            </button>
+          </Link>
+          <Link to="/maps/housing_development_zone">
+            <button
+              id="permits-button"
+              className={`menu-button ${
+                isSelected("housing_development_zone")
+                  ? "selected"
+                  : "map-feature-button"
+              }`}
+            >
+              <span className="button-name">
+                {" "}
+                Housing
+                <br />
+                Development
+              </span>
+              <FontAwesomeIcon
+                icon={faScroll}
+                title="Building Permits"
+                className="fa-svg-icon"
+              />
+            </button>
+          </Link>
+          <Link to="/maps/property_value_per_community">
+            <button
+              id="pricing-button"
+              className={`menu-button ${
+                isSelected("property_value_per_community")
+                  ? "selected"
+                  : "map-feature-button"
+              }`}
+            >
+              <span className="button-name">
+                {" "}
+                House
+                <br />
+                Prices
+              </span>
+              <FontAwesomeIcon
+                icon={faDollarSign}
+                title="House Prices"
+                className="fa-svg-icon"
+              />
+            </button>
+          </Link>
           <button
-            id="vacancy-button"
+            id="machine-learning-button"
             className={`menu-button ${
-              isSelected("vacancy_per_community") ? "selected" : "map-feature-button"
+              isSelected("house_price_map") ? "selected" : "map-feature-button"
             }`}
+            onClick={() => {
+              toggleMLWindow();
+              handleLastButtonToggle();
+            }}
           >
-            <span className="button-name"> Community<br/>Vacancy</span>
-              <FontAwesomeIcon
-              icon={faMapMarkerAlt}
-              title="Land Vacancy"
-              className="fa-svg-icon"
-            />
-          </button>
-        </Link>
-        <Link to="/maps/housing_development_zone">
-          <button
-            id="permits-button"
-            className={`menu-button ${
-              isSelected("housing_development_zone") ? "selected" : "map-feature-button"
-            }`}
-          >
-            <span className="button-name"> Housing<br/>Development</span>
-              <FontAwesomeIcon
-              icon={faScroll}
-              title="Building Permits"
-              className="fa-svg-icon"
-            />
-          </button>
-        </Link>
-        <Link to="/maps/property_value_per_community">
-          <button
-            id="pricing-button"
-            className={`menu-button ${
-              isSelected("property_value_per_community") ? "selected" : "map-feature-button"
-            }`}
-          >
-          <span className="button-name"> House<br/>Prices</span>
-              <FontAwesomeIcon
-              icon={faDollarSign}
-              title="House Prices"
-              className="fa-svg-icon"
-            />
-          </button>
-        </Link>
-        <button
-          id="machine-learning-button"
-          className={`menu-button ${
-            isSelected("house_price_map") ? "selected" : "map-feature-button"
-          }`}
-          onClick={() => {
-            toggleMLWindow();
-            handleLastButtonToggle();
-          }}
-        >
-        <span className="button-name"> ML<br/>House Analysis</span>
+            <span className="button-name">
+              {" "}
+              ML
+              <br />
+              House Analysis
+            </span>
             <FontAwesomeIcon
-            icon={faSquarePollVertical}
-            title="Machine Learning Housing Analysis"
-            className="fa-svg-icon"
-          />
-        </button>
-      </div>
-    <div
-
-      id="machine-learning-window"
+              icon={faSquarePollVertical}
+              title="Machine Learning Housing Analysis"
+              className="fa-svg-icon"
+            />
+          </button>
+        </div>
+        <div
+          id="machine-learning-window"
           className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
         >
           {Object.entries(communityFeatures).map(([key, values], index) => (
@@ -291,16 +299,20 @@ function Maps() {
           ))}
         </div>
       </div>
-      <button
-        onClick={() => setCollapseLeft(!collapseLeft)}
-        className="collapse-expand-left-btn"
-      >
-        <img
-          src="https://maps.gstatic.com/tactile/pane/arrow_left_2x.png"
-          className={`sidebar-btn ${collapseLeft ? "right-btn" : ""}`}
-          alt="Toggle Sidebar"
-        />
-      </button>
+      <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>
+        <button
+          onClick={() => setCollapseLeft(!collapseLeft)}
+          className={`collapse-expand-left-btn ${
+            collapseLeft ? "collapse-expand-right-btn" : ""
+          }`}
+        >
+          <img
+            src="https://maps.gstatic.com/tactile/pane/arrow_left_2x.png"
+            className={`sidebar-btn ${collapseLeft ? "right-btn" : ""}`}
+            alt="Toggle Sidebar"
+          />
+        </button>
+      </div>
       {loading && <div className="screen-message">Loading...</div>}
       {error && (
         <div className="screen-message">

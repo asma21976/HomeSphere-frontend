@@ -13,29 +13,6 @@
     color: white;
 }
 
-<<<<<<< Updated upstream
-=======
-.sidebar {
-    width: var(--sidebar-width);
-    padding: 0px 15px;
-    background-color: white;
-    height: 100vh;
-    position: relative;
-    z-index: 1;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
-    /* Add transform-origin if you are using transform properties like skew or rotate */
-    transform-origin: top left;
-    overflow: scroll;
-    scrollbar-color: red orange;
-    scrollbar-width: thin;
-
-}
-
-/* #population-button {
-    margin-top: 15px;
-} */
->>>>>>> Stashed changes
 .sidebar .title {
 margin-bottom: 5px;
 font-family: Poppins;
@@ -111,6 +88,10 @@ font-size: 1.rem;
 
   .hidden {
     display: none;
+
+    .sidebar {
+        transition: width 0.5s ease-in-out;
+    }
   }
 
   .cancelML {
@@ -158,19 +139,19 @@ display: grid;
   }
 
 .sidebar {
-  transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
   width: var(--sidebar-width);
   padding: 0px 15px;
   background-color: white;
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
-  transform-origin: top left;
+  /* transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
+  transform-origin: top left; */
   overflow: scroll;
-  scrollbar-color: red orange;
   scrollbar-width: thin;
+  border-bottom-right-radius: 7px;
 }
+
 
 .short {
   --sidebar-width: 50px;
@@ -194,25 +175,13 @@ display: grid;
   } 
 }
 
-/* .close-sidebar-btn {
-  position: absolute;
-  top: 10px; 
-  right: 5px;
-  background-color: #3846cb;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 2;
-} */
+.machine-learning-button:hover {
+    background-color: #1e3a8a; 
+}
 
 .close-sidebar-btn:hover {
   background-color: #1e3a8a; 
+  cursor: pointer !important;
 }
 
 .close-sidebar-btn button {
@@ -223,7 +192,6 @@ display: grid;
   font-size: 1.5rem; 
   color: white;
 }
-<<<<<<< Updated upstream
 
 .menu-button .button-name {
   position: absolute;
@@ -253,7 +221,6 @@ color: #3846cb;
 .machine-learning-window {
     margin-top: -22px;
 }
-=======
 .machine-learning-window_boxes {
     margin: 5px 0px;
     display: flex;
@@ -273,14 +240,40 @@ color: #3846cb;
   }
 
 
+
+
+/* #collapse-expand-left-btn {
+    background-color: white; */
+    /* width: calc(var(--sidebar-width) + 30px) */
+    /* width: 300px;
+} */
+
+.sidebar-btn {
+    height: 30px;
+}
+
+.collapse-expand-left-btn{
+    position: absolute;
+    top: 50%;
+    /* right: calc(var(--sidebar-width) - 1px);  */
+    transform: translateY(-50%);
+    z-index: 1;
+    width: calc(var(--sidebar-width) + 60px); 
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    border-radius: 12px;
+    border: none;
+    height: 50px;
+}
+
+.collapse-expand-right-btn{
+
+width: 60px;
+left: -30px;
+}
+
 .right-btn {
     transform: rotate(180deg);
 }
-
-/* collapse-expand-left-btn{
-    position: absolute;
-    top: 50%;
-    right: calc(bat--sidebar-width - 1px); 
-    transform: translateY(-50%);
-} */
->>>>>>> Stashed changes
