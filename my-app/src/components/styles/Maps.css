@@ -39,7 +39,7 @@ font-size: 1.rem;
 }
 
 .short {
-    --sidebar-width: 50px;
+    --sidebar-width: 0px;
     width: var(--sidebar-width);
     text-align: center;
     height: fit-content;

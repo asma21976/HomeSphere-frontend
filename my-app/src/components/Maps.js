@@ -177,23 +177,6 @@ function Maps() {
                   : "map-feature-button"
               }`}
             >
-              {/* Community  */}
-              <FontAwesomeIcon
-                icon={faArrowUpRightDots}
-                title="Community Population"
-                className="fa-svg-icon"
-              />
-            </button>
-          </Link>
-          <Link to="/maps/vacancy_per_community">
-            <button
-              id="vacancy-button"
-              className={`menu-button ${
-                isSelected("vacancy_per_community")
-                  ? "selected"
-                  : "map-feature-button"
-              }`}
-            >
               <span className="button-name">
                 {" "}
                 Community
