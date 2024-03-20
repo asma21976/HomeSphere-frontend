@@ -39,7 +39,7 @@ font-size: 1.rem;
 }
 
 .short {
-    --sidebar-width: 50px;
+    --sidebar-width: 0px;
     width: var(--sidebar-width);
     text-align: center;
     height: fit-content;
@@ -88,6 +88,10 @@ font-size: 1.rem;
 
   .hidden {
     display: none;
+
+    .sidebar {
+        transition: width 0.5s ease-in-out;
+    }
   }
 
   .cancelML {
@@ -135,19 +139,19 @@ display: grid;
   }
 
 .sidebar {
-  transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
   width: var(--sidebar-width);
   padding: 0px 15px;
   background-color: white;
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
-  transform-origin: top left;
+  /* transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
+  transform-origin: top left; */
   overflow: scroll;
   scrollbar-width: thin;
   border-bottom-right-radius: 7px;
 }
+
 
 .short {
   --sidebar-width: 50px;
@@ -215,18 +219,61 @@ color: #3846cb;
 }
 
 .machine-learning-window {
-    margin-top: -7px;
-    height: 100vh;
+    margin-top: -22px;
 }
-
 .machine-learning-window_boxes {
     margin: 5px 0px;
     display: flex;
     flex-direction: row;
     font-size: 12px;
     padding-right: 30px;
-    padding-bottom: 6px;
 }
-.machine-learning-window h3 {
-font-size: 15px;
+
+.close-sidebar-btn img {
+    cursor: pointer;
+    width: 23px; /* Adjust based on your design */
+    height: auto;
+  }
+  
+  .sidebar.short .close-sidebar-btn img {
+    transform: rotate(180deg); /* This is an example; adjust based on your actual need */
+  }
+
+
+
+
+/* #collapse-expand-left-btn {
+    background-color: white; */
+    /* width: calc(var(--sidebar-width) + 30px) */
+    /* width: 300px;
+} */
+
+.sidebar-btn {
+    height: 30px;
+}
+
+.collapse-expand-left-btn{
+    position: absolute;
+    top: 50%;
+    /* right: calc(var(--sidebar-width) - 1px);  */
+    transform: translateY(-50%);
+    z-index: 1;
+    width: calc(var(--sidebar-width) + 60px); 
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0;
+    border-radius: 12px;
+    border: none;
+    height: 50px;
+}
+
+.collapse-expand-right-btn{
+
+width: 60px;
+left: -30px;
+}
+
+.right-btn {
+    transform: rotate(180deg);
 }
