@@ -145,7 +145,6 @@ display: grid;
   transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
   transform-origin: top left;
   overflow: scroll;
-  scrollbar-color: red orange;
   scrollbar-width: thin;
   border-bottom-right-radius: 7px;
 }
@@ -217,6 +216,7 @@ color: #3846cb;
 
 .machine-learning-window {
     margin-top: -7px;
+    height: 100vh;
 }
 
 .machine-learning-window_boxes {
