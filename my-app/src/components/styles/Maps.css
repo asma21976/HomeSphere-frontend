@@ -223,6 +223,11 @@ color: #3846cb;
 .machine-learning-window {
     margin-top: -22px;
 }
+
+.machine-learning-window h3 {
+    font-size: 15px;
+}
+
 .machine-learning-window_boxes {
     margin: 5px 0px;
     display: flex;
