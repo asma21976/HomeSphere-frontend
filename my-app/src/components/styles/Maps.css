@@ -13,26 +13,6 @@
     color: white;
 }
 
-.sidebar {
-    width: var(--sidebar-width);
-    padding: 0px 15px;
-    background-color: white;
-    height: 100vh;
-    position: absolute;
-    z-index: 1;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
-    /* Add transform-origin if you are using transform properties like skew or rotate */
-    transform-origin: top left;
-    overflow: scroll;
-    scrollbar-color: red orange;
-    scrollbar-width: thin;
-
-}
-
-/* #population-button {
-    margin-top: 15px;
-} */
 .sidebar .title {
 margin-bottom: 5px;
 font-family: Poppins;
@@ -103,24 +83,8 @@ font-size: 1.rem;
 #buttons-container {
     display: flex;
     justify-content: space-between;
-    padding-top: 50px;
+    padding-bottom: 25px;
 }
-
-/* .machine-learning-window {
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(106, 119, 234, 0.9);
-    z-index: 1;
-    top: 0;
-    padding: 1rem;
-    color: white;
-
-  } */
-  /* .disclaimer {
-    margin-top: 5px;
-    padding-right: 100px;
-  } */
 
   .hidden {
     display: none;
@@ -170,26 +134,98 @@ display: grid;
     --sidebar-width: 50px;
   }
 
-.close-sidebar-btn {
-    position: absolute;
-    right: 10px;
-    margin-top: 15px;
-    margin-right: 7px;
+.sidebar {
+  transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
+  width: var(--sidebar-width);
+  padding: 0px 15px;
+  background-color: white;
+  position: absolute;
+  z-index: 1;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
+  transform-origin: top left;
+  overflow: scroll;
+  scrollbar-color: red orange;
+  scrollbar-width: thin;
 }
+
+.short {
+  --sidebar-width: 50px;
+  width: var(--sidebar-width);
+  text-align: center;
+  height: 100vh;
+  padding-bottom: 12px;
+
+  .title {
+    display: none;
+  }
+  .menu-button {
+    height: 60px;
+  }
+
+  .menu-button p {
+    display: none;
+  }
+  .menu-button .fa-svg-icon {
+    font-size: 1.5rem; 
+  } 
+}
+
+/* .close-sidebar-btn {
+  position: absolute;
+  top: 10px; 
+  right: 5px;
+  background-color: #3846cb;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 2;
+} */
+
+.close-sidebar-btn:hover {
+  background-color: #1e3a8a; 
+}
+
+.close-sidebar-btn button {
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  font-size: 1.5rem; 
+  color: white;
+}
+
+.menu-button .button-name {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu-button:hover .button-name {
+  visibility: visible;
+  opacity: 1;
+}
+
 .HomeSphere-Title {
-    position: absolute;
-    margin-top: 17px;
-    font-size: 8px;
-    margin-left: 4px;
-    color: #3846cb;
+margin-top: 10px;
+font-size: 10px;
+color: #3846cb;
 }
-.machine-learning-window h3 {
-    font-size: 17px;
-}
-.machine-learning-window_boxes {
-    margin: 5px 0px;
-    display: flex;
-    flex-direction: row;
-    font-size: 12px;
-    padding-right: 30px;
+
+.machine-learning-window {
+    margin-top: -22px;
 }
