@@ -147,6 +147,7 @@ display: grid;
   overflow: scroll;
   scrollbar-color: red orange;
   scrollbar-width: thin;
+  border-bottom-right-radius: 7px;
 }
 
 .short {
@@ -171,25 +172,13 @@ display: grid;
   } 
 }
 
-/* .close-sidebar-btn {
-  position: absolute;
-  top: 10px; 
-  right: 5px;
-  background-color: #3846cb;
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  z-index: 2;
-} */
+.machine-learning-button:hover {
+    background-color: #1e3a8a; 
+}
 
 .close-sidebar-btn:hover {
   background-color: #1e3a8a; 
+  cursor: pointer !important;
 }
 
 .close-sidebar-btn button {
@@ -227,5 +216,17 @@ color: #3846cb;
 }
 
 .machine-learning-window {
-    margin-top: -22px;
+    margin-top: -7px;
+}
+
+.machine-learning-window_boxes {
+    margin: 5px 0px;
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+    padding-right: 30px;
+    padding-bottom: 6px;
+}
+.machine-learning-window h3 {
+font-size: 15px;
 }
