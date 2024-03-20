@@ -13,6 +13,29 @@
     color: white;
 }
 
+<<<<<<< Updated upstream
+=======
+.sidebar {
+    width: var(--sidebar-width);
+    padding: 0px 15px;
+    background-color: white;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
+    /* Add transform-origin if you are using transform properties like skew or rotate */
+    transform-origin: top left;
+    overflow: scroll;
+    scrollbar-color: red orange;
+    scrollbar-width: thin;
+
+}
+
+/* #population-button {
+    margin-top: 15px;
+} */
+>>>>>>> Stashed changes
 .sidebar .title {
 margin-bottom: 5px;
 font-family: Poppins;
@@ -200,6 +223,7 @@ display: grid;
   font-size: 1.5rem; 
   color: white;
 }
+<<<<<<< Updated upstream
 
 .menu-button .button-name {
   position: absolute;
@@ -229,3 +253,34 @@ color: #3846cb;
 .machine-learning-window {
     margin-top: -22px;
 }
+=======
+.machine-learning-window_boxes {
+    margin: 5px 0px;
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+    padding-right: 30px;
+}
+
+.close-sidebar-btn img {
+    cursor: pointer;
+    width: 23px; /* Adjust based on your design */
+    height: auto;
+  }
+  
+  .sidebar.short .close-sidebar-btn img {
+    transform: rotate(180deg); /* This is an example; adjust based on your actual need */
+  }
+
+
+.right-btn {
+    transform: rotate(180deg);
+}
+
+/* collapse-expand-left-btn{
+    position: absolute;
+    top: 50%;
+    right: calc(bat--sidebar-width - 1px); 
+    transform: translateY(-50%);
+} */
+>>>>>>> Stashed changes

@@ -24,6 +24,7 @@ function Maps() {
   const [mapData, setMapData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [collapseLeft, setCollapseLeft] = useState(false);
 
   const isSelected = (pathSegment) => {
     const currentPath = location.pathname.split("/").pop();
@@ -136,6 +137,7 @@ function Maps() {
           HOMESPHERE
         </h1>
       </div>
+<<<<<<< Updated upstream
 
     <div id="sidebar" className={`sidebar ${collapsed && !lastButtonExpanded ? "short" : "expanded"}`}>
       <div className="HomeSphere-Title">
@@ -153,6 +155,46 @@ function Maps() {
             }`}
           >
             <span className="button-name"> Community <br/> Population</span>
+=======
+      <div
+        id="sidebar"
+        className={`sidebar ${collapsed ? "short" : ""} ${
+          collapseLeft ? "hidden" : ""
+        }`}
+      >
+        <div className="HomeSphere-Title">
+          <h1>HOMESPHERE</h1>
+        </div>
+        <div className="close-sidebar-btn" onClick={handleToggleSidebar}>
+          <button type="button">X</button>
+        </div>
+        <div id="buttons-container">
+          <Link to="/maps/congestion">
+            <button
+              id="population-button"
+              className={`menu-button ${
+                isSelected("congestion") ? "selected" : "map-feature-button"
+              }`}
+            >
+              <FontAwesomeIcon
+                icon={faArrowUpRightDots}
+                title="Community Population"
+                className="fa-svg-icon"
+              />
+              {/* Congestion */}
+            </button>
+          </Link>
+          <Link to="/maps/vacancy_per_community">
+            <button
+              id="vacancy-button"
+              className={`menu-button ${
+                isSelected("vacancy_per_community")
+                  ? "selected"
+                  : "map-feature-button"
+              }`}
+            >
+              {/* Community  */}
+>>>>>>> Stashed changes
               <FontAwesomeIcon
               icon={faArrowUpRightDots}
               title="Community Population"
@@ -232,7 +274,11 @@ function Maps() {
             <div key={index}>
               <h3>{key}</h3>
               {values.map((value, valueIndex) => (
-                <div className="machine-learning-window_boxes" key={valueIndex} style={{ margin: "5px 0" }}>
+                <div
+                  className="machine-learning-window_boxes"
+                  key={valueIndex}
+                  style={{ margin: "5px 0" }}
+                >
                   <input
                     type="checkbox"
                     id={`${key}_${valueIndex}`}
@@ -245,6 +291,16 @@ function Maps() {
           ))}
         </div>
       </div>
+      <button
+        onClick={() => setCollapseLeft(!collapseLeft)}
+        className="collapse-expand-left-btn"
+      >
+        <img
+          src="https://maps.gstatic.com/tactile/pane/arrow_left_2x.png"
+          className={`sidebar-btn ${collapseLeft ? "right-btn" : ""}`}
+          alt="Toggle Sidebar"
+        />
+      </button>
       {loading && <div className="screen-message">Loading...</div>}
       {error && (
         <div className="screen-message">
