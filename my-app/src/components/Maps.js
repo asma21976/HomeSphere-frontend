@@ -222,12 +222,11 @@ function Maps() {
           id="machine-learning-window"
           className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
         >
-          hello young padawan, here are your options:
           {Object.entries(communityFeatures).map(([key, values], index) => (
             <div key={index}>
               <h3>{key}</h3>
               {values.map((value, valueIndex) => (
-                <div key={valueIndex} style={{ margin: "5px 0" }}>
+                <div className="machine-learning-window_boxes" key={valueIndex} style={{ margin: "5px 0" }}>
                   <input
                     type="checkbox"
                     id={`${key}_${valueIndex}`}

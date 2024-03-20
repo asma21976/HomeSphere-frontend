@@ -18,13 +18,15 @@
     padding: 0px 15px;
     background-color: white;
     height: 100vh;
-    border-radius: 5%;
     position: absolute;
     z-index: 1;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     transition: transform 0.5s ease-in-out, width 0.5s ease-in-out;
     /* Add transform-origin if you are using transform properties like skew or rotate */
     transform-origin: top left;
+    overflow: scroll;
+    scrollbar-color: red orange;
+    scrollbar-width: thin;
 
 }
 
@@ -180,4 +182,14 @@ display: grid;
     font-size: 8px;
     margin-left: 4px;
     color: #3846cb;
+}
+.machine-learning-window h3 {
+    font-size: 17px;
+}
+.machine-learning-window_boxes {
+    margin: 5px 0px;
+    display: flex;
+    flex-direction: row;
+    font-size: 12px;
+    padding-right: 30px;
 }
