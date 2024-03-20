@@ -222,7 +222,22 @@ function Maps() {
           id="machine-learning-window"
           className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
         >
-          hello add <p>options headers</p> <p>add slider hurrrrrrrr hehehehe</p>
+          hello young padawan, here are your options:
+          {Object.entries(communityFeatures).map(([key, values], index) => (
+            <div key={index}>
+              <h3>{key}</h3>
+              {values.map((value, valueIndex) => (
+                <div key={valueIndex} style={{ margin: "5px 0" }}>
+                  <input
+                    type="checkbox"
+                    id={`${key}_${valueIndex}`}
+                    name={value}
+                  />
+                  <label htmlFor={`${key}_${valueIndex}`}>{value}</label>
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
       {loading && <div className="screen-message">Loading...</div>}
