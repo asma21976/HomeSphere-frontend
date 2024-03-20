@@ -97,26 +97,26 @@ function Maps() {
 
     fetch(`https://home-sphere.ca/api/maps/${mapType}`, {
       headers: {
-        'AccessToken': 'Kvwf<IQ5qV]nlPooW@'
-      }
+        AccessToken: "Kvwf<IQ5qV]nlPooW@",
+      },
     })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setMapData(data);
-    })
-    .catch((err) => {
-      console.error("Error fetching data:", err);
-      setError(err.message);
-      setMapData(null);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMapData(data);
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        setError(err.message);
+        setMapData(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [mapType]);
 
   return (
@@ -136,7 +136,7 @@ function Maps() {
           <h1>HOMESPHERE</h1>
         </div>
         <div className="close-sidebar-btn" onClick={handleToggleSidebar}>
-            <button type="button">X</button>
+          <button type="button">X</button>
         </div>
         <div id="buttons-container">
           <Link to="/maps/congestion">
@@ -216,8 +216,13 @@ function Maps() {
               title="Machine Learning Housing Analaysis"
               className="fa-svg-icon"
             />
-            {/* <p>Housing Analysis</p> */}
           </button>
+        </div>
+        <div
+          id="machine-learning-window"
+          className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
+        >
+          hello add <p>options headers</p> <p>add slider hurrrrrrrr hehehehe</p>
         </div>
       </div>
       {loading && <div className="screen-message">Loading...</div>}
@@ -226,69 +231,29 @@ function Maps() {
           <p>{error}</p>
         </div>
       )}
-      <div id="mapContainer" key={collapsed ? "short" : "full"} className={`mapContainer ${collapsed ? "shortMap" : ""}`}>
+      <div
+        id="mapContainer"
+        key={collapsed ? "short" : "full"}
+        className={`mapContainer ${collapsed ? "shortMap" : ""}`}
+      >
         {mapData && (
           <Plot
             data={mapData.data}
             layout={mapData.layout}
             useResizeHandler={true}
-            style={{ width: '100%', height: '100%' }}
+            style={{ width: "100%", height: "100%" }}
             responsive={true}
           />
         )}
       </div>
-      <div
-        id="machine-learning-window"
-        className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
-      >
-        {/* Machine learning window content */}
-        <button type="button" className="cancelML" onClick={toggleMLWindow}>
-          X
-        </button>
-        <p className="disclaimer">
-          Disclaimer: Please not that our housing analysis system focuses
-          exclusively on the northeast scope of Calgary and offers a broad
-          estimation of housing and community analytics based on data sources
-          from the City of Calgary. This information must not be regarded as
-          definitive and should only serve as a guide and support for developers
-          and residents.
-        </p>
-        <h2>Select Analysis Criteria</h2>
-        <div
-          id="features"
-          className="features"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around",
-            width: "97%",
-          }}
-        >
-          {Object.entries(communityFeatures).map(([key, values], index) => (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-              }}
-            >
-              <h3>{key}</h3>
-              {values.map((value, valueIndex) => (
-                <div key={valueIndex} style={{ margin: "5px 0" }}>
-                  <input
-                    type="checkbox"
-                    id={`${key}_${valueIndex}`}
-                    name={value}
-                  />
-                  <label htmlFor={`${key}_${valueIndex}`}>{value}</label>
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-        <div id="slider" className="slider">
-          <Box sx={{ width: 200 }}>
+    </div>
+  );
+}
+
+export default Maps;
+
+/*
+<Box sx={{ width: 200 }}>
             <Slider
               defaultValue={3}
               getAriaValueText={valuetext}
@@ -300,12 +265,4 @@ function Maps() {
               className="slider-component"
             />
           </Box>
-        </div>
-
-        <button type="submit">Run</button>
-      </div>
-    </div>
-  );
-}
-
-export default Maps;
+*/
