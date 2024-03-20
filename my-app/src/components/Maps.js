@@ -152,7 +152,6 @@ function Maps() {
               isSelected("congestion") ? "selected" : "map-feature-button"
             }`}
           >
-            <span className="button-name"> Community <br/> Population</span>
               <FontAwesomeIcon
               icon={faArrowUpRightDots}
               title="Community Population"
@@ -167,7 +166,6 @@ function Maps() {
               isSelected("vacancy_per_community") ? "selected" : "map-feature-button"
             }`}
           >
-            <span className="button-name"> Community<br/>Vacancy</span>
               <FontAwesomeIcon
               icon={faMapMarkerAlt}
               title="Land Vacancy"
@@ -182,7 +180,6 @@ function Maps() {
               isSelected("housing_development_zone") ? "selected" : "map-feature-button"
             }`}
           >
-            <span className="button-name"> Housing<br/>Development</span>
               <FontAwesomeIcon
               icon={faScroll}
               title="Building Permits"
@@ -197,7 +194,6 @@ function Maps() {
               isSelected("property_value_per_community") ? "selected" : "map-feature-button"
             }`}
           >
-          <span className="button-name"> House<br/>Prices</span>
               <FontAwesomeIcon
               icon={faDollarSign}
               title="House Prices"
@@ -215,7 +211,6 @@ function Maps() {
             handleLastButtonToggle();
           }}
         >
-        <span className="button-name"> ML<br/>House Analysis</span>
             <FontAwesomeIcon
             icon={faSquarePollVertical}
             title="Machine Learning Housing Analysis"
