@@ -151,7 +151,7 @@ display: grid;
   overflow-y: scroll;
   scrollbar-width: thin;
   border-bottom-right-radius: 7px;
-  max-height: 100vh;
+  height: 100vh;
 }
 
 
@@ -223,11 +223,6 @@ color: #3846cb;
 .machine-learning-window {
     margin-top: -22px;
 }
-
-.machine-learning-window h3 {
-    font-size: 15px;
-}
-
 .machine-learning-window_boxes {
     margin: 5px 0px;
     display: flex;
@@ -261,6 +256,7 @@ color: #3846cb;
 
 .sidebar.shortened {
     overflow: hidden;
+    height: auto;
 }
 
 .collapse-expand-left-btn{
@@ -287,4 +283,8 @@ left: -30px;
 
 .right-btn {
     transform: rotate(180deg);
+}
+
+.machine-learning-window h3 {
+    font-size: 15px;
 }
