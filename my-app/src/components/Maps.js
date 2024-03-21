@@ -25,6 +25,7 @@ function Maps() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [collapseLeft, setCollapseLeft] = useState(false);
+  const [selectedMLOption, setSelectedMLOption] = useState("community-level");
 
   const isSelected = (pathSegment) => {
     const currentPath = location.pathname.split("/").pop();
@@ -45,6 +46,34 @@ function Maps() {
 
   function valuetext(value) {
     return `${value}°C`;
+  }
+
+  const handleMLOptionChange = (event) => {
+    console.log("New ML option selected:", event.target.value); // Debugging
+
+    setSelectedMLOption(event.target.value);
+  };
+
+  function getFeatures() {
+    const features =
+      selectedMLOption === "community-level"
+        ? communityFeatures
+        : postalFeatures;
+    return Object.entries(features).map(([key, values], index) => (
+      <div key={index}>
+        <h3>{key}</h3>
+        {values.map((value, valueIndex) => (
+          <div
+            className="machine-learning-window_boxes"
+            key={valueIndex}
+            style={{ margin: "5px 0" }}
+          >
+            <input type="checkbox" id={`${key}_${valueIndex}`} name={value} />
+            <label htmlFor={`${key}_${valueIndex}`}>{value}</label>
+          </div>
+        ))}
+      </div>
+    ));
   }
 
   const communityFeatures = {
@@ -74,25 +103,25 @@ function Maps() {
   };
 
   const postalFeatures = {
-    PropertyAssessments: ["MedianAssessedValue", "MedianLandSize"],
+    "Property Assessments": ["Median Assessed Value", "Median Land Size"],
     Schools: [
-      "NearestElementarySchool",
-      "NearestJuniorHighSchool",
-      "NearestSeniorHighSchool",
-      "SchoolCountWithin1KM",
+      "Nearest Elementary School",
+      "Nearest Junior-Highschool",
+      "Nearest Senior-High School",
+      "School Coun tWithin 1KM",
     ],
-    CommunityServices: [
-      "NearestCommunityCentre",
-      "NearestAttraction",
-      "NearestVisitorInformationCentre",
-      "NearestSocialDevelopmentCentre",
-      "ServicesCountWithin1KM",
+    "Community Services": [
+      "Nearest Community Centre",
+      "Nearest Attraction",
+      "Nearest Visitor Information Centre",
+      "Nearest Social Development Centre",
+      "Services Count Within 1KM",
     ],
     Amenities: [
-      "NearestHospital",
-      "NearestLibrary",
-      "NearestPHSClinic",
-      "NearestCourt",
+      "Nearest Hospital",
+      "Nearest Library",
+      "Nearest PHS Clinic",
+      "Nearest Court",
     ],
   };
 
@@ -233,25 +262,50 @@ function Maps() {
           id="machine-learning-window"
           className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
         >
-          {Object.entries(communityFeatures).map(([key, values], index) => (
-            <div key={index}>
-              <h3>{key}</h3>
-              {values.map((value, valueIndex) => (
-                <div
-                  className="machine-learning-window_boxes"
-                  key={valueIndex}
-                  style={{ margin: "5px 0" }}
-                >
-                  <input
-                    type="checkbox"
-                    id={`${key}_${valueIndex}`}
-                    name={value}
-                  />
-                  <label htmlFor={`${key}_${valueIndex}`}>{value}</label>
-                </div>
-              ))}
-            </div>
-          ))}
+          <form>
+            <p>
+              <input
+                type="radio"
+                id="community-level-option"
+                name="ml-options"
+                value="communnity-level"
+                checked={selectedMLOption === "community-level"}
+                onChange={handleMLOptionChange}
+              />
+              <label for="community-level-option">Community Level</label>
+            </p>
+
+            <p>
+              <input
+                type="radio"
+                id="postal-code-level-option"
+                name="ml-options"
+                value="postal-code-level"
+                checked={selectedMLOption === "postal-code-level"}
+                onChange={handleMLOptionChange}
+              />
+              <label for="postal-code-level-option">Sub-Community Level</label>
+            </p>
+          </form>
+          <div id="slider" className="slider">
+            <h3>Number of categories:</h3>
+            <Box sx={{ width: 200 }}>
+              <Slider
+                defaultValue={3}
+                getAriaValueText={valuetext}
+                valueLabelDisplay="auto"
+                shiftStep={1}
+                step={1}
+                min={1}
+                max={30}
+                className="slider-component"
+              />
+            </Box>
+          </div>
+          <div>{getFeatures()}</div>
+          <div id="ml-run-btn" className="ml-run-btn">
+            <button> Run</button>
+          </div>
         </div>
       </div>
       <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>
