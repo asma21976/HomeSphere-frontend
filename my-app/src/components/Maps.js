@@ -20,10 +20,12 @@ function Maps() {
   const location = useLocation();
   const [showMLWindow, setShowMLWindow] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
+  const [lastButtonExpanded, setLastButtonExpanded] = useState(false);
   const [mapData, setMapData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [checkboxes, setCheckboxes] = useState({}); // State to manage checkboxes
+  const [collapseLeft, setCollapseLeft] = useState(false);
+
   const isSelected = (pathSegment) => {
     const currentPath = location.pathname.split("/").pop();
     return currentPath === pathSegment;
@@ -35,6 +37,10 @@ function Maps() {
 
   const toggleMLWindow = () => {
     setShowMLWindow(!showMLWindow);
+  };
+
+  const handleLastButtonToggle = () => {
+    setLastButtonExpanded(!lastButtonExpanded);
   };
 
   function valuetext(value) {
@@ -91,58 +97,65 @@ function Maps() {
   };
 
   useEffect(() => {
-    // Load previously selected checkboxes from localStorage
-    const storedCheckboxes = localStorage.getItem("checkboxes");
-    if (storedCheckboxes) {
-      setCheckboxes(JSON.parse(storedCheckboxes));
-    }
-
     setLoading(true);
     setError(null);
     setMapData(null);
 
     fetch(`https://home-sphere.ca/api/maps/${mapType}`, {
       headers: {
-        'AccessToken': 'Kvwf<IQ5qV]nlPooW@'
-      }
-    })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setMapData(data);
-    })
-    .catch((err) => {
-      console.error("Error fetching data:", err);
-      setError(err.message);
-      setMapData(null);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
-  }, [mapType]);
-
-  useEffect(() => {
-    // Save selected checkboxes to localStorage
-    localStorage.setItem("checkboxes", JSON.stringify(checkboxes));
-  }, [checkboxes]);
-
-  const handleCheckboxChange = (category, index) => {
-    setCheckboxes((prevCheckboxes) => ({
-      ...prevCheckboxes,
-      [category]: {
-        ...prevCheckboxes[category],
-        [index]: !prevCheckboxes[category][index],
+        AccessToken: "Kvwf<IQ5qV]nlPooW@",
       },
-    }));
-  };
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        data.layout = {
+          ...data.layout,
+          margin: { l: 0, r: 0, t: 0, b: 0 },
+          title: '',
+          coloraxis: {
+            ...data.layout.coloraxis,
+            colorbar: {
+              ...data.layout.coloraxis.colorbar,
+              xanchor: 'right',
+              yanchor: 'middle',
+
+              thickness: 10,
+              x: 0.99,
+              y: 0.5,
+              len: 0.8,
+              width: 0.1,
+              title: {
+                ...data.layout.coloraxis.colorbar.title,
+                side: 'right',
+                font : {
+                  family: "Arial Black",
+                  size: 14,
+                }
+              },
+            },
+            colorscale: 'Rainbow'
+          }
+        }
+        setMapData(data);
+      })
+      .catch((err) => {
+        console.error("Error fetching data:", err);
+        setError(err.message);
+        setMapData(null);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, [mapType]);
 
   return (
     <div>
-      <div id="homeBar" className="homeBar">
+      {/* <div id="homeBar" className="homeBar">
         <h1>
           <FontAwesomeIcon
             icon={faBars}
@@ -151,8 +164,19 @@ function Maps() {
           />
           HOMESPHERE
         </h1>
-      </div>
-      <div id="sidebar" className={`sidebar ${collapsed ? "short" : ""}`}>
+      </div> */}
+      <div
+        id="sidebar"
+        className={`sidebar ${!lastButtonExpanded ? "shortened" : ""} ${
+          collapseLeft ? "hidden" : ""
+        }`}
+      >
+        <div className="HomeSphere-Title">
+          <h1>HOMESPHERE</h1>
+        </div>
+        {/* <div className="close-sidebar-btn" onClick={handleToggleSidebar}>
+        <button type="button">X</button>
+      </div> */}
         <div id="buttons-container">
           <Link to="/maps/congestion">
             <button
@@ -166,8 +190,6 @@ function Maps() {
                 title="Community Population"
                 className="fa-svg-icon"
               />
-              <p>Population</p>
-              {/* Congestion */}
             </button>
           </Link>
           <Link to="/maps/vacancy_per_community">
@@ -179,13 +201,11 @@ function Maps() {
                   : "map-feature-button"
               }`}
             >
-              {/* Community  */}
               <FontAwesomeIcon
                 icon={faMapMarkerAlt}
                 title="Land Vacancy"
                 className="fa-svg-icon"
               />
-              <p>Vacancy</p>
             </button>
           </Link>
           <Link to="/maps/housing_development_zone">
@@ -197,13 +217,11 @@ function Maps() {
                   : "map-feature-button"
               }`}
             >
-              {/* Urban  */}
               <FontAwesomeIcon
                 icon={faScroll}
                 title="Building Permits"
                 className="fa-svg-icon"
               />
-              <p>Permits</p>
             </button>
           </Link>
           <Link to="/maps/property_value_per_community">
@@ -220,7 +238,6 @@ function Maps() {
                 title="House Prices"
                 className="fa-svg-icon"
               />
-              <p>House Prices</p>
             </button>
           </Link>
           <button
@@ -228,73 +245,31 @@ function Maps() {
             className={`menu-button ${
               isSelected("house_price_map") ? "selected" : "map-feature-button"
             }`}
-            onClick={toggleMLWindow}
+            onClick={() => {
+              toggleMLWindow();
+              handleLastButtonToggle();
+            }}
           >
             <FontAwesomeIcon
               icon={faSquarePollVertical}
-              title="Machine Learning Housing Analaysis"
+              title="Machine Learning Housing Analysis"
               className="fa-svg-icon"
             />
-            <p>Housing Analysis</p>
           </button>
         </div>
-      </div>
-      {loading && <div className="screen-message">Loading...</div>}
-      {error && (
-        <div className="screen-message">
-          <p>{error}</p>
-        </div>
-      )}
-      <div id="mapContainer" key={collapsed ? "short" : "full"} className={`mapContainer ${collapsed ? "shortMap" : ""}`}>
-        {mapData && (
-          <Plot
-            data={mapData.data}
-            layout={mapData.layout}
-            useResizeHandler={true}
-            style={{ width: '100%', height: '100%' }}
-            responsive={true}
-          />
-        )}
-      </div>
-      <div
-        id="machine-learning-window"
-        className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
-      >
-        {/* Machine learning window content */}
-        <button type="button" className="cancelML" onClick={toggleMLWindow}>
-          X
-        </button>
-        <p className="disclaimer">
-          Disclaimer: Please not that our housing analysis system focuses
-          exclusively on the northeast scope of Calgary and offers a broad
-          estimation of housing and community analytics based on data sources
-          from the City of Calgary. This information must not be regarded as
-          definitive and should only serve as a guide and support for developers
-          and residents.
-        </p>
-        <h2>Select Analysis Criteria</h2>
         <div
-          id="features"
-          className="features"
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around",
-            width: "97%",
-          }}
+          id="machine-learning-window"
+          className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
         >
           {Object.entries(communityFeatures).map(([key, values], index) => (
-            <div
-              key={index}
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-start",
-              }}
-            >
+            <div key={index}>
               <h3>{key}</h3>
               {values.map((value, valueIndex) => (
-                <div key={valueIndex} style={{ margin: "5px 0" }}>
+                <div
+                  className="machine-learning-window_boxes"
+                  key={valueIndex}
+                  style={{ margin: "5px 0" }}
+                >
                   <input
                     type="checkbox"
                     id={`${key}_${valueIndex}`}
@@ -306,8 +281,50 @@ function Maps() {
             </div>
           ))}
         </div>
-        <div id="slider" className="slider">
-          <Box sx={{ width: 200 }}>
+      </div>
+      <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>
+        <button
+          onClick={() => setCollapseLeft(!collapseLeft)}
+          className={`collapse-expand-left-btn ${
+            collapseLeft ? "collapse-expand-right-btn" : ""
+          }`}
+        >
+          <img
+            src="https://maps.gstatic.com/tactile/pane/arrow_left_2x.png"
+            className={`sidebar-btn ${collapseLeft ? "right-btn" : ""}`}
+            alt="Toggle Sidebar"
+          />
+        </button>
+      </div>
+      {loading && <div className="screen-message">Loading...</div>}
+      {error && (
+        <div className="screen-message">
+          <p>{error}</p>
+        </div>
+      )}
+      <div
+        style={{
+          height: '100vh'
+        }}
+      >
+        {mapData && (
+          <Plot
+            data={mapData.data}
+            layout={mapData.layout}
+            useResizeHandler={true}
+            style={{ width: "100%", height: "99%"}}
+            responsive={true}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default Maps;
+
+/*
+<Box sx={{ width: 200 }}>
             <Slider
               defaultValue={3}
               getAriaValueText={valuetext}
@@ -319,12 +336,4 @@ function Maps() {
               className="slider-component"
             />
           </Box>
-        </div>
-
-        <button type="submit">Run</button>
-      </div>
-    </div>
-  );
-}
-
-export default Maps;
+*/
