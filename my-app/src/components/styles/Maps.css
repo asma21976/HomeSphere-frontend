@@ -1,7 +1,7 @@
 :root {
     --sidebar-width: 250px; /* Default sidebar width */
   }
-
+/* 
 #homeBar {
     background-color: #3846cb;
     padding-top: 10px;
@@ -11,13 +11,13 @@
 #homeBar h1 {
     margin: 0;
     color: white;
-}
+} */
 
-.sidebar .title {
+/* .sidebar .title {
 margin-bottom: 5px;
 font-family: Poppins;
 font-size: 1.rem;
-}
+} */
 
 .menu-button {
     margin-top: 18px;
@@ -32,14 +32,13 @@ font-size: 1.rem;
     height: 100%;
 }
 
-.homeBar .hamburger {
+/* .homeBar .hamburger {
     margin-left: 5px;
     margin-right: 7px;
     cursor: pointer;
-}
+} */
 
-.short {
-    --sidebar-width: 0px;
+/* .short {
     width: var(--sidebar-width);
     text-align: center;
     height: fit-content;
@@ -59,10 +58,10 @@ font-size: 1.rem;
         font-size: 1.5rem; 
     } 
 
-}
+} */
 
 .menu-button .fa-svg-icon {
-    font-size: 2.5rem; 
+    font-size: .5rem; 
 } 
 
 .selected{
@@ -128,16 +127,6 @@ display: grid;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.mapContainer{
-    margin-left: var(--sidebar-width);
-    margin-right: 20px;
-    height: 100vh;
-    transition: margin-left 0.5s ease-in-out, width 0.5s ease-in-out;
-  }
-
-.shortMap{
-    --sidebar-width: 50px;
-  }
 
 .sidebar {
   width: var(--sidebar-width);

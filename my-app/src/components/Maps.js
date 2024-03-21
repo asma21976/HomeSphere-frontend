@@ -113,6 +113,34 @@ function Maps() {
         return response.json();
       })
       .then((data) => {
+        data.layout = {
+          ...data.layout,
+          margin: { l: 0, r: 0, t: 0, b: 0 },
+          title: '',
+          coloraxis: {
+            ...data.layout.coloraxis,
+            colorbar: {
+              ...data.layout.coloraxis.colorbar,
+              xanchor: 'right',
+              yanchor: 'middle',
+
+              thickness: 10,
+              x: 0.99,
+              y: 0.5,
+              len: 0.8,
+              width: 0.1,
+              title: {
+                ...data.layout.coloraxis.colorbar.title,
+                side: 'right',
+                font : {
+                  family: "Arial Black",
+                  size: 14,
+                }
+              },
+            },
+            colorscale: 'Rainbow'
+          }
+        }
         setMapData(data);
       })
       .catch((err) => {
@@ -127,7 +155,7 @@ function Maps() {
 
   return (
     <div>
-      <div id="homeBar" className="homeBar">
+      {/* <div id="homeBar" className="homeBar">
         <h1>
           <FontAwesomeIcon
             icon={faBars}
@@ -136,7 +164,7 @@ function Maps() {
           />
           HOMESPHERE
         </h1>
-      </div>
+      </div> */}
       <div
         id="sidebar"
         className={`sidebar ${!lastButtonExpanded ? "shortened" : ""} ${
@@ -275,16 +303,16 @@ function Maps() {
         </div>
       )}
       <div
-        id="mapContainer"
-        key={collapsed ? "short" : "full"}
-        className={`mapContainer ${collapsed ? "shortMap" : ""}`}
+        style={{
+          height: '100vh'
+        }}
       >
         {mapData && (
           <Plot
             data={mapData.data}
             layout={mapData.layout}
             useResizeHandler={true}
-            style={{ width: "100%", height: "100%" }}
+            style={{ width: "100%", height: "99%"}}
             responsive={true}
           />
         )}
