@@ -145,13 +145,13 @@ function Maps() {
         data.layout = {
           ...data.layout,
           margin: { l: 0, r: 0, t: 0, b: 0 },
-          title: '',
+          title: "",
           coloraxis: {
             ...data.layout.coloraxis,
             colorbar: {
               ...data.layout.coloraxis.colorbar,
-              xanchor: 'right',
-              yanchor: 'middle',
+              xanchor: "right",
+              yanchor: "middle",
 
               thickness: 10,
               x: 0.99,
@@ -160,16 +160,20 @@ function Maps() {
               width: 0.1,
               title: {
                 ...data.layout.coloraxis.colorbar.title,
-                side: 'right',
-                font : {
+                side: "right",
+                font: {
                   family: "Arial Black",
                   size: 14,
-                }
+                },
               },
             },
-            colorscale: 'Rainbow'
-          }
-        }
+            colorscale: "Rainbow",
+          },
+          mapbox: {
+            ...data.layout.mapbox,
+            zoom: 11,
+          },
+        };
         setMapData(data);
       })
       .catch((err) => {
@@ -358,7 +362,7 @@ function Maps() {
       )}
       <div
         style={{
-          height: '100vh'
+          height: "100vh",
         }}
       >
         {mapData && (
@@ -366,7 +370,7 @@ function Maps() {
             data={mapData.data}
             layout={mapData.layout}
             useResizeHandler={true}
-            style={{ width: "100%", height: "99%"}}
+            style={{ width: "100%", height: "99%" }}
             responsive={true}
           />
         )}
