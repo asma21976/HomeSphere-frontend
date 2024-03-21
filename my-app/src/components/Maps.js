@@ -14,6 +14,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
+import mapboxgl from "mapbox-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
 
 function Maps() {
   const { mapType } = useParams();
@@ -112,6 +114,10 @@ function Maps() {
       selectedMLOption === "community-level"
         ? communityFeatures
         : postalFeatures;
+
+    // This variable is now scoped to runML and can be accessed within nested functions.
+    let mapData = null;
+
     fetch(`https://home-sphere.ca/api/api/${mlType}`, {
       method: "POST",
       headers: {
@@ -127,14 +133,36 @@ function Maps() {
         return response.json();
       })
       .then((data) => {
-        setMapData(data);
+        console.log(data);
+        mapData = data; // Directly assign to the scoped variable without `this`.
+
+        // Initialize the map inside the then block to ensure mapData is loaded.
+        mapboxgl.accessToken =
+          "pk.eyJ1Ijoia2FhamJvbGFuZCIsImEiOiJjbG5kejg0emIwOGRyMmxsZW9vaXYyMGswIn0.Rhnj7A5aOZh0JBebF4WaFQ";
+
+        let map = new mapboxgl.Map({
+          container: "featureMap",
+          style: "mapbox://styles/mapbox/streets-v11",
+          center: [-98.5795, 39.8283],
+          zoom: 3,
+        });
+
+        map.on("load", function () {
+          // Use mapData directly here, as it's now properly scoped and assigned.
+          map.addSource("regions", {
+            type: "geojson",
+            data: mapData,
+          });
+        });
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
+        // Assume setError and setMapData are defined elsewhere to handle errors and state.
         setError(err.message);
         setMapData(null);
       })
       .finally(() => {
+        // Assuming setLoading is defined elsewhere to handle loading state.
         setLoading(false);
       });
   }
@@ -259,6 +287,7 @@ function Maps() {
           },
         };
         setMapData(data);
+        console.log(data);
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
@@ -436,6 +465,7 @@ function Maps() {
         </div>
       )}
       <div
+        id="featureMap"
         style={{
           height: "100vh",
         }}
