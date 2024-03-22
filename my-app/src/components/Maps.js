@@ -86,52 +86,6 @@ function Maps() {
     console.log(numClusters);
   };
 
-  // function getFeatures() {
-  //   const features =
-  //     selectedMLOption === "community-level"
-  //       ? communityFeatures
-  //       : postalFeatures;
-
-  //   const featureHeaders = {
-  //     count_of_population_in_private_households:
-  //       "Demographics and Socioeconomic Indicators",
-  //     community_crime_count: "Crime and Disorder",
-  //     count_of_households_that_require_maintenance: "Housing Condition",
-  //     median_assessed_value: "Property Assessments",
-  //     distance_to_closest_elementary: "Schools",
-  //     distance_to_closest_community_centre: "Amenities",
-  //   };
-
-  //   return Object.entries(features)
-  //     .slice(0, -2) // Adjust or remove slice if needed
-  //     .map(([feature], index) => {
-  //       // does the header belong to this feature? else return null
-  //       const header = featureHeaders[feature] ? (
-  //         <h3 id={feature}>{featureHeaders[feature]}</h3>
-  //       ) : null;
-
-  //       return (
-  //         <React.Fragment key={`fragment-${feature}`}>
-  //           {header}
-  //           <div className="checkbox-container">
-  //             <input type="checkbox" id={feature} onChange={isChecked} />
-  //             <label htmlFor={feature} className="checkbox-label">
-  //               {feature
-  //                 .replace(/_/g, " ")
-  //                 .replace(/\b\w/g, (l) => l.toUpperCase())
-  //                 .replace(/ Pct/, "%")
-  //                 .replace(/Gt/, "Greater Than")
-  //                 .replace(/Lt/, "Less Than")
-  //                 .replace(/Income On/, "Income Spent On")
-  //                 .replace(/Dev Centre/, "Development Centre")
-  //                 .replace(/Phs Clinic/, "PHS Clinic")}
-  //             </label>
-  //           </div>
-  //         </React.Fragment>
-  //       );
-  //     });
-  // }
-
   function getFeatures() {
     const features =
       selectedMLOption === "community-level"
@@ -218,6 +172,7 @@ function Maps() {
         };
         setMapData(data);
         console.log(data);
+        printResults();
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
@@ -228,6 +183,25 @@ function Maps() {
         setLoading(false);
       });
   }
+
+  function printResults() {
+    console.log("Selected ML Option:", selectedMLOption);
+    console.log("Map Data:", mapData);
+
+    const jsonData = JSON.stringify(mapData, null, 2);
+
+    const blob = new Blob([jsonData], { type: "application/json" });
+
+    const anchor = document.createElement("a");
+
+    anchor.download = "mapData.json";
+
+    anchor.href = window.URL.createObjectURL(blob);
+
+    anchor.click();
+
+    window.URL.revokeObjectURL(anchor.href);
+}
 
   const communityFeatures = {
     count_of_population_in_private_households: false,
@@ -250,31 +224,6 @@ function Maps() {
     n_clusters: 3,
     random_state: 42,
   };
-  // {
-  //   "Demographic and Socioeconomic Indicators": [
-  //     "Count of Population in Private Households",
-  //     "Median Household Income",
-  //     "Count of Population Considered Low Income",
-  //     "Count of Private Households",
-  //     "Count of Owner Households",
-  //     "Count of Renter Households",
-  //     "Count of Private Households With Income",
-  //     "Count of Households with Less Than 30 Pct of Total Income on Shelter",
-  //     "Count of Households with More Than 30 Pct of Total Income on Shelter",
-  //     "Median Owner Monthly Shelter Cost",
-  //     "Median Renter Monthly Shelter Cost",
-  //   ],
-  //   "Housing Composition Condition": [
-  //     "Count of Households That Require Regular Maintenance Or Minor Repairs",
-  //     "Count of Households That Require Major Repairs",
-  //     "Count of Suitable Households",
-  //     "Count of Unsuitable Households",
-  //   ],
-  //   "Crime And Disorder": [
-  //     "Crime Count of Prior Year",
-  //     "Physical and Social Disorder Count of Prior Year",
-  //   ],
-  // };
 
   const postalFeatures = {
     median_assessed_value: true,
@@ -336,30 +285,6 @@ function Maps() {
       "service_count_within_1km",
     ],
   };
-
-  /*
-      "Property Assessments": ["Median Assessed Value", "Median Land Size"],
-    Schools: [
-      "Nearest Elementary School",
-      "Nearest Junior-Highschool",
-      "Nearest Senior-High School",
-      "School Count Within 1KM",
-    ],
-    "Community Services": [
-      "Nearest Community Centre",
-      "Nearest Attraction",
-      "Nearest Visitor Information Centre",
-      "Nearest Social Development Centre",
-      "Services Count Within 1KM",
-    ],
-    Amenities: [
-      "Nearest Hospital",
-      "Nearest Library",
-      "Nearest PHS Clinic",
-      "Nearest Court",
-    ],
-  };
-  */
 
   useEffect(() => {
     setLoading(true);
@@ -564,8 +489,12 @@ function Maps() {
           </div>
           <div>{getFeatures()}</div>
           <div id="ml-run-btn" className="ml-run-btn">
-            <button onClick={runML}> Run</button>
+            <button onClick={runML}>Run</button>
           </div>
+          <div>
+            <button onClick={printResults}>Print Results</button>
+          </div>
+        
         </div>
       </div>
       <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>
