@@ -219,4 +219,17 @@ left: -30px;
 
 .machine-learning-window h3 {
     font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.checkbox-label {
+    margin-left: 5px;
+    margin-top: -3px;
+  }
+
+.checkbox-container {
+    margin: 5px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: start;
 }

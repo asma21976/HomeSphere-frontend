@@ -9,6 +9,7 @@ import {
   faScroll,
   faMapMarkerAlt,
   faSquarePollVertical,
+  faCaretDown,
   faBars,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
@@ -90,18 +91,45 @@ function Maps() {
       selectedMLOption === "community-level"
         ? communityFeatures
         : postalFeatures;
+
+    const featureHeaders = {
+      count_of_population_in_private_households:
+        "Demographics and Socioeconomic Indicators",
+      community_crime_count: "Crime and Disorder",
+      count_of_households_that_require_maintenance: "Housing Condition",
+      median_assessed_value: "Property Assessments",
+      distance_to_closest_elementary: "Schools",
+      distance_to_closest_community_centre: "Amenities",
+    };
+
     return Object.entries(features)
-      .slice(0, -2)
-      .map(([feature]) => (
-        <div key={feature} style={{ margin: 5 }}>
-          <input type="checkbox" id={feature} onChange={isChecked} />
-          <label htmlFor={feature}>
-            {feature
-              .replace(/_/g, " ")
-              .replace(/\b\w/g, (l) => l.toUpperCase())}
-          </label>
-        </div>
-      ));
+      .slice(0, -2) // Adjust or remove slice if needed
+      .map(([feature], index) => {
+        // does the header belong to this feature? else return null
+        const header = featureHeaders[feature] ? (
+          <h3 id={feature}>{featureHeaders[feature]}</h3>
+        ) : null;
+
+        return (
+          <React.Fragment key={`fragment-${header}`}>
+            {header}
+            <div className="checkbox-container">
+              <input type="checkbox" id={feature} onChange={isChecked} />
+              <label htmlFor={feature} className="checkbox-label">
+                {feature
+                  .replace(/_/g, " ")
+                  .replace(/\b\w/g, (l) => l.toUpperCase())
+                  .replace(/ Pct/, "%")
+                  .replace(/Gt/, "Greater Than")
+                  .replace(/Lt/, "Less Than")
+                  .replace(/Income On/, "Income Spent On")
+                  .replace(/Dev Centre/, "Development Centre")
+                  .replace(/Phs Clinic/, "PHS Clinic")}
+              </label>
+            </div>
+          </React.Fragment>
+        );
+      });
   }
 
   function runML() {
@@ -128,41 +156,20 @@ function Maps() {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok at all");
+          throw new Error("Network response was not ok");
         }
         return response.json();
       })
       .then((data) => {
+        setMapData(data);
         console.log(data);
-        mapData = data; // Directly assign to the scoped variable without `this`.
-
-        // Initialize the map inside the then block to ensure mapData is loaded.
-        mapboxgl.accessToken =
-          "pk.eyJ1Ijoia2FhamJvbGFuZCIsImEiOiJjbG5kejg0emIwOGRyMmxsZW9vaXYyMGswIn0.Rhnj7A5aOZh0JBebF4WaFQ";
-
-        let map = new mapboxgl.Map({
-          container: "featureMap",
-          style: "mapbox://styles/mapbox/streets-v11",
-          center: [-98.5795, 39.8283],
-          zoom: 3,
-        });
-
-        map.on("load", function () {
-          // Use mapData directly here, as it's now properly scoped and assigned.
-          map.addSource("regions", {
-            type: "geojson",
-            data: mapData,
-          });
-        });
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
-        // Assume setError and setMapData are defined elsewhere to handle errors and state.
         setError(err.message);
         setMapData(null);
       })
       .finally(() => {
-        // Assuming setLoading is defined elsewhere to handle loading state.
         setLoading(false);
       });
   }
@@ -215,7 +222,68 @@ function Maps() {
   // };
 
   const postalFeatures = {
-    "Property Assessments": ["Median Assessed Value", "Median Land Size"],
+    median_assessed_value: true,
+    median_land_size: true,
+    distance_to_closest_elementary: true,
+    distance_to_closest_junior_high: true,
+    distance_to_closest_senior_high: true,
+    school_count_within_1km: true,
+    distance_to_closest_community_centre: true,
+    distance_to_closest_attraction: true,
+    distance_to_closest_visitor_info: true,
+    distance_to_closest_court: true,
+    distance_to_closest_library: true,
+    distance_to_closest_hospital: true,
+    distance_to_closest_phs_clinic: true,
+    distance_to_closest_social_dev_centre: true,
+    service_count_within_1km: true,
+    n_clusters: 3,
+    random_state: 42,
+  };
+
+  const headerSections = {
+    "Demographics and Socioeconomic Indicators": [
+      "count_of_population_in_private_households",
+      "median_household_income",
+      "count_of_population_considered_low_income",
+      "count_of_private_households",
+      "count_of_owner_households",
+      "count_of_renter_households",
+      "count_of_private_households_with_income",
+      "count_of_households_with_lt_30_pct_of_total_income_on_shelter",
+      "count_of_households_with_gt_30_pct_of_total_income_on_shelter",
+      "median_owner_monthly_shelter_cost",
+      "median_renter_monthly_shelter_cost",
+    ],
+    "Crime and Disorder": ["community_crime_count", "community_disorder_count"],
+    "Housing Condition": [
+      "count_of_households_that_require_maintenance",
+      "count_of_households_that_require_major_repairs",
+      "count_of_suitable_households",
+      "count_of_unsuitable_households",
+    ],
+    "Property Assessments": ["median_assessed_value", "median_land_size"],
+    Schools: [
+      "distance_to_closest_elementary",
+      "distance_to_closest_junior_high",
+      "distance_to_closest_senior_high",
+      "school_count_within_1km",
+    ],
+    Amenities: [
+      "distance_to_closest_community_centre",
+      "distance_to_closest_attraction",
+      "distance_to_closest_visitor_info",
+      "distance_to_closest_court",
+      "distance_to_closest_library",
+      "distance_to_closest_hospital",
+      "distance_to_closest_phs_clinic",
+      "distance_to_closest_social_dev_centre",
+      "service_count_within_1km",
+    ],
+  };
+
+  /*
+      "Property Assessments": ["Median Assessed Value", "Median Land Size"],
     Schools: [
       "Nearest Elementary School",
       "Nearest Junior-Highschool",
@@ -236,6 +304,7 @@ function Maps() {
       "Nearest Court",
     ],
   };
+  */
 
   useEffect(() => {
     setLoading(true);
