@@ -123,18 +123,36 @@ function Maps() {
       ));
   }
 
+  function fetchMLTypeInfo(mlType, features) {
+    return fetch(`https://home-sphere.ca/api/api/${mlType}_info`, {
+      method: "POST",
+      headers: {
+        AccessToken: "Kvwf<IQ5qV]nlPooW@",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(features),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .catch((err) => {
+        console.error("Error fetching mlType_info:", err);
+      });
+  }
+  
   function runML() {
     const mlType =
-      selectedMLOption === "community-level"
-        ? "kmeans_community"
-        : "kmeans_postal";
+      selectedMLOption === "community-level" ? "kmeans_community" : "kmeans_postal";
   
     const features =
-      selectedMLOption === "community-level"
-        ? communityFeatures
-        : postalFeatures;
+      selectedMLOption === "community-level" ? communityFeatures : postalFeatures;
   
-    let mapData = null;
+    setLoading(true);
+    setError(null);
+    setMapData(null);
   
     fetch(`https://home-sphere.ca/api/api/${mlType}`, {
       method: "POST",
@@ -151,30 +169,15 @@ function Maps() {
         return response.json();
       })
       .then((data) => {
-
-        fetch(`https://home-sphere.ca/api/api/${mlType}_info`, {
-          method: "POST",
-          headers: {
-            AccessToken: "Kvwf<IQ5qV]nlPooW@",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(features),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
+        fetchMLTypeInfo(mlType, features)
           .then((mlTypeInfo) => {
             console.log(mlTypeInfo);
-
             printResults(mlTypeInfo, mlType);
           })
           .catch((err) => {
             console.error("Error fetching mlType_info:", err);
           });
-        
+  
         data.layout = {
           ...data.layout,
           margin: { l: 0, r: 0, t: 0, b: 0 },
@@ -185,7 +188,6 @@ function Maps() {
               ...data.layout.coloraxis.colorbar,
               xanchor: "right",
               yanchor: "middle",
-  
               thickness: 10,
               x: 0.99,
               y: 0.5,
@@ -222,104 +224,19 @@ function Maps() {
       .finally(() => {
         setLoading(false);
       });
-
-    // fetch(`https://home-sphere.ca/api/api/${mlType}`, {
-    //   method: "POST",
-    //   headers: {
-    //     AccessToken: "Kvwf<IQ5qV]nlPooW@",
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(features),
-    // })
-    //   .then((response) => {
-    //     if (!response.ok) {
-    //       throw new Error("Network response was not ok");
-    //     }
-    //     return response.json();
-    //   })
-    //   .then((data) => {
-    //     data.layout = {
-    //       ...data.layout,
-    //       margin: { l: 0, r: 0, t: 0, b: 0 },
-    //       title: "",
-    //       coloraxis: {
-    //         ...data.layout.coloraxis,
-    //         colorbar: {
-    //           ...data.layout.coloraxis.colorbar,
-    //           xanchor: "right",
-    //           yanchor: "middle",
-
-    //           thickness: 10,
-    //           x: 0.99,
-    //           y: 0.5,
-    //           len: 0.8,
-    //           width: 0.1,
-    //           title: {
-    //             ...data.layout.coloraxis.colorbar.title,
-    //             side: "right",
-    //             font: {
-    //               family: "Arial Black",
-    //               size: 14,
-    //             },
-    //           },
-    //         },
-    //         colorscale: "Rainbow",
-    //       },
-    //       mapbox: {
-    //         ...data.layout.mapbox,
-    //         zoom: 11,
-    //         center: {
-    //           lat: 51.115,
-    //           lon: -113.954,
-    //         },
-    //       },
-    //     };
-    //     setMapData(data);
-    //     console.log(data);
-    //     printResults();
-    //   })
-    //   .catch((err) => {
-    //     console.error("Error fetching data:", err);
-    //     setError(err.message);
-    //     setMapData(null);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   }
-  
-
-  // function printResults(mlTypeInfo, mlType) {
-  //   const blob = new Blob([JSON.stringify(mlTypeInfo, null, 2)], { type: "application/json" });
-  
-  //   const anchor = document.createElement("a");
-  
-  //   anchor.download = `${mlType}_info.json`;
-  
-  //   anchor.href = window.URL.createObjectURL(blob);
-  
-  //   anchor.click();
-  
-  //   window.URL.revokeObjectURL(anchor.href);
-  // }
   
   function printResults(mlTypeInfo, mlType) {
     const data = JSON.parse(mlTypeInfo);
-    
     const formattedJson = JSON.stringify(data, null, 2);
-    
     const blob = new Blob([formattedJson], { type: "application/json" });
-  
     const anchor = document.createElement("a");
- 
     anchor.download = `${mlType}_info.json`;
     anchor.href = window.URL.createObjectURL(blob);
     anchor.click();
     window.URL.revokeObjectURL(anchor.href);
-}
-
+  }
   
-
   const communityFeatures = {
     count_of_population_in_private_households: false,
     median_household_income: false,
@@ -610,9 +527,11 @@ function Maps() {
           <div id="ml-run-btn" className="ml-run-btn">
             <button onClick={runML}>Run</button>
           </div>
-          {/* <div>
+
+          <div id="ml-results-btn" className="ml-results-btn">
             <button onClick={printResults}>Print Results</button>
-          </div> */}
+          </div>
+
         </div>
       </div>
       <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>
