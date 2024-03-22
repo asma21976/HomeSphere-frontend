@@ -29,6 +29,8 @@ function Maps() {
   const [error, setError] = useState(null);
   const [collapseLeft, setCollapseLeft] = useState(false);
   const [selectedMLOption, setSelectedMLOption] = useState("community-level");
+  const [viewResults, setViewResults] = useState(false);
+  const [MLResults, setMLResults] = useState({});
 
   const isSelected = (pathSegment) => {
     const currentPath = location.pathname.split("/").pop();
@@ -142,18 +144,24 @@ function Maps() {
         console.error("Error fetching mlType_info:", err);
       });
   }
-  
+
   function runML() {
     const mlType =
-      selectedMLOption === "community-level" ? "kmeans_community" : "kmeans_postal";
-  
+      selectedMLOption === "community-level"
+        ? "kmeans_community"
+        : "kmeans_postal";
+
     const features =
-      selectedMLOption === "community-level" ? communityFeatures : postalFeatures;
-  
+      selectedMLOption === "community-level"
+        ? communityFeatures
+        : postalFeatures;
+
+    setViewResults(true);
+
     setLoading(true);
     setError(null);
     setMapData(null);
-  
+
     fetch(`https://home-sphere.ca/api/api/${mlType}`, {
       method: "POST",
       headers: {
@@ -172,12 +180,13 @@ function Maps() {
         fetchMLTypeInfo(mlType, features)
           .then((mlTypeInfo) => {
             console.log(mlTypeInfo);
-            printResults(mlTypeInfo, mlType);
+            setMLResults(mlTypeInfo);
+            // printResults(mlTypeInfo, mlType);
           })
           .catch((err) => {
             console.error("Error fetching mlType_info:", err);
           });
-  
+
         data.layout = {
           ...data.layout,
           margin: { l: 0, r: 0, t: 0, b: 0 },
@@ -225,18 +234,18 @@ function Maps() {
         setLoading(false);
       });
   }
-  
-  function printResults(mlTypeInfo, mlType) {
-    const data = JSON.parse(mlTypeInfo);
+
+  function printResults() {
+    const data = JSON.parse(MLResults);
     const formattedJson = JSON.stringify(data, null, 2);
     const blob = new Blob([formattedJson], { type: "application/json" });
     const anchor = document.createElement("a");
-    anchor.download = `${mlType}_info.json`;
+    anchor.download = `${selectedMLOption}_info.json`;
     anchor.href = window.URL.createObjectURL(blob);
     anchor.click();
     window.URL.revokeObjectURL(anchor.href);
   }
-  
+
   const communityFeatures = {
     count_of_population_in_private_households: false,
     median_household_income: false,
@@ -529,9 +538,13 @@ function Maps() {
           </div>
 
           <div id="ml-results-btn" className="ml-results-btn">
-            <button onClick={printResults}>Print Results</button>
+            <button
+              onClick={printResults}
+              className={`${viewResults ? "" : "hidden"}`}
+            >
+              Print Results
+            </button>
           </div>
-
         </div>
       </div>
       <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>
