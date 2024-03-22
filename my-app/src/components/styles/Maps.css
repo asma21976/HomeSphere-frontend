@@ -71,6 +71,7 @@ display: grid;
 
 .slider-component {
     color: white;
+    margin-bottom: -5px;
 }
 
 .screen-message {

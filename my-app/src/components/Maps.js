@@ -137,7 +137,7 @@ function Maps() {
     // This variable is now scoped to runML and can be accessed within nested functions.
     let mapData = null;
 
-    fetch(`https://home-sphere.ca/api/api/${mlType}`, {
+    fetch(`https://home-sphere.ca/api/api/${mlType}_info`, {
       method: "POST",
       headers: {
         AccessToken: "Kvwf<IQ5qV]nlPooW@",
@@ -152,54 +152,72 @@ function Maps() {
         return response.json();
       })
       .then((data) => {
-        data.layout = {
-          ...data.layout,
-          margin: { l: 0, r: 0, t: 0, b: 0 },
-          title: "",
-          coloraxis: {
-            ...data.layout.coloraxis,
-            colorbar: {
-              ...data.layout.coloraxis.colorbar,
-              xanchor: "right",
-              yanchor: "middle",
-
-              thickness: 10,
-              x: 0.99,
-              y: 0.5,
-              len: 0.8,
-              width: 0.1,
-              title: {
-                ...data.layout.coloraxis.colorbar.title,
-                side: "right",
-                font: {
-                  family: "Arial Black",
-                  size: 14,
-                },
-              },
-            },
-            colorscale: "Rainbow",
-          },
-          mapbox: {
-            ...data.layout.mapbox,
-            zoom: 11,
-            center: {
-              lat: 51.115,
-              lon: -113.954,
-            },
-          },
-        };
-        setMapData(data);
         console.log(data);
-        printResults();
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-        setError(err.message);
-        setMapData(null);
-      })
-      .finally(() => {
-        setLoading(false);
       });
+
+    // fetch(`https://home-sphere.ca/api/api/${mlType}`, {
+    //   method: "POST",
+    //   headers: {
+    //     AccessToken: "Kvwf<IQ5qV]nlPooW@",
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(features),
+    // })
+    //   .then((response) => {
+    //     if (!response.ok) {
+    //       throw new Error("Network response was not ok");
+    //     }
+    //     return response.json();
+    //   })
+    //   .then((data) => {
+    //     data.layout = {
+    //       ...data.layout,
+    //       margin: { l: 0, r: 0, t: 0, b: 0 },
+    //       title: "",
+    //       coloraxis: {
+    //         ...data.layout.coloraxis,
+    //         colorbar: {
+    //           ...data.layout.coloraxis.colorbar,
+    //           xanchor: "right",
+    //           yanchor: "middle",
+
+    //           thickness: 10,
+    //           x: 0.99,
+    //           y: 0.5,
+    //           len: 0.8,
+    //           width: 0.1,
+    //           title: {
+    //             ...data.layout.coloraxis.colorbar.title,
+    //             side: "right",
+    //             font: {
+    //               family: "Arial Black",
+    //               size: 14,
+    //             },
+    //           },
+    //         },
+    //         colorscale: "Rainbow",
+    //       },
+    //       mapbox: {
+    //         ...data.layout.mapbox,
+    //         zoom: 11,
+    //         center: {
+    //           lat: 51.115,
+    //           lon: -113.954,
+    //         },
+    //       },
+    //     };
+    //     setMapData(data);
+    //     console.log(data);
+    //     printResults();
+    //   })
+    //   .catch((err) => {
+    //     console.error("Error fetching data:", err);
+    //     setError(err.message);
+    //     setMapData(null);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   }
 
   function printResults() {
@@ -493,7 +511,7 @@ function Maps() {
 
           <div id="slider" className="slider">
             <h3>Number of Clusters (Categories):</h3>
-            <Box sx={{ width: 260 }}>
+            <Box sx={{}}>
               <Slider
                 defaultValue={3}
                 getAriaValueText={valuetext}
