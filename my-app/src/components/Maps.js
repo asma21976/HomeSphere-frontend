@@ -86,50 +86,69 @@ function Maps() {
     console.log(numClusters);
   };
 
+  // function getFeatures() {
+  //   const features =
+  //     selectedMLOption === "community-level"
+  //       ? communityFeatures
+  //       : postalFeatures;
+
+  //   const featureHeaders = {
+  //     count_of_population_in_private_households:
+  //       "Demographics and Socioeconomic Indicators",
+  //     community_crime_count: "Crime and Disorder",
+  //     count_of_households_that_require_maintenance: "Housing Condition",
+  //     median_assessed_value: "Property Assessments",
+  //     distance_to_closest_elementary: "Schools",
+  //     distance_to_closest_community_centre: "Amenities",
+  //   };
+
+  //   return Object.entries(features)
+  //     .slice(0, -2) // Adjust or remove slice if needed
+  //     .map(([feature], index) => {
+  //       // does the header belong to this feature? else return null
+  //       const header = featureHeaders[feature] ? (
+  //         <h3 id={feature}>{featureHeaders[feature]}</h3>
+  //       ) : null;
+
+  //       return (
+  //         <React.Fragment key={`fragment-${feature}`}>
+  //           {header}
+  //           <div className="checkbox-container">
+  //             <input type="checkbox" id={feature} onChange={isChecked} />
+  //             <label htmlFor={feature} className="checkbox-label">
+  //               {feature
+  //                 .replace(/_/g, " ")
+  //                 .replace(/\b\w/g, (l) => l.toUpperCase())
+  //                 .replace(/ Pct/, "%")
+  //                 .replace(/Gt/, "Greater Than")
+  //                 .replace(/Lt/, "Less Than")
+  //                 .replace(/Income On/, "Income Spent On")
+  //                 .replace(/Dev Centre/, "Development Centre")
+  //                 .replace(/Phs Clinic/, "PHS Clinic")}
+  //             </label>
+  //           </div>
+  //         </React.Fragment>
+  //       );
+  //     });
+  // }
+
   function getFeatures() {
     const features =
       selectedMLOption === "community-level"
         ? communityFeatures
         : postalFeatures;
-
-    const featureHeaders = {
-      count_of_population_in_private_households:
-        "Demographics and Socioeconomic Indicators",
-      community_crime_count: "Crime and Disorder",
-      count_of_households_that_require_maintenance: "Housing Condition",
-      median_assessed_value: "Property Assessments",
-      distance_to_closest_elementary: "Schools",
-      distance_to_closest_community_centre: "Amenities",
-    };
-
     return Object.entries(features)
-      .slice(0, -2) // Adjust or remove slice if needed
-      .map(([feature], index) => {
-        // does the header belong to this feature? else return null
-        const header = featureHeaders[feature] ? (
-          <h3 id={feature}>{featureHeaders[feature]}</h3>
-        ) : null;
-
-        return (
-          <React.Fragment key={`fragment-${header}`}>
-            {header}
-            <div className="checkbox-container">
-              <input type="checkbox" id={feature} onChange={isChecked} />
-              <label htmlFor={feature} className="checkbox-label">
-                {feature
-                  .replace(/_/g, " ")
-                  .replace(/\b\w/g, (l) => l.toUpperCase())
-                  .replace(/ Pct/, "%")
-                  .replace(/Gt/, "Greater Than")
-                  .replace(/Lt/, "Less Than")
-                  .replace(/Income On/, "Income Spent On")
-                  .replace(/Dev Centre/, "Development Centre")
-                  .replace(/Phs Clinic/, "PHS Clinic")}
-              </label>
-            </div>
-          </React.Fragment>
-        );
-      });
+      .slice(0, -2)
+      .map(([feature]) => (
+        <div key={feature} className="checkbox-container">
+          <input type="checkbox" id={feature} onChange={isChecked} />
+          <label htmlFor={feature} className="checkbox-label">
+            {feature
+              .replace(/_/g, " ")
+              .replace(/\b\w/g, (l) => l.toUpperCase())}
+          </label>
+        </div>
+      ));
   }
 
   function runML() {
@@ -161,6 +180,42 @@ function Maps() {
         return response.json();
       })
       .then((data) => {
+        data.layout = {
+          ...data.layout,
+          margin: { l: 0, r: 0, t: 0, b: 0 },
+          title: "",
+          coloraxis: {
+            ...data.layout.coloraxis,
+            colorbar: {
+              ...data.layout.coloraxis.colorbar,
+              xanchor: "right",
+              yanchor: "middle",
+
+              thickness: 10,
+              x: 0.99,
+              y: 0.5,
+              len: 0.8,
+              width: 0.1,
+              title: {
+                ...data.layout.coloraxis.colorbar.title,
+                side: "right",
+                font: {
+                  family: "Arial Black",
+                  size: 14,
+                },
+              },
+            },
+            colorscale: "Rainbow",
+          },
+          mapbox: {
+            ...data.layout.mapbox,
+            zoom: 11,
+            center: {
+              lat: 51.115,
+              lon: -113.954,
+            },
+          },
+        };
         setMapData(data);
         console.log(data);
       })
