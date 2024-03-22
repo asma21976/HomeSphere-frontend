@@ -289,21 +289,35 @@ function Maps() {
   }
   
 
+  // function printResults(mlTypeInfo, mlType) {
+  //   const blob = new Blob([JSON.stringify(mlTypeInfo, null, 2)], { type: "application/json" });
+  
+  //   const anchor = document.createElement("a");
+  
+  //   anchor.download = `${mlType}_info.json`;
+  
+  //   anchor.href = window.URL.createObjectURL(blob);
+  
+  //   anchor.click();
+  
+  //   window.URL.revokeObjectURL(anchor.href);
+  // }
+  
   function printResults(mlTypeInfo, mlType) {
-    const blob = new Blob([JSON.stringify(mlTypeInfo, null, 2)], { type: "application/json" });
+    const data = JSON.parse(mlTypeInfo);
+    
+    const formattedJson = JSON.stringify(data, null, 2);
+    
+    const blob = new Blob([formattedJson], { type: "application/json" });
   
     const anchor = document.createElement("a");
-  
+ 
     anchor.download = `${mlType}_info.json`;
-  
     anchor.href = window.URL.createObjectURL(blob);
-  
     anchor.click();
-  
     window.URL.revokeObjectURL(anchor.href);
-  }
-  
-  
+}
+
   
 
   const communityFeatures = {
