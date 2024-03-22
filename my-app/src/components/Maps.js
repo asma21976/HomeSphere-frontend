@@ -596,9 +596,9 @@ function Maps() {
           <div id="ml-run-btn" className="ml-run-btn">
             <button onClick={runML}>Run</button>
           </div>
-          <div>
+          {/* <div>
             <button onClick={printResults}>Print Results</button>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>
