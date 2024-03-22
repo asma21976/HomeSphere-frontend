@@ -9,7 +9,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/maps/:mapType" element={<Maps />} />
-      <Route path="/maps/:mL" element={<MLMap />} />
+      {/* <Route path="/maps/:mL" element={<MLMap />} /> */}
     </Routes>
   );
 }

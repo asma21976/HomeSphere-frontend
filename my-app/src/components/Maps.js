@@ -17,13 +17,20 @@ import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import Modal from "@mui/material/Modal";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 function Maps() {
   const { mapType } = useParams();
   const location = useLocation();
   const [showMLWindow, setShowMLWindow] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const [lastButtonExpanded, setLastButtonExpanded] = useState(false);
+  // const [lastButtonExpanded, setLastButtonExpanded] = useState(false);
   const [mapData, setMapData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -31,6 +38,43 @@ function Maps() {
   const [selectedMLOption, setSelectedMLOption] = useState("community-level");
   const [viewResults, setViewResults] = useState(false);
   const [MLResults, setMLResults] = useState({});
+  const [showResultsModal, setShowResultsModal] = useState(false);
+  const [MLModalResults, setMLModalResults] = useState([]);
+
+  const handleOpenResultsModal = () => {
+    setShowResultsModal(true);
+  };
+
+  const handleCloseResultsModal = () => {
+    setShowResultsModal(false);
+  };
+
+  const renderTableHeaders = () => {
+    if (MLModalResults.length > 0) {
+      const headers = Object.keys(MLModalResults[0]);
+      return (
+        <TableRow>
+          {headers.map((header, index) => (
+            <TableCell key={index}>{header}</TableCell>
+          ))}
+        </TableRow>
+      );
+    }
+    return null;
+  };
+
+  const renderTableRows = () => {
+    return MLModalResults.map((row, index) => (
+      <TableRow key={index}>
+        {Object.values(row).map((value, colIndex) => {
+          // Check if the value is not null or undefined before calling toString
+          const displayValue =
+            value !== null && value !== undefined ? value.toString() : "";
+          return <TableCell key={colIndex}>{displayValue}</TableCell>;
+        })}
+      </TableRow>
+    ));
+  };
 
   const isSelected = (pathSegment) => {
     const currentPath = location.pathname.split("/").pop();
@@ -45,9 +89,9 @@ function Maps() {
     setShowMLWindow(!showMLWindow);
   };
 
-  const handleLastButtonToggle = () => {
-    setLastButtonExpanded(!lastButtonExpanded);
-  };
+  // const handleLastButtonToggle = () => {
+  //   setLastButtonExpanded(!lastButtonExpanded);
+  // };
 
   function valuetext(value) {
     return `${value}°C`;
@@ -126,7 +170,7 @@ function Maps() {
   }
 
   function fetchMLTypeInfo(mlType, features) {
-    return fetch(`https://home-sphere.ca/api/api/${mlType}_info`, {
+    return fetch(`https://home-sphere.ca/api/api/${mlType}_info_full`, {
       method: "POST",
       headers: {
         AccessToken: "Kvwf<IQ5qV]nlPooW@",
@@ -181,6 +225,8 @@ function Maps() {
           .then((mlTypeInfo) => {
             console.log(mlTypeInfo);
             setMLResults(mlTypeInfo);
+            const parsedData = JSON.parse(mlTypeInfo);
+            setMLModalResults(parsedData);
             // printResults(mlTypeInfo, mlType);
           })
           .catch((err) => {
@@ -333,6 +379,11 @@ function Maps() {
     setLoading(true);
     setError(null);
     setMapData(null);
+    if (isSelected("algorithm")) {
+      setShowMLWindow(true);
+    } else {
+      setShowMLWindow(false);
+    }
 
     fetch(`https://home-sphere.ca/api/maps/${mapType}`, {
       headers: {
@@ -341,7 +392,7 @@ function Maps() {
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          throw new Error("Please Run the Algorithm to View Results");
         }
         return response.json();
       })
@@ -395,7 +446,7 @@ function Maps() {
     <div>
       <div
         id="sidebar"
-        className={`sidebar ${!lastButtonExpanded ? "shortened" : ""} ${
+        className={`sidebar ${!showMLWindow ? "shortened" : ""} ${
           collapseLeft ? "hidden" : ""
         }`}
       >
@@ -465,22 +516,20 @@ function Maps() {
               />
             </button>
           </Link>
-          <button
-            id="machine-learning-button"
-            className={`menu-button ${
-              isSelected("house_price_map") ? "selected" : "map-feature-button"
-            }`}
-            onClick={() => {
-              toggleMLWindow();
-              handleLastButtonToggle();
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faSquarePollVertical}
-              title="Machine Learning Housing Analysis"
-              className="fa-svg-icon"
-            />
-          </button>
+          <Link to="/maps/algorithm">
+            <button
+              id="machine-learning-button"
+              className={`menu-button ${
+                isSelected("algorithm") ? "selected" : "map-feature-button"
+              }`}
+            >
+              <FontAwesomeIcon
+                icon={faSquarePollVertical}
+                title="Machine Learning Housing Analysis"
+                className="fa-svg-icon"
+              />
+            </button>
+          </Link>
         </div>
         <div
           id="machine-learning-window"
@@ -537,13 +586,12 @@ function Maps() {
             <button onClick={runML}>Run</button>
           </div>
 
-          <div id="ml-results-btn" className="ml-results-btn">
-            <button
-              onClick={printResults}
-              className={`${viewResults ? "" : "hidden"}`}
-            >
-              Print Results
-            </button>
+          <div
+            id="ml-results-btn"
+            className={`ml-results-btn ${viewResults ? "" : "hidden"}`}
+          >
+            <button onClick={handleOpenResultsModal}>View Results</button>
+            <button onClick={printResults}>Print Results</button>
           </div>
         </div>
       </div>
@@ -561,6 +609,22 @@ function Maps() {
           />
         </button>
       </div>
+      <Modal
+        open={showResultsModal}
+        onClose={handleCloseResultsModal}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <Paper style={{ maxHeight: 500, overflow: "auto" }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>{renderTableHeaders()}</TableHead>
+            <TableBody>{renderTableRows()}</TableBody>
+          </Table>
+        </Paper>
+      </Modal>
       {loading && <div className="screen-message">Loading...</div>}
       {error && (
         <div className="screen-message">
