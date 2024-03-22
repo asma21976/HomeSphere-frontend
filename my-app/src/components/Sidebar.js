@@ -459,22 +459,24 @@ const Sidebar = () => {
               />
             </button>
           </Link>
-          <button
-            id="machine-learning-button"
-            className={`menu-button ${
-              isSelected("house_price_map") ? "selected" : "map-feature-button"
-            }`}
-            onClick={() => {
-              toggleMLWindow();
-              handleLastButtonToggle();
-            }}
-          >
-            <FontAwesomeIcon
-              icon={faSquarePollVertical}
-              title="Machine Learning Housing Analysis"
-              className="fa-svg-icon"
-            />
-          </button>
+          <Link to="/maps/algorithm">
+            <button
+              id="machine-learning-button"
+              className={`menu-button ${
+                isSelected("algorithm") ? "selected" : "map-feature-button"
+              }`}
+              onClick={() => {
+                toggleMLWindow();
+                handleLastButtonToggle();
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faSquarePollVertical}
+                title="Machine Learning Housing Analysis"
+                className="fa-svg-icon"
+              />
+            </button>
+          </Link>
         </div>
         <div
           id="machine-learning-window"
