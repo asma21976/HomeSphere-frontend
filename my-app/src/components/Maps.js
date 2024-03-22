@@ -128,15 +128,14 @@ function Maps() {
       selectedMLOption === "community-level"
         ? "kmeans_community"
         : "kmeans_postal";
-
+  
     const features =
       selectedMLOption === "community-level"
         ? communityFeatures
         : postalFeatures;
-
-    // This variable is now scoped to runML and can be accessed within nested functions.
+  
     let mapData = null;
-
+  
     fetch(`https://home-sphere.ca/api/api/${mlType}`, {
       method: "POST",
       headers: {
@@ -152,6 +151,30 @@ function Maps() {
         return response.json();
       })
       .then((data) => {
+
+        fetch(`https://home-sphere.ca/api/api/${mlType}_info`, {
+          method: "POST",
+          headers: {
+            AccessToken: "Kvwf<IQ5qV]nlPooW@",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(features),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((mlTypeInfo) => {
+            console.log(mlTypeInfo);
+
+            printResults(mlTypeInfo, mlType);
+          })
+          .catch((err) => {
+            console.error("Error fetching mlType_info:", err);
+          });
+        
         data.layout = {
           ...data.layout,
           margin: { l: 0, r: 0, t: 0, b: 0 },
@@ -162,7 +185,7 @@ function Maps() {
               ...data.layout.coloraxis.colorbar,
               xanchor: "right",
               yanchor: "middle",
-
+  
               thickness: 10,
               x: 0.99,
               y: 0.5,
@@ -190,7 +213,6 @@ function Maps() {
         };
         setMapData(data);
         console.log(data);
-        printResults();
       })
       .catch((err) => {
         console.error("Error fetching data:", err);
@@ -201,25 +223,24 @@ function Maps() {
         setLoading(false);
       });
   }
+  
 
-  function printResults() {
-    console.log("Selected ML Option:", selectedMLOption);
-    console.log("Map Data:", mapData);
-
-    const jsonData = JSON.stringify(mapData, null, 2);
-
-    const blob = new Blob([jsonData], { type: "application/json" });
-
+  function printResults(mlTypeInfo, mlType) {
+    const blob = new Blob([JSON.stringify(mlTypeInfo, null, 2)], { type: "application/json" });
+  
     const anchor = document.createElement("a");
-
-    anchor.download = "mapData.json";
-
+  
+    anchor.download = `${mlType}_info.json`;
+  
     anchor.href = window.URL.createObjectURL(blob);
-
+  
     anchor.click();
-
+  
     window.URL.revokeObjectURL(anchor.href);
   }
+  
+  
+  
 
   const communityFeatures = {
     count_of_population_in_private_households: false,
