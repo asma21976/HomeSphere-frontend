@@ -1,6 +1,8 @@
 :root {
-    --sidebar-width: 250px;
+    --sidebar-width: 15%;
   }
+
+
 
 .menu-button {
     margin-top: 18px;
@@ -233,3 +235,4 @@ left: -30px;
     display: flex;
     align-items: start;
 }
+

@@ -86,6 +86,15 @@ function Maps() {
     console.log(numClusters);
   };
 
+  function getHeader(feature) {
+    for (const header in headerSections) {
+      if (headerSections[header][0] === feature) {
+        return <h3 key={header}>{header}</h3>;
+      }
+    }
+    return null;
+  }
+
   function getFeatures() {
     const features =
       selectedMLOption === "community-level"
@@ -94,14 +103,23 @@ function Maps() {
     return Object.entries(features)
       .slice(0, -2)
       .map(([feature]) => (
-        <div key={feature} className="checkbox-container">
-          <input type="checkbox" id={feature} onChange={isChecked} />
-          <label htmlFor={feature} className="checkbox-label">
-            {feature
-              .replace(/_/g, " ")
-              .replace(/\b\w/g, (l) => l.toUpperCase())}
-          </label>
-        </div>
+        <React.Fragment>
+          {getHeader(feature)}
+          <div key={feature} className="checkbox-container">
+            <input type="checkbox" id={feature} onChange={isChecked} />
+            <label htmlFor={feature} className="checkbox-label">
+              {feature
+                .replace(/_/g, " ")
+                .replace(/\b\w/g, (l) => l.toUpperCase())
+                .replace(/ Pct/, "%")
+                .replace(/Gt/, "Greater Than")
+                .replace(/Lt/, "Less Than")
+                .replace(/Income On/, "Income Spent On")
+                .replace(/Dev Centre/, "Development Centre")
+                .replace(/Phs Clinic/, "PHS Clinic")}
+            </label>
+          </div>
+        </React.Fragment>
       ));
   }
 
@@ -201,7 +219,7 @@ function Maps() {
     anchor.click();
 
     window.URL.revokeObjectURL(anchor.href);
-}
+  }
 
   const communityFeatures = {
     count_of_population_in_private_households: false,
@@ -452,6 +470,7 @@ function Maps() {
                 value="community-level"
                 checked={selectedMLOption === "community-level"}
                 onChange={handleMLOptionChange}
+                className="radio"
               />
               <label htmlFor="community-level-option">Community Level</label>
             </p>
@@ -464,6 +483,7 @@ function Maps() {
                 value="postal-code-level"
                 checked={selectedMLOption === "postal-code-level"}
                 onChange={handleMLOptionChange}
+                className="radio"
               />
               <label htmlFor="postal-code-level-option">
                 Sub-Community Level
@@ -472,8 +492,8 @@ function Maps() {
           </form>
 
           <div id="slider" className="slider">
-            <h3>Number of categories:</h3>
-            <Box sx={{ width: 200 }}>
+            <h3>Number of Clusters (Categories):</h3>
+            <Box sx={{ width: 260 }}>
               <Slider
                 defaultValue={3}
                 getAriaValueText={valuetext}
@@ -481,7 +501,7 @@ function Maps() {
                 shiftStep={1}
                 step={1}
                 min={1}
-                max={30}
+                max={20}
                 className="slider-component"
                 onChange={clusterCount}
               />
@@ -494,7 +514,6 @@ function Maps() {
           <div>
             <button onClick={printResults}>Print Results</button>
           </div>
-        
         </div>
       </div>
       <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>
