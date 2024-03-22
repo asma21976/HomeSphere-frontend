@@ -396,6 +396,7 @@ const Sidebar = () => {
           <Link to="/maps/congestion">
             <button
               id="population-button"
+              onClick={() => setShowMLWindow(false)}
               className={`menu-button ${
                 isSelected("congestion") ? "selected" : "map-feature-button"
               }`}
@@ -410,6 +411,7 @@ const Sidebar = () => {
           <Link to="/maps/vacancy_per_community">
             <button
               id="vacancy-button"
+              onClick={() => setShowMLWindow(false)}
               className={`menu-button ${
                 isSelected("vacancy_per_community")
                   ? "selected"
@@ -426,6 +428,7 @@ const Sidebar = () => {
           <Link to="/maps/housing_development_zone">
             <button
               id="permits-button"
+              onClick={() => setShowMLWindow(false)}
               className={`menu-button ${
                 isSelected("housing_development_zone")
                   ? "selected"
@@ -442,6 +445,7 @@ const Sidebar = () => {
           <Link to="/maps/property_value_per_community">
             <button
               id="pricing-button"
+              onClick={() => setShowMLWindow(false)}
               className={`menu-button ${
                 isSelected("property_value_per_community")
                   ? "selected"
