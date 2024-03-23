@@ -582,17 +582,15 @@ function Maps() {
             </Box>
           </div>
           <div>{getFeatures()}</div>
-          <div id="ml-run-btn" className="ml-run-btn">
-            <button onClick={runML}>Run</button>
-          </div>
+          <div id="ml-run-btn" className="ml-btn">
+          <button onClick={runML}>Run</button>
+        </div>
 
-          <div
-            id="ml-results-btn"
-            className={`ml-results-btn ${viewResults ? "" : "hidden"}`}
-          >
-            <button onClick={handleOpenResultsModal}>View Results</button>
-            <button onClick={printResults}>Print Results</button>
-          </div>
+        <div id="ml-results-btn" className={`ml-btn ${viewResults ? "" : "hidden"}`}>
+          <button onClick={handleOpenResultsModal}>View Results</button>
+          <button onClick={printResults}>Print Results</button>
+        </div>
+
         </div>
       </div>
       <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>

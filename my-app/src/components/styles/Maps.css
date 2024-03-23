@@ -41,6 +41,7 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: 25px;
+    padding-bottom: 36px;
 }
 
   .hidden {
@@ -221,14 +222,21 @@ left: -30px;
 }
 
 .machine-learning-window h3 {
-    font-size: 13px;
+    font-size: 15px;
     margin-bottom: 0px;
+    font-family: math;
+    margin-top: 25px;
 }
 
 .checkbox-label {
     margin-left: 5px;
     margin-top: -3px;
-  }
+    font-family: math;
+    font-size: 13px;
+    position: relative;
+    top: 4px;
+    color: black;
+}
 
 .checkbox-container {
    display: flex;
@@ -238,15 +246,44 @@ left: -30px;
 }
 .machine-learning-window form p {
     font-size: 14px;
-    font-family: inter;
+    font-family: math;
     text-align: left;
     bottom: 3px;
     position: relative;
-    left: 6px;
+    left: 0px;
 }
 
 .machine-learning-window form p label {
     bottom: 2px;
     position: relative;
     left: 3px;
+    font-family: math;
+    font-size: 15px;
 }
+
+.ml-btn button {
+    background-color: #3846cb;
+    border: none;
+    color: white;
+    position: relative;
+    padding: 6px 14px;
+    text-align: center;
+    font-family: math;
+    right: 5px;
+    display: flex;
+    top: 12px;
+    font-weight: 600;
+    font-size: 12px;
+    margin: 4px 2px;
+    cursor: pointer;
+    margin-bottom: 7px;
+    border-radius: 22px
+}
+  
+/*   
+  .ml-btn:hover button{
+    background-color: #69696d; 
+  } */
+
+  
+  
