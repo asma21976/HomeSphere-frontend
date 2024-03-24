@@ -30,7 +30,6 @@ function Maps() {
   const location = useLocation();
   const [showMLWindow, setShowMLWindow] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  // const [lastButtonExpanded, setLastButtonExpanded] = useState(false);
   const [mapData, setMapData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -40,7 +39,7 @@ function Maps() {
   const [MLResults, setMLResults] = useState({});
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [MLModalResults, setMLModalResults] = useState([]);
-
+ 
   const handleOpenResultsModal = () => {
     setShowResultsModal(true);
   };
@@ -119,6 +118,7 @@ function Maps() {
     console.log(features);
     console.log(key);
   };
+  
 
   const clusterCount = (event) => {
     const features =
@@ -560,7 +560,7 @@ function Maps() {
                 className="radio"
               />
               <label htmlFor="postal-code-level-option">
-                Sub-Community Level
+                Postal Code Level
               </label>
             </p>
           </form>
