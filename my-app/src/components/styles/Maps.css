@@ -291,7 +291,7 @@ color: #3846cb;
       width: 100%;
       top: 0;
       left: 0;
-      margin-top: 0; /* Reset margin to align title at the very top */
+      margin-top: 0;
       background-color: #3846cb;
       color: white;
       text-align: center;
@@ -304,28 +304,28 @@ color: #3846cb;
       position: fixed;
       left: 0;
       border-bottom-right-radius: 0;
-      border-top-left-radius: 7px; /* Added for aesthetic consistency */
+      border-top-left-radius: 7px;
       z-index: 2;
     }
     #buttons-container {
       overflow: auto;
-      position: fixed; /* Fix the position relative to the viewport */
-      bottom: 0; /* Align to the bottom of the viewport */
+      position: fixed;
+      bottom: 0;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      flex-direction: row; /* Align buttons in a row */
-      justify-content: center; /* Center buttons horizontally */
-      padding-bottom: 12px; /* Adjust padding as needed */
-      z-index: 5; /* Ensure it's above other content */
+      flex-direction: row;
+      justify-content: center;
+      padding-bottom: 12px;
+      z-index: 5;
       background: white;
       width: 99%;
     }
   
     #buttons-container p {
-      text-align: center; /* Center-align text within each button */
-      margin: 5px; /* Add margin for spacing around buttons */
-      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      text-align: center;
+      margin: 5px;
+      box-sizing: border-box;
     }
     #buttons-container > a > button {
       margin-left:10px;
@@ -334,8 +334,8 @@ color: #3846cb;
 
     .machine-learning-window {
       position: relative;
-      top: var(--header-height-mobile); /* Adjust the value to the height of the buttons container */
-      height: calc(100vh - var(--header-height-mobile)); /* Adjust the height */
+      top: var(--header-height-mobile);
+      height: calc(100vh - var(--header-height-mobile));
       left: 0;
       right: 0;
       width: 100%;
@@ -344,13 +344,13 @@ color: #3846cb;
     }
   
     .machine-learning-window_boxes {
-      flex-direction: column; /* Stack elements vertically */
-      align-items: center; /* Center elements horizontally */
-      padding-right: 0; /* Remove right padding on small screens */
+      flex-direction: column;
+      align-items: center;
+      padding-right: 0;
     }
 
     .slider {
-      width: 95%; /* Set the slider's width to 100% of its parent */
+      width: 95%;
     }
 
     .ml-btn {
