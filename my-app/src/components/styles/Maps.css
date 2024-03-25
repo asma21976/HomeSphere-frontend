@@ -427,3 +427,15 @@ color: #3846cb;
     color: #2549d6;
     font-weight: bold;
   }
+
+  .center-content button {
+    font-family: "Montserrat", "PT Sans";
+    font-size: 2rem;
+    border-radius: 31px;
+    padding: 15px;
+    background-color: #3846cb;
+    border: none;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+  }

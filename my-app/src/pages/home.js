@@ -32,7 +32,7 @@ function Home() {
       </header>
       <body>
         <div className="center-content">
-          <h1 className="slogan">Shaping Calgary's Future:</h1>
+          <h1 className="slogan">Shaping Calgary's Future!</h1>
           <Link to="/maps/congestion">
             <button className="get-started">Get Started</button>
           </Link>
