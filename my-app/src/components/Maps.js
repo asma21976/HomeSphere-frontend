@@ -42,6 +42,8 @@ function Maps() {
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [MLModalResults, setMLModalResults] = useState([]);
   const [title, setTitle] = useState("Community Population Map");
+  const [description, setDescription] = useState("");
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
  
   const handleOpenResultsModal = () => {
@@ -52,8 +54,8 @@ function Maps() {
     setShowResultsModal(false);
   };
 
-  const handleLinkClick = (newTitle) => {
-    setTitle(newTitle);
+  const handleLinkClick = (newTitle, newDescription) => {
+    setTitle(newTitle, newDescription);
   };
 
   const togglePopup = () => {
@@ -466,7 +468,7 @@ function Maps() {
           <h2>
             {title}
             <Popup trigger={<button onClick={togglePopup}><FontAwesomeIcon icon={faInfoCircle}/></button>} onClose={togglePopup}>
-              <p>Some information here...</p>
+              {description}
             </Popup>
           </h2>
         </div>
@@ -481,6 +483,7 @@ function Maps() {
               <FontAwesomeIcon
                 icon={faArrowUpRightDots}
                 title="Community Population"
+                description="The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions. "
                 className="fa-svg-icon"
               />
             </button>

@@ -174,7 +174,6 @@ color: #3846cb;
 .HomeSphere-Title h2 button {
   background: none;
   border: none;
-  margin-left: 10px;
   font-size: 15px;
 }
 
@@ -399,5 +398,17 @@ color: #3846cb;
       left: -30px;
     }
   }
+  .popup-inner {
+    font-family: math;
+    font-weight: 300;
+    padding: 12px;
+  }
   
+  .popup-inner button {
+    background-color: rgb(56, 70, 203);
+    color: white;
+    border-radius: 18px;
+    position: relative;
+    left: 795px;
+  }
   
