@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import "../components/styles/Maps.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Popup from './Popup.js';
 import {
   faArrowUpRightDots,
   faDollarSign,
@@ -12,6 +13,7 @@ import {
   faCaretDown,
   faBars,
   faX,
+  faInfoCircle
 } from "@fortawesome/free-solid-svg-icons";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
@@ -39,6 +41,8 @@ function Maps() {
   const [MLResults, setMLResults] = useState({});
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [MLModalResults, setMLModalResults] = useState([]);
+  const [title, setTitle] = useState("Community Population Map");
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
  
   const handleOpenResultsModal = () => {
     setShowResultsModal(true);
@@ -46,6 +50,14 @@ function Maps() {
 
   const handleCloseResultsModal = () => {
     setShowResultsModal(false);
+  };
+
+  const handleLinkClick = (newTitle) => {
+    setTitle(newTitle);
+  };
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
   };
 
   const renderTableHeaders = () => {
@@ -400,7 +412,6 @@ function Maps() {
         data.layout = {
           ...data.layout,
           margin: { l: 0, r: 0, t: 0, b: 0 },
-          title: "",
           coloraxis: {
             ...data.layout.coloraxis,
             colorbar: {
@@ -452,9 +463,15 @@ function Maps() {
       >
         <div className="HomeSphere-Title">
           <h1>HOMESPHERE</h1>
+          <h2>
+            {title}
+            <Popup trigger={<button onClick={togglePopup}><FontAwesomeIcon icon={faInfoCircle}/></button>} onClose={togglePopup}>
+              <p>Some information here...</p>
+            </Popup>
+          </h2>
         </div>
         <div id="buttons-container">
-          <Link to="/maps/congestion">
+          <Link to="/maps/congestion" onClick={() => handleLinkClick("Community Population Map")}>
             <button
               id="population-button"
               className={`menu-button ${
@@ -468,7 +485,7 @@ function Maps() {
               />
             </button>
           </Link>
-          <Link to="/maps/vacancy_per_community">
+          <Link to="/maps/vacancy_per_community" onClick={() => handleLinkClick("Land Vacancy Map")}>
             <button
               id="vacancy-button"
               className={`menu-button ${
@@ -484,7 +501,7 @@ function Maps() {
               />
             </button>
           </Link>
-          <Link to="/maps/housing_development_zone">
+          <Link to="/maps/housing_development_zone" onClick={() => handleLinkClick("Building Permits Map")}>
             <button
               id="permits-button"
               className={`menu-button ${
@@ -500,7 +517,7 @@ function Maps() {
               />
             </button>
           </Link>
-          <Link to="/maps/property_value_per_community">
+          <Link to="/maps/property_value_per_community" onClick={() => handleLinkClick("House Prices Map")}>
             <button
               id="pricing-button"
               className={`menu-button ${
@@ -516,7 +533,7 @@ function Maps() {
               />
             </button>
           </Link>
-          <Link to="/maps/algorithm">
+          <Link to="/maps/algorithm" onClick={() => handleLinkClick("Machine Learning Map")}>
             <button
               id="machine-learning-button"
               className={`menu-button ${
