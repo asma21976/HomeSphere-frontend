@@ -196,16 +196,24 @@ function Maps() {
       selectedMLOption === "community-level"
         ? communityFeatures
         : postalFeatures;
+
+    const featureKey = event.target.id;
     const isChecked = event.target.checked;
-    const key = event.target.id;
-    if (isChecked) {
-      features[key] = true;
-    } else if (!isChecked) {
-      features[key] = false;
+
+    if (selectedMLOption === "community-level") {
+      setCommunityFeatures((prevFeatures) => ({
+        ...prevFeatures,
+        [featureKey]: isChecked,
+      }));
+    } else {
+      setPostalFeatures((prevFeatures) => ({
+        ...prevFeatures,
+        [featureKey]: isChecked,
+      }));
     }
 
     console.log(features);
-    console.log(key);
+    console.log(featureKey);
   };
 
   const clusterCount = (event) => {
@@ -213,8 +221,19 @@ function Maps() {
       selectedMLOption === "community-level"
         ? communityFeatures
         : postalFeatures;
-    const numClusters = event.target.value;
-    features.n_clusters = numClusters;
+    const numClusters = parseInt(event.target.value, 10);
+
+    if (selectedMLOption === "community-level") {
+      setCommunityFeatures((prevFeatures) => ({
+        ...prevFeatures,
+        n_clusters: numClusters,
+      }));
+    } else {
+      setPostalFeatures((prevFeatures) => ({
+        ...prevFeatures,
+        n_clusters: numClusters,
+      }));
+    }
 
     console.log(features);
     console.log(numClusters);
@@ -401,7 +420,7 @@ function Maps() {
     window.URL.revokeObjectURL(url);
   }
 
-  const communityFeatures = {
+  const [communityFeatures, setCommunityFeatures] = useState({
     count_of_population_in_private_households: false,
     median_household_income: false,
     count_of_population_considered_low_income: false,
@@ -421,9 +440,9 @@ function Maps() {
     community_disorder_count: false,
     n_clusters: 3,
     random_state: 42,
-  };
+  });
 
-  const postalFeatures = {
+  const [postalFeatures, setPostalFeatures] = useState({
     median_assessed_value: true,
     median_land_size: true,
     distance_to_closest_elementary: true,
@@ -441,7 +460,7 @@ function Maps() {
     service_count_within_1km: true,
     n_clusters: 3,
     random_state: 42,
-  };
+  });
 
   const headerSections = {
     "Demographics and Socioeconomic Indicators": [
