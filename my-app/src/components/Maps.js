@@ -22,12 +22,13 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Modal from "@mui/material/Modal";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TableSortLabel from "@mui/material/TableSortLabel";
 import { TablePagination } from "@mui/material";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import { styled } from "@mui/material/styles";
 
 function Maps() {
   const { mapType } = useParams();
@@ -131,9 +132,9 @@ function Maps() {
     if (MLModalResults.length > 0) {
       const headers = Object.keys(MLModalResults[0]);
       return (
-        <TableRow>
+        <StyledTableRow>
           {headers.map((header) => (
-            <TableCell
+            <StyledTableCell
               key={header}
               sortDirection={orderBy === header ? order : false}
             >
@@ -144,9 +145,9 @@ function Maps() {
               >
                 {header}
               </TableSortLabel>
-            </TableCell>
+            </StyledTableCell>
           ))}
-        </TableRow>
+        </StyledTableRow>
       );
     }
     return null;
@@ -156,13 +157,33 @@ function Maps() {
     return stableSort(MLModalResults, getComparator(order, orderBy))
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map((row, index) => (
-        <TableRow key={index}>
+        <StyledTableRow key={index}>
           {Object.values(row).map((value, colIndex) => (
             <TableCell key={colIndex}>{value.toString()}</TableCell>
           ))}
-        </TableRow>
+        </StyledTableRow>
       ));
   };
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.info.dark,
+      color: theme.palette.common.white,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    // "&:last-child td, &:last-child th": {
+    //   border: 0,
+    // },
+  }));
 
   const isSelected = (pathSegment) => {
     const currentPath = location.pathname.split("/").pop();
