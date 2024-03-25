@@ -333,7 +333,7 @@ color: #3846cb;
     .sidebar {
       width: var(--sidebar-width-mobile);
       height: calc(100vh - 102px);
-      top: var(--header-height-mobile);
+      top: calc(var(--header-height-mobile));
       position: fixed;
       left: 0;
       border-bottom-right-radius: 0;
@@ -366,6 +366,7 @@ color: #3846cb;
     }
 
     .machine-learning-window {
+      padding-top: 25px;
       position: relative;
       top: var(--header-height-mobile);
       height: calc(100vh - var(--header-height-mobile));
