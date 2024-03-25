@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import "../components/styles/Maps.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Popup from './Popup.js';
+import Popup from "./Popup.js";
 import {
   faArrowUpRightDots,
   faDollarSign,
@@ -13,7 +13,7 @@ import {
   faCaretDown,
   faBars,
   faX,
-  faInfoCircle
+  faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import Slider from "@mui/material/Slider";
 import Box from "@mui/material/Box";
@@ -42,10 +42,12 @@ function Maps() {
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [MLModalResults, setMLModalResults] = useState([]);
   const [title, setTitle] = useState("Community Population Map");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(
+    "The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
+  );
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
- 
+
   const handleOpenResultsModal = () => {
     setShowResultsModal(true);
   };
@@ -54,8 +56,23 @@ function Maps() {
     setShowResultsModal(false);
   };
 
-  const handleLinkClick = (newTitle, newDescription) => {
-    setTitle(newTitle, newDescription);
+  const handleLinkClick = (newTitle) => {
+    setTitle(newTitle);
+    if (title === "Community Population Map") {
+      setDescription(
+        "The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
+      );
+    } else if (title === "Land Vacancy Map") {
+      setDescription(
+        "AHHHHHHHHHHHHH BABUNYAAAAAAAAAAAAAAAAA BADA BICHI BABABAAAAA"
+      );
+    } else if (title === "Building Permits Map") {
+      setDescription("hiyaaaaa");
+    } else if (title === "House Prices Map") {
+      setDescription("hi");
+    } else if (title === "Machine Learning Map") {
+      setDescription("no more hi's");
+    }
   };
 
   const togglePopup = () => {
@@ -132,7 +149,6 @@ function Maps() {
     console.log(features);
     console.log(key);
   };
-  
 
   const clusterCount = (event) => {
     const features =
@@ -467,13 +483,23 @@ function Maps() {
           <h1>HOMESPHERE</h1>
           <h2>
             {title}
-            <Popup trigger={<button onClick={togglePopup}><FontAwesomeIcon icon={faInfoCircle}/></button>} onClose={togglePopup}>
+            <Popup
+              trigger={
+                <button onClick={togglePopup}>
+                  <FontAwesomeIcon icon={faInfoCircle} />
+                </button>
+              }
+              onClose={togglePopup}
+            >
               {description}
             </Popup>
           </h2>
         </div>
         <div id="buttons-container">
-          <Link to="/maps/congestion" onClick={() => handleLinkClick("Community Population Map")}>
+          <Link
+            to="/maps/congestion"
+            onClick={() => handleLinkClick("Community Population Map")}
+          >
             <button
               id="population-button"
               className={`menu-button ${
@@ -483,12 +509,15 @@ function Maps() {
               <FontAwesomeIcon
                 icon={faArrowUpRightDots}
                 title="Community Population"
-                description="The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions. "
+                description="The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
                 className="fa-svg-icon"
               />
             </button>
           </Link>
-          <Link to="/maps/vacancy_per_community" onClick={() => handleLinkClick("Land Vacancy Map")}>
+          <Link
+            to="/maps/vacancy_per_community"
+            onClick={() => handleLinkClick("Land Vacancy Map")}
+          >
             <button
               id="vacancy-button"
               className={`menu-button ${
@@ -504,7 +533,10 @@ function Maps() {
               />
             </button>
           </Link>
-          <Link to="/maps/housing_development_zone" onClick={() => handleLinkClick("Building Permits Map")}>
+          <Link
+            to="/maps/housing_development_zone"
+            onClick={() => handleLinkClick("Building Permits Map")}
+          >
             <button
               id="permits-button"
               className={`menu-button ${
@@ -520,7 +552,10 @@ function Maps() {
               />
             </button>
           </Link>
-          <Link to="/maps/property_value_per_community" onClick={() => handleLinkClick("House Prices Map")}>
+          <Link
+            to="/maps/property_value_per_community"
+            onClick={() => handleLinkClick("House Prices Map")}
+          >
             <button
               id="pricing-button"
               className={`menu-button ${
@@ -536,7 +571,10 @@ function Maps() {
               />
             </button>
           </Link>
-          <Link to="/maps/algorithm" onClick={() => handleLinkClick("Machine Learning Map")}>
+          <Link
+            to="/maps/algorithm"
+            onClick={() => handleLinkClick("Machine Learning Map")}
+          >
             <button
               id="machine-learning-button"
               className={`menu-button ${
@@ -603,14 +641,16 @@ function Maps() {
           </div>
           <div>{getFeatures()}</div>
           <div id="ml-run-btn" className="ml-btn">
-          <button onClick={runML}>Run</button>
-        </div>
+            <button onClick={runML}>Run</button>
+          </div>
 
-        <div id="ml-results-btn" className={`ml-btn ${viewResults ? "" : "hidden"}`}>
-          <button onClick={handleOpenResultsModal}>View Results</button>
-          <button onClick={printResults}>Print Results</button>
-        </div>
-
+          <div
+            id="ml-results-btn"
+            className={`ml-btn ${viewResults ? "" : "hidden"}`}
+          >
+            <button onClick={handleOpenResultsModal}>View Results</button>
+            <button onClick={printResults}>Print Results</button>
+          </div>
         </div>
       </div>
       <div className={showMLWindow ? "collapse-expand-left-btn" : "hidden"}>
