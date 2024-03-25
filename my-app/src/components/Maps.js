@@ -26,6 +26,8 @@ import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import TableSortLabel from "@mui/material/TableSortLabel";
+import { TablePagination } from "@mui/material";
 
 function Maps() {
   const { mapType } = useParams();
@@ -45,8 +47,18 @@ function Maps() {
   const [description, setDescription] = useState(
     "The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
   );
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleRequestSort = (event, property) => {
+    const isAsc = orderBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(property);
+  };
 
   const handleOpenResultsModal = () => {
     setShowResultsModal(true);
@@ -55,6 +67,34 @@ function Maps() {
   const handleCloseResultsModal = () => {
     setShowResultsModal(false);
   };
+
+  function stableSort(array, comparator) {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) {
+        return order;
+      }
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  }
+
+  function descendingComparator(a, b, orderBy) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  function getComparator(order, orderBy) {
+    return order === "desc"
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  }
 
   const handleLinkClick = (newTitle) => {
     setTitle(newTitle);
@@ -84,8 +124,19 @@ function Maps() {
       const headers = Object.keys(MLModalResults[0]);
       return (
         <TableRow>
-          {headers.map((header, index) => (
-            <TableCell key={index}>{header}</TableCell>
+          {headers.map((header) => (
+            <TableCell
+              key={header}
+              sortDirection={orderBy === header ? order : false}
+            >
+              <TableSortLabel
+                active={orderBy === header}
+                direction={orderBy === header ? order : "asc"}
+                onClick={(event) => handleRequestSort(event, header)}
+              >
+                {header}
+              </TableSortLabel>
+            </TableCell>
           ))}
         </TableRow>
       );
@@ -94,16 +145,15 @@ function Maps() {
   };
 
   const renderTableRows = () => {
-    return MLModalResults.map((row, index) => (
-      <TableRow key={index}>
-        {Object.values(row).map((value, colIndex) => {
-          // Check if the value is not null or undefined before calling toString
-          const displayValue =
-            value !== null && value !== undefined ? value.toString() : "";
-          return <TableCell key={colIndex}>{displayValue}</TableCell>;
-        })}
-      </TableRow>
-    ));
+    return stableSort(MLModalResults, getComparator(order, orderBy))
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((row, index) => (
+        <TableRow key={index}>
+          {Object.values(row).map((value, colIndex) => (
+            <TableCell key={colIndex}>{value.toString()}</TableCell>
+          ))}
+        </TableRow>
+      ));
   };
 
   const isSelected = (pathSegment) => {
@@ -680,6 +730,18 @@ function Maps() {
           <Table stickyHeader aria-label="sticky table">
             <TableHead>{renderTableHeaders()}</TableHead>
             <TableBody>{renderTableRows()}</TableBody>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={MLModalResults.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(event, newPage) => setPage(newPage)}
+              onRowsPerPageChange={(event) => {
+                setRowsPerPage(parseInt(event.target.value, 10));
+                setPage(0);
+              }}
+            />
           </Table>
         </Paper>
       </Modal>
