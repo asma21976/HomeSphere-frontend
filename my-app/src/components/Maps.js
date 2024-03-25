@@ -44,9 +44,7 @@ function Maps() {
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [MLModalResults, setMLModalResults] = useState([]);
   const [title, setTitle] = useState("Community Population Map");
-  const [description, setDescription] = useState(
-    "The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
-  );
+  const [description, setDescription] = useState("");
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
   const [page, setPage] = useState(0);
@@ -96,21 +94,29 @@ function Maps() {
       : (a, b) => -descendingComparator(a, b, orderBy);
   }
 
-  const handleLinkClick = (newTitle) => {
-    setTitle(newTitle);
-    if (title === "Community Population Map") {
+  const handleLinkClick = () => {
+    if (isSelected("congestion")) {
+      setTitle("Community Population Map");
       setDescription(
-        "This map delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
+        "The Community Population Map delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
       );
-    } else if (title === "Land Vacancy Map") {
+    } else if (isSelected("vacancy_per_community")) {
+      setTitle("Landy Vacancy Map");
       setDescription(
-        "This map shows the number to display the number of development permits granted by community to show how much development is occurring"
+        "The Landy Vacancy Map shows the number to display the number of development permits granted by community to show how much development is occurring"
       );
-    } else if (title === "Building Permits Map") {
-      setDescription("This map shows the number of building permits available for each community");
-    } else if (title === "House Prices Map") {
-      setDescription("This map to show the median house price for each community");
-    } else if (title === "Machine Learning Map") {
+    } else if (isSelected("housing_development_zone")) {
+      setTitle("Building Permits Map");
+      setDescription(
+        "The Building Permits Map shows the number of building permits available for each community"
+      );
+    } else if (isSelected("property_value_per_community")) {
+      setTitle("House Prices Map");
+      setDescription(
+        "The House Prices Map shows the median house price for each community"
+      );
+    } else if (isSelected("algorithm")) {
+      setTitle("Machine Learning Map");
       setDescription("no more hi's");
     }
   };
@@ -456,6 +462,7 @@ function Maps() {
   };
 
   useEffect(() => {
+    handleLinkClick();
     setLoading(true);
     setError(null);
     setMapData(null);

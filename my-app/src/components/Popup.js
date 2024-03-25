@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import './styles/Popup.css';
-import Button from '@mui/material/Button';
+import React, { useState } from "react";
+import "./styles/Popup.css";
+import Button from "@mui/material/Button";
 
 const Popup = ({ children, trigger, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -23,7 +23,13 @@ const Popup = ({ children, trigger, onClose }) => {
         <div className="popup">
           <div className="popup-inner">
             {children}
-            <Button variant="contained" style={{ backgroundColor: '#3846cb', color: 'white' }} onClick={handleClose}>Close</Button>
+            <Button
+              variant="contained"
+              style={{ backgroundColor: "#3846cb", color: "white" }}
+              onClick={handleClose}
+            >
+              Close
+            </Button>
           </div>
         </div>
       )}
