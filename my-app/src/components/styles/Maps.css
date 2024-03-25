@@ -167,10 +167,14 @@ color: #3846cb;
 }
 
 .HomeSphere-Title h2 {
-  color: black;
-  display: flex;
-  align-items: center;
+    color: black;
+    display: flex;
+    align-items: center;
+    font-family: math;
+    font-weight: 100;
+    font-size: 14px;
 }
+
 .HomeSphere-Title h2 button {
   background: none;
   border: none;
@@ -293,10 +297,6 @@ color: #3846cb;
 .popup {
   padding: 20px;
 }
-/*   
-  .ml-btn:hover button{
-    background-color: #69696d; 
-  } */
 
   @media (max-width: 768px) {
     .HomeSphere-Title {
@@ -402,6 +402,13 @@ color: #3846cb;
     font-family: math;
     font-weight: 300;
     padding: 12px;
+    background: rgb(234, 234, 234);
+    padding: 20px;
+    margin-right: 20%;
+    display: flex;
+    margin-left: 17%;
+    border-radius: 5px;
+    flex-direction: row-reverse;
   }
   
   .popup-inner button {
@@ -412,3 +419,11 @@ color: #3846cb;
     left: 795px;
   }
   
+  .popup-close {
+    position: relative;
+    bottom: 12px;
+    left: 10px;
+    cursor: pointer;
+    color: #2549d6;
+    font-weight: bold;
+  }

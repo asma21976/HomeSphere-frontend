@@ -101,9 +101,9 @@ function Maps() {
         "The Community Population Map delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
       );
     } else if (isSelected("vacancy_per_community")) {
-      setTitle("Landy Vacancy Map");
+      setTitle("Land Vacancy Map");
       setDescription(
-        "The Landy Vacancy Map shows the number to display the number of development permits granted by community to show how much development is occurring"
+        "The Land Vacancy Map shows the number to display the number of development permits granted by community to show how much development is occurring"
       );
     } else if (isSelected("housing_development_zone")) {
       setTitle("Building Permits Map");
@@ -117,7 +117,7 @@ function Maps() {
       );
     } else if (isSelected("algorithm")) {
       setTitle("Machine Learning Map");
-      setDescription("no more hi's");
+      setDescription("This is the Machine Learning Map, where unsupervised algorithms cluster communities and postal codes based on data patterns, ensuring flexibility in identifying optimal living areas in Northeast Calgary. Users can select options such as Community Level, Postal Code Level, and Number of Clusters (Categories). Users can observe reflected changes upon hitting 'Run', and download results as needed.");
     }
   };
 
