@@ -780,7 +780,7 @@ function Maps() {
             <TableHead>{renderTableHeaders()}</TableHead>
             <TableBody>{renderTableRows()}</TableBody>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 25, 50, 100, 250, 500]}
               component="div"
               count={MLModalResults.length}
               rowsPerPage={rowsPerPage}
