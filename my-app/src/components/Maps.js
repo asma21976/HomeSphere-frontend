@@ -60,16 +60,16 @@ function Maps() {
     setTitle(newTitle);
     if (title === "Community Population Map") {
       setDescription(
-        "The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
+        "This map delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
       );
     } else if (title === "Land Vacancy Map") {
       setDescription(
-        "AHHHHHHHHHHHHH BABUNYAAAAAAAAAAAAAAAAA BADA BICHI BABABAAAAA"
+        "This map shows the number to display the number of development permits granted by community to show how much development is occurring"
       );
     } else if (title === "Building Permits Map") {
-      setDescription("hiyaaaaa");
+      setDescription("This map shows the number of building permits available for each community");
     } else if (title === "House Prices Map") {
-      setDescription("hi");
+      setDescription("This map to show the median house price for each community");
     } else if (title === "Machine Learning Map") {
       setDescription("no more hi's");
     }
