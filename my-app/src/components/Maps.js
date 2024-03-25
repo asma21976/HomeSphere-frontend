@@ -111,7 +111,7 @@ function Maps() {
         "The Building Permits Map shows the number of building permits available for each community"
       );
     } else if (isSelected("property_value_per_community")) {
-      setTitle("House Prices Map");
+      setTitle("House Price Map");
       setDescription(
         "The House Prices Map shows the median house price for each community"
       );
