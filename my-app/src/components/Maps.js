@@ -815,7 +815,7 @@ function Maps() {
           </Table>
         </Paper>
       </Modal>
-      {loading && <div className="screen-message">Loading...</div>}
+      {loading && <div className="loader" />}
       {error && (
         <div className="screen-message">
           <p>{error}</p>
