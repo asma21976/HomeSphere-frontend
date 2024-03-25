@@ -706,7 +706,7 @@ function Maps() {
             className={`ml-btn ${viewResults ? "" : "hidden"}`}
           >
             <button onClick={handleOpenResultsModal}>View Results</button>
-            <button onClick={printResults}>Print Results</button>
+            <button onClick={printResults}>Download Results</button>
           </div>
         </div>
       </div>
