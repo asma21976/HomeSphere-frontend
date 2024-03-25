@@ -117,7 +117,9 @@ function Maps() {
       );
     } else if (isSelected("algorithm")) {
       setTitle("Machine Learning Map");
-      setDescription("This is the Machine Learning Map, where unsupervised algorithms cluster communities and postal codes based on data patterns, ensuring flexibility in identifying optimal living areas in Northeast Calgary. Users can select options such as Community Level, Postal Code Level, and Number of Clusters (Categories). Users can observe reflected changes upon hitting 'Run', and download results as needed.");
+      setDescription(
+        "This is the Machine Learning Map, where unsupervised algorithms cluster communities and postal codes based on data patterns, ensuring flexibility in identifying optimal living areas in Northeast Calgary. Users can select options such as Community Level, Postal Code Level, and Number of Clusters (Categories). Users can observe reflected changes upon hitting 'Run', and download results as needed."
+      );
     }
   };
 
@@ -368,14 +370,35 @@ function Maps() {
   }
 
   function printResults() {
+    // Assuming MLResults is an array of objects
     const data = JSON.parse(MLResults);
-    const formattedJson = JSON.stringify(data, null, 2);
-    const blob = new Blob([formattedJson], { type: "application/json" });
+
+    // Convert JSON to CSV
+    const csvRows = [];
+    const headers = Object.keys(data[0]);
+    csvRows.push(headers.join(",")); // Add column headers as the first row
+
+    for (const row of data) {
+      const values = headers.map((header) => {
+        const escaped = ("" + row[header]).replace(/"/g, '\\"'); // Escape double quotes
+        return `"${escaped}"`; // Wrap each value in double quotes to handle commas in data
+      });
+      csvRows.push(values.join(",")); // Join each row's values by commas and add to the CSV array
+    }
+
+    const csvString = csvRows.join("\n"); // Join all rows by newline characters to form the CSV string
+
+    // Trigger download
+    const blob = new Blob([csvString], { type: "text/csv" });
+    const url = window.URL.createObjectURL(blob);
     const anchor = document.createElement("a");
-    anchor.download = `${selectedMLOption}_info.json`;
-    anchor.href = window.URL.createObjectURL(blob);
+    anchor.setAttribute("hidden", "");
+    anchor.setAttribute("href", url);
+    anchor.setAttribute("download", `${selectedMLOption}_info.csv`); // Change file extension to .csv
+    document.body.appendChild(anchor);
     anchor.click();
-    window.URL.revokeObjectURL(anchor.href);
+    document.body.removeChild(anchor);
+    window.URL.revokeObjectURL(url);
   }
 
   const communityFeatures = {
