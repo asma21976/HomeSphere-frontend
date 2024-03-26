@@ -112,22 +112,22 @@ function Maps() {
     if (isSelected("congestion")) {
       setTitle("Community Population Map");
       setDescription(
-        "The Community Population Map considers human traffic to depict congestion's impact on housing choices."
+        "This Map considers human traffic to depict congestion's impact on housing choices."
       );
     } else if (isSelected("vacancy_per_community")) {
       setTitle("Land Vacancy Map");
       setDescription(
-        "The Land Vacancy Map displays development permits by community, indicating ongoing development activity."
+        "This Map displays development permits by community, indicating ongoing development activity."
       );
     } else if (isSelected("housing_development_zone")) {
       setTitle("Building Permits Map");
       setDescription(
-        "The Building Permits Map shows the number of building permits available for each community"
+        "This Map shows the number of building permits available for each community"
       );
     } else if (isSelected("property_value_per_community")) {
       setTitle("House Price Map");
       setDescription(
-        "The House Prices Map shows the median house price for each community"
+        "This Map shows the median house price for each community"
       );
     } else if (isSelected("algorithm")) {
       setTitle("Machine Learning Map");
