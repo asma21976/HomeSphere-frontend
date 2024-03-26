@@ -324,6 +324,10 @@ color: #3846cb;
       align-items: center;
       width: fit-content; /* Set width to fit content */
     }
+    
+    #ml-results-btn .view-results-btn{
+      display: none;
+    }
 
     .HomeSphere-Title h2 button {
       background: none;
@@ -444,7 +448,6 @@ color: #3846cb;
   }
 
 
-/* HTML: <div class="loader"></div> */
 .loader {
   position: fixed;
   top: 50%;

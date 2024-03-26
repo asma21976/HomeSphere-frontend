@@ -768,7 +768,12 @@ function Maps() {
             id="ml-results-btn"
             className={`ml-btn ${viewResults ? "" : "hidden"}`}
           >
-            <button onClick={handleOpenResultsModal}>View Results</button>
+            <button
+              className="view-results-btn"
+              onClick={handleOpenResultsModal}
+            >
+              View Results
+            </button>
             <button onClick={printResults}>Download Results</button>
           </div>
         </div>
@@ -796,7 +801,7 @@ function Maps() {
           justifyContent: "center",
         }}
       >
-        <Paper style={{ maxHeight: 500, overflow: "auto" }}>
+        <Paper style={{ maxHeight: 800, overflow: "auto" }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>{renderTableHeaders()}</TableHead>
             <TableBody>{renderTableRows()}</TableBody>
