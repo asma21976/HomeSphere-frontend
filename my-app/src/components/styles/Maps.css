@@ -171,7 +171,6 @@ color: #3846cb;
 
 .HomeSphere-Title h2 {
     color: black;
-    display: flex;
     align-items: center;
     font-family: math;
     font-weight: 100;
@@ -463,3 +462,66 @@ color: #3846cb;
   animation:l4 1s infinite steps(10);
 }
 @keyframes l4 {to{transform: rotate(1turn)}}
+.icon-container {
+    position: relative;
+  }
+  
+  .icon-tooltip {
+    /* visibility: hidden;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s; */
+    /* visibility: hidden;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    top: 50px;
+    left: 195px;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s; */
+    visibility: hidden;
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  /* Incrementally adjust these values */
+  top: 0px;
+  left: 0%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  }
+  
+  .icon-container:hover .icon-tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .info-icon {
+    cursor: pointer;
+  }
+  .icon-container {
+    position: absolute;
+    top: 47px;
+    right: 85px;
+  }
