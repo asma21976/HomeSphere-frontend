@@ -42,14 +42,17 @@ function Maps() {
   const [selectedMLOption, setSelectedMLOption] = useState("community-level");
   const [viewResults, setViewResults] = useState(false);
   const [MLResults, setMLResults] = useState({});
+  const [FullMLResults, setFullMLResults] = useState({});
   const [showResultsModal, setShowResultsModal] = useState(false);
   const [MLModalResults, setMLModalResults] = useState([]);
+  const [MLModalFullResults, setMLModalFullResults] = useState([]);
   const [title, setTitle] = useState("Community Population Map");
   const [description, setDescription] = useState("");
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [resultsType, setResultsType] = useState("");
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -57,6 +60,22 @@ function Maps() {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
+  };
+
+  const handleGenResults = () => {
+    setResultsType("general");
+  };
+
+  const handleFullResults = () => {
+    setResultsType("full");
+  };
+
+  const getResultsLength = () => {
+    if (resultsType === "general") {
+      return MLModalResults.length;
+    } else {
+      return MLModalFullResults.length;
+    }
   };
 
   const handleOpenResultsModal = () => {
@@ -129,8 +148,10 @@ function Maps() {
   };
 
   const renderTableHeaders = () => {
-    if (MLModalResults.length > 0) {
-      const headers = Object.keys(MLModalResults[0]);
+    const results =
+      resultsType === "full" ? MLModalFullResults : MLModalResults;
+    if (results.length > 0) {
+      const headers = Object.keys(results[0]);
       return (
         <StyledTableRow>
           {headers.map((header) => (
@@ -154,7 +175,9 @@ function Maps() {
   };
 
   const renderTableRows = () => {
-    return stableSort(MLModalResults, getComparator(order, orderBy))
+    const results =
+      resultsType === "full" ? MLModalFullResults : MLModalResults;
+    return stableSort(results, getComparator(order, orderBy))
       .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
       .map((row, index) => (
         <StyledTableRow key={index}>
@@ -298,6 +321,26 @@ function Maps() {
   }
 
   function fetchMLTypeInfo(mlType, features) {
+    return fetch(`https://home-sphere.ca/api/api/${mlType}_info`, {
+      method: "POST",
+      headers: {
+        AccessToken: "Kvwf<IQ5qV]nlPooW@",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(features),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .catch((err) => {
+        console.error("Error fetching mlType_info:", err);
+      });
+  }
+
+  function fetchMLTypeFullInfo(mlType, features) {
     return fetch(`https://home-sphere.ca/api/api/${mlType}_info_full`, {
       method: "POST",
       headers: {
@@ -359,8 +402,19 @@ function Maps() {
           })
           .catch((err) => {
             console.error("Error fetching mlType_info:", err);
+          })
+          .then((data) => {
+            fetchMLTypeFullInfo(mlType, features)
+              .then((mlTypeInfo) => {
+                console.log(mlTypeInfo);
+                setFullMLResults(mlTypeInfo);
+                const parsedData = JSON.parse(mlTypeInfo);
+                setMLModalFullResults(parsedData);
+              })
+              .catch((err) => {
+                console.error("Error fetching mlType_info_full", err);
+              });
           });
-
         data.layout = {
           ...data.layout,
           margin: { l: 0, r: 0, t: 0, b: 0 },
@@ -411,7 +465,9 @@ function Maps() {
 
   function printResults() {
     // Assuming MLResults is an array of objects
-    const data = JSON.parse(MLResults);
+    const results =
+      resultsType === "full" ? MLModalFullResults : MLModalResults;
+    const data = results;
 
     // Convert JSON to CSV
     const csvRows = [];
@@ -434,7 +490,10 @@ function Maps() {
     const anchor = document.createElement("a");
     anchor.setAttribute("hidden", "");
     anchor.setAttribute("href", url);
-    anchor.setAttribute("download", `${selectedMLOption}_info.csv`); // Change file extension to .csv
+    anchor.setAttribute(
+      "download",
+      `${selectedMLOption}_info_${resultsType}.csv`
+    ); // Change file extension to .csv
     document.body.appendChild(anchor);
     anchor.click();
     document.body.removeChild(anchor);
@@ -771,21 +830,50 @@ function Maps() {
             </Box>
           </div>
           <div>{getFeatures()}</div>
-          <div id="ml-run-btn" className="ml-btn">
-            <button onClick={runML}>Run</button>
-          </div>
+          <div className="all-ml-btns">
+            <div id="ml-run-btn" className="ml-btn">
+              <button onClick={runML}>Run</button>
+            </div>
 
-          <div
-            id="ml-results-btn"
-            className={`ml-btn ${viewResults ? "" : "hidden"}`}
-          >
-            <button
-              className="view-results-btn"
-              onClick={handleOpenResultsModal}
+            <div
+              id="ml-results-btn"
+              className={`ml-btn ${viewResults ? "" : "hidden"}`}
             >
-              View Results
-            </button>
-            <button onClick={printResults}>Download Results</button>
+              <button
+                className="view-results-btn"
+                onClick={() => {
+                  handleOpenResultsModal();
+                  handleGenResults();
+                }}
+              >
+                View General Results
+              </button>
+              <button
+                onClick={() => {
+                  printResults();
+                  handleGenResults();
+                }}
+              >
+                Download General Results
+              </button>
+              <button
+                className="view-results-btn last-btn"
+                onClick={() => {
+                  handleOpenResultsModal();
+                  handleFullResults();
+                }}
+              >
+                View Detailed Results
+              </button>
+              <button
+                onClick={() => {
+                  printResults();
+                  handleFullResults();
+                }}
+              >
+                Download Detailed Results
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -819,7 +907,7 @@ function Maps() {
             <TablePagination
               rowsPerPageOptions={[5, 10, 25, 50, 100, 250, 500]}
               component="div"
-              count={MLModalResults.length}
+              count={getResultsLength()}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={(event, newPage) => setPage(newPage)}

@@ -278,6 +278,10 @@ color: #3846cb;
     font-size: 15px;
 }
 
+.all-ml-btns {
+  padding-bottom: 20px;
+}
+
 .ml-btn button {
     background-color: #3846cb;
     border: none;
@@ -324,7 +328,7 @@ color: #3846cb;
       align-items: center;
       width: fit-content; /* Set width to fit content */
     }
-    
+
     #ml-results-btn .view-results-btn{
       display: none;
     }
