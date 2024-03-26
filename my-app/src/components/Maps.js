@@ -112,12 +112,12 @@ function Maps() {
     if (isSelected("congestion")) {
       setTitle("Community Population Map");
       setDescription(
-        "The Community Population Map delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
+        "The Community Population Map considers human traffic to depict congestion's impact on housing choices."
       );
     } else if (isSelected("vacancy_per_community")) {
       setTitle("Land Vacancy Map");
       setDescription(
-        "The Land Vacancy Map shows the number to display the number of development permits granted by community to show how much development is occurring"
+        "The Land Vacancy Map displays development permits by community, indicating ongoing development activity."
       );
     } else if (isSelected("housing_development_zone")) {
       setTitle("Building Permits Map");
@@ -132,7 +132,7 @@ function Maps() {
     } else if (isSelected("algorithm")) {
       setTitle("Machine Learning Map");
       setDescription(
-        "This is the Machine Learning Map, where unsupervised algorithms cluster communities and postal codes based on data patterns, ensuring flexibility in identifying optimal living areas in Northeast Calgary. Users can select options such as Community Level, Postal Code Level, and Number of Clusters (Categories). Users can observe reflected changes upon hitting 'Run', and download results as needed."
+        "This Map clusters areas, aiding users in finding ideal living spots. Customize, view changes, and download results."
       );
     }
   };
@@ -644,7 +644,7 @@ function Maps() {
           >
             <FontAwesomeIcon
               icon={faArrowUpRightDots}
-              title="The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
+              title="The Congestion Heatmap delves into the human factors influencing housing choices. This feature paints a comprehensive picture of congestion based on population."
               className="fa-svg-icon"
             />
           </button>

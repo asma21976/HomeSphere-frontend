@@ -467,49 +467,20 @@ color: #3846cb;
   }
   
   .icon-tooltip {
-    /* visibility: hidden;
-    width: 200px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -100px;
-    opacity: 0;
-    transition: opacity 0.3s; */
-    /* visibility: hidden;
-    width: 200px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    top: 50px;
-    left: 195px;
-    margin-left: -100px;
-    opacity: 0;
-    transition: opacity 0.3s; */
     visibility: hidden;
-  width: 200px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  /* Incrementally adjust these values */
-  top: 0px;
-  left: 0%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 11px;
+    left: -6px;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
   }
   
   .icon-container:hover .icon-tooltip {
