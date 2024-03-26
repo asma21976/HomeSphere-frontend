@@ -136,12 +136,12 @@ function Maps() {
     } else if (isSelected("vacancy_per_community")) {
       setTitle("Land Vacancy Map");
       setDescription(
-        "This map displays development permits by community, indicating ongoing development activity."
+        "This map displays the vacancy rate within each community, indicating areas of high demand for housing."
       );
     } else if (isSelected("housing_development_zone")) {
       setTitle("Building Permits Map");
       setDescription(
-        "This map shows the number of building permits available for each community"
+        "This map displays development permits by community, indicating ongoing development activity."
       );
     } else if (isSelected("property_value_per_community")) {
       setTitle("House Price Map");
