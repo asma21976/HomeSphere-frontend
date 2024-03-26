@@ -441,7 +441,7 @@ function Maps() {
     window.URL.revokeObjectURL(url);
   }
 
-  const [communityFeatures, setCommunityFeatures] = useState({
+  const communityFeaturesDefault = {
     count_of_population_in_private_households: false,
     median_household_income: false,
     count_of_population_considered_low_income: false,
@@ -461,27 +461,33 @@ function Maps() {
     community_disorder_count: false,
     n_clusters: 3,
     random_state: 42,
-  });
+  };
 
-  const [postalFeatures, setPostalFeatures] = useState({
-    median_assessed_value: true,
-    median_land_size: true,
-    distance_to_closest_elementary: true,
-    distance_to_closest_junior_high: true,
-    distance_to_closest_senior_high: true,
-    school_count_within_1km: true,
-    distance_to_closest_community_centre: true,
-    distance_to_closest_attraction: true,
-    distance_to_closest_visitor_info: true,
-    distance_to_closest_court: true,
-    distance_to_closest_library: true,
-    distance_to_closest_hospital: true,
-    distance_to_closest_phs_clinic: true,
-    distance_to_closest_social_dev_centre: true,
-    service_count_within_1km: true,
+  const [communityFeatures, setCommunityFeatures] = useState(
+    communityFeaturesDefault
+  );
+
+  const postalFeaturesDefault = {
+    median_assessed_value: false,
+    median_land_size: false,
+    distance_to_closest_elementary: false,
+    distance_to_closest_junior_high: false,
+    distance_to_closest_senior_high: false,
+    school_count_within_1km: false,
+    distance_to_closest_community_centre: false,
+    distance_to_closest_attraction: false,
+    distance_to_closest_visitor_info: false,
+    distance_to_closest_court: false,
+    distance_to_closest_library: false,
+    distance_to_closest_hospital: false,
+    distance_to_closest_phs_clinic: false,
+    distance_to_closest_social_dev_centre: false,
+    service_count_within_1km: false,
     n_clusters: 3,
     random_state: 42,
-  });
+  };
+
+  const [postalFeatures, setPostalFeatures] = useState(postalFeaturesDefault);
 
   const headerSections = {
     "Demographics and Socioeconomic Indicators": [
@@ -523,6 +529,11 @@ function Maps() {
       "service_count_within_1km",
     ],
   };
+
+  useEffect(() => {
+    setCommunityFeatures({ ...communityFeaturesDefault });
+    setPostalFeatures({ ...postalFeaturesDefault });
+  }, [selectedMLOption]);
 
   useEffect(() => {
     handleLinkClick();
