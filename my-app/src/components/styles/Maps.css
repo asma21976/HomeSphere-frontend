@@ -282,6 +282,10 @@ color: #3846cb;
   padding-bottom: 20px;
 }
 
+.css-jtlhu6-MuiTablePagination-root {
+  overflow: visible !important;
+}
+
 .ml-btn button {
     background-color: #3846cb;
     border: none;
