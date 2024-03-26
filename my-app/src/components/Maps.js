@@ -518,6 +518,7 @@ function Maps() {
     count_of_unsuitable_households: false,
     community_crime_count: false,
     community_disorder_count: false,
+    transit_stops_count: false,
     n_clusters: 3,
     random_state: 42,
   };
@@ -542,6 +543,8 @@ function Maps() {
     distance_to_closest_phs_clinic: false,
     distance_to_closest_social_dev_centre: false,
     service_count_within_1km: false,
+    distance_to_closest_bus_stop: false,
+    distance_to_closest_ctrain_station: false,
     n_clusters: 3,
     random_state: 42,
   };
@@ -563,6 +566,7 @@ function Maps() {
       "median_renter_monthly_shelter_cost",
     ],
     "Crime and Disorder": ["community_crime_count", "community_disorder_count"],
+    "Transit Infromation": ["transit_stops_count"],
     "Housing Condition": [
       "count_of_households_that_require_maintenance",
       "count_of_households_that_require_major_repairs",
@@ -586,6 +590,8 @@ function Maps() {
       "distance_to_closest_phs_clinic",
       "distance_to_closest_social_dev_centre",
       "service_count_within_1km",
+      "distance_to_closest_bus_stop",
+      "distance_to_closest_ctrain_station",
     ],
   };
 
