@@ -4,6 +4,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import "../components/styles/Maps.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Popup from "./Popup.js";
+import { Tooltip } from 'react-tooltip';
 import {
   faArrowUpRightDots,
   faDollarSign,
@@ -58,6 +59,18 @@ function Maps() {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
+  const renderPopup = (description) => (
+    <Popup
+      trigger={
+        <button>
+          <FontAwesomeIcon icon={faInfoCircle} />
+          <Tooltip effect="solid" delayShow={0} />
+        </button>
+      }
+    >
+      {description}
+    </Popup>
+  );
 
   const handleOpenResultsModal = () => {
     setShowResultsModal(true);
@@ -99,12 +112,12 @@ function Maps() {
     if (isSelected("congestion")) {
       setTitle("Community Population Map");
       setDescription(
-        "The Community Population Map delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
+        "The Community Population Map considers human traffic to depict congestion's impact on housing choices."
       );
     } else if (isSelected("vacancy_per_community")) {
       setTitle("Land Vacancy Map");
       setDescription(
-        "The Land Vacancy Map shows the number to display the number of development permits granted by community to show how much development is occurring"
+        "The Land Vacancy Map displays development permits by community, indicating ongoing development activity."
       );
     } else if (isSelected("housing_development_zone")) {
       setTitle("Building Permits Map");
@@ -119,7 +132,7 @@ function Maps() {
     } else if (isSelected("algorithm")) {
       setTitle("Machine Learning Map");
       setDescription(
-        "This is the Machine Learning Map, where unsupervised algorithms cluster communities and postal codes based on data patterns, ensuring flexibility in identifying optimal living areas in Northeast Calgary. Users can select options such as Community Level, Postal Code Level, and Number of Clusters (Categories). Users can observe reflected changes upon hitting 'Run', and download results as needed."
+        "This Map clusters areas, aiding users in finding ideal living spots. Customize, view changes, and download results."
       );
     }
   };
@@ -614,37 +627,39 @@ function Maps() {
           <h1>HOMESPHERE</h1>
           <h2>
             {title}
-            <Popup
-              trigger={
+              {/* trigger={
                 <button onClick={togglePopup}>
                   <FontAwesomeIcon icon={faInfoCircle} />
+                  <Tooltip effect="solid" delayShow={0} />
                 </button>
               }
               onClose={togglePopup}
             >
-              {description}
-            </Popup>
+              {description} */}
           </h2>
-        </div>
-        <div id="buttons-container">
+          <div className="icon-container">
+            <span className="icon-tooltip">{description}</span>
+            <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
+          </div>
+
+          <div id="buttons-container">
           <Link
-            to="/maps/congestion"
-            onClick={() => handleLinkClick("Community Population Map")}
+          to="/maps/congestion"
+          onClick={() => handleLinkClick("Community Population Map")}
+        >
+          <button
+            id="population-button"
+            className={`menu-button ${
+              isSelected("congestion") ? "selected" : "map-feature-button"
+            }`}
           >
-            <button
-              id="population-button"
-              className={`menu-button ${
-                isSelected("congestion") ? "selected" : "map-feature-button"
-              }`}
-            >
-              <FontAwesomeIcon
-                icon={faArrowUpRightDots}
-                title="Community Population"
-                description="The Congestion Heatmap delves into the human factors influencing housing choices. By considering human traffic, noise pollution, and proximity to neighboring houses, this feature paints a comprehensive picture of congestion. Overlay proximity to public transport, amenities, and healthcare facilities, illuminating accessibility as a crucial factor in housing decisions."
-                className="fa-svg-icon"
-              />
-            </button>
-          </Link>
+            <FontAwesomeIcon
+              icon={faArrowUpRightDots}
+              title="The Congestion Heatmap delves into the human factors influencing housing choices. This feature paints a comprehensive picture of congestion based on population."
+              className="fa-svg-icon"
+            />
+          </button>
+        </Link>
           <Link
             to="/maps/vacancy_per_community"
             onClick={() => handleLinkClick("Land Vacancy Map")}
@@ -720,6 +735,8 @@ function Maps() {
             </button>
           </Link>
         </div>
+        </div>
+      
         <div
           id="machine-learning-window"
           className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
