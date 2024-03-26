@@ -131,27 +131,27 @@ function Maps() {
     if (isSelected("congestion")) {
       setTitle("Community Population Map");
       setDescription(
-        "This Map considers human traffic to depict congestion's impact on housing choices."
+        "This map considers human traffic to depict congestion's impact on housing choices."
       );
     } else if (isSelected("vacancy_per_community")) {
       setTitle("Land Vacancy Map");
       setDescription(
-        "This Map displays development permits by community, indicating ongoing development activity."
+        "This map displays development permits by community, indicating ongoing development activity."
       );
     } else if (isSelected("housing_development_zone")) {
       setTitle("Building Permits Map");
       setDescription(
-        "This Map shows the number of building permits available for each community"
+        "This map shows the number of building permits available for each community"
       );
     } else if (isSelected("property_value_per_community")) {
       setTitle("House Price Map");
       setDescription(
-        "This Map shows the median house price for each community"
+        "This map shows the median house price for each community"
       );
     } else if (isSelected("algorithm")) {
       setTitle("Machine Learning Map");
       setDescription(
-        "This Map clusters areas, aiding users in finding ideal living spots. Customize, view changes, and download results."
+        "This map clusters areas, aiding users in finding ideal living spots. Customize, view changes, and download results."
       );
     }
   };
@@ -692,15 +692,6 @@ function Maps() {
           <h1>HOMESPHERE</h1>
           <h2>
             {title}
-              {/* trigger={
-                <button onClick={togglePopup}>
-                  <FontAwesomeIcon icon={faInfoCircle} />
-                  <Tooltip effect="solid" delayShow={0} />
-                </button>
-              }
-              onClose={togglePopup}
-            >
-              {description} */}
           </h2>
           <div className="icon-container">
             <span className="icon-tooltip">{description}</span>
