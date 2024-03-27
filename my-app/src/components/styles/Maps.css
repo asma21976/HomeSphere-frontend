@@ -352,7 +352,7 @@ color: #3846cb;
     .sidebar {
       width: var(--sidebar-width-mobile);
       height: calc(100vh - var(--header-height-mobile) - var(--menu-height-mobile));
-      top: calc(var(--header-height-mobile));
+      bottom: calc(var(--menu-height-mobile));
       position: fixed;
       left: 0;
       border-bottom-right-radius: 0;

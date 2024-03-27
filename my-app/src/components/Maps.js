@@ -461,7 +461,7 @@ function Maps() {
               thickness: 10,
               x: 0.99,
               y: 0.5,
-              len: 0.8,
+              len: 0.75,
               width: 0.1,
               title: {
                 ...data.layout.coloraxis.colorbar.title,
@@ -690,7 +690,7 @@ function Maps() {
               thickness: 10,
               x: 0.99,
               y: 0.5,
-              len: 0.8,
+              len: 0.75,
               width: 0.1,
               title: {
                 ...data.layout.coloraxis.colorbar.title,
