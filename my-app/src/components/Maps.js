@@ -54,7 +54,7 @@ function Maps() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [resultsType, setResultsType] = useState("");
-  const [MLclusterCount, setMLclusterCount] = useState(4);
+  const [MLclusterCount, setMLclusterCount] = useState(3);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
