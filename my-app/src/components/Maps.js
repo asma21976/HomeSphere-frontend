@@ -934,6 +934,7 @@ function Maps() {
           <div>{getFeatures()}</div>
           <div className="all-ml-btns">
             <div id="ml-run-btn" className="ml-btn">
+              
               <button onClick={runML} disabled={isNothingSelected()}>
                 Run
               </button>
@@ -945,6 +946,7 @@ function Maps() {
             >
               <button
                 className="view-results-btn"
+                style= {{backgroundColor: 'blue'}}
                 onClick={() => {
                   handleOpenResultsModal();
                   handleGenResults();
@@ -953,6 +955,7 @@ function Maps() {
                 View General Results
               </button>
               <button
+                style= {{backgroundColor: 'blue'}}
                 onClick={() => {
                   printResults();
                   handleGenResults();
@@ -962,6 +965,8 @@ function Maps() {
               </button>
               <button
                 className="view-results-btn last-btn"
+                style= {{backgroundColor: 'rgb(9 91 55)'}}
+
                 onClick={() => {
                   handleOpenResultsModal();
                   handleFullResults();
@@ -970,6 +975,7 @@ function Maps() {
                 View Detailed Results
               </button>
               <button
+                style= {{backgroundColor: 'rgb(9 91 55)'}}
                 onClick={() => {
                   printResults();
                   handleFullResults();
