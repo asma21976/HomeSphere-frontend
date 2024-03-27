@@ -54,6 +54,7 @@ function Maps() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [resultsType, setResultsType] = useState("");
+  const [MLclusterCount, setMLclusterCount] = useState(4);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
@@ -262,11 +263,13 @@ function Maps() {
         ...prevFeatures,
         [featureKey]: isChecked,
       }));
+      localStorage.setItem("communityFeatures", JSON.stringify({...communityFeatures, [featureKey]: isChecked}));
     } else {
       setPostalFeatures((prevFeatures) => ({
         ...prevFeatures,
         [featureKey]: isChecked,
       }));
+      localStorage.setItem("postalFeatures", JSON.stringify({...postalFeatures, [featureKey]: isChecked}));
     }
 
     console.log(features);
@@ -285,11 +288,13 @@ function Maps() {
         ...prevFeatures,
         n_clusters: numClusters,
       }));
+      localStorage.setItem("communityFeatures", JSON.stringify({ ...communityFeatures, n_clusters: numClusters}));
     } else {
       setPostalFeatures((prevFeatures) => ({
         ...prevFeatures,
         n_clusters: numClusters,
       }));
+      localStorage.setItem("postalFeatures", JSON.stringify({ ...postalFeatures, n_clusters: numClusters }));
     }
 
     console.log(features);
@@ -316,7 +321,11 @@ function Maps() {
         <React.Fragment>
           {getHeader(feature)}
           <div key={feature} className="checkbox-container">
-            <input type="checkbox" id={feature} onChange={isChecked} />
+            <input 
+              type="checkbox" id={feature} 
+              checked={selectedMLOption === "community-level" ? communityFeatures[feature] : postalFeatures[feature]} 
+              onChange={isChecked} 
+            />
             <label htmlFor={feature} className="checkbox-label">
               {feature
                 .replace(/_/g, " ")
@@ -532,13 +541,11 @@ function Maps() {
     community_crime_count: false,
     community_disorder_count: false,
     transit_stops_count: false,
-    n_clusters: 3,
+    n_clusters: MLclusterCount,
     random_state: 42,
   };
 
-  const [communityFeatures, setCommunityFeatures] = useState(
-    communityFeaturesDefault
-  );
+  const [communityFeatures, setCommunityFeatures] = useState({});
 
   const postalFeaturesDefault = {
     median_assessed_value: false,
@@ -558,11 +565,11 @@ function Maps() {
     service_count_within_1km: false,
     distance_to_closest_bus_stop: false,
     distance_to_closest_ctrain_station: false,
-    n_clusters: 3,
+    n_clusters: MLclusterCount,
     random_state: 42,
   };
 
-  const [postalFeatures, setPostalFeatures] = useState(postalFeaturesDefault);
+  const [postalFeatures, setPostalFeatures] = useState({});
 
   const headerSections = {
     "Demographics and Socioeconomic Indicators": [
@@ -608,10 +615,10 @@ function Maps() {
     ],
   };
 
-  useEffect(() => {
-    setCommunityFeatures({ ...communityFeaturesDefault });
-    setPostalFeatures({ ...postalFeaturesDefault });
-  }, [selectedMLOption]);
+  // useEffect(() => {
+  //   setCommunityFeatures({ ...communityFeaturesDefault });
+  //   setPostalFeatures({ ...postalFeaturesDefault });
+  // }, [selectedMLOption]);
 
   useEffect(() => {
     handleLinkClick();
@@ -679,6 +686,29 @@ function Maps() {
         setLoading(false);
       });
   }, [mapType]);
+
+  useEffect(() => {
+    // Load features and cluster count from localStorage on initial render
+    const loadedCommunityFeatures = JSON.parse(localStorage.getItem("communityFeatures")) || {};
+    const loadedPostalFeatures = JSON.parse(localStorage.getItem("postalFeatures")) || {};
+
+    const communityFeaturesState = {};
+    const postalFeaturesState = {};
+
+    // Default features for community-level
+    Object.keys(communityFeaturesDefault).forEach((key) => {
+      communityFeaturesState[key] = loadedCommunityFeatures[key] !== undefined ? loadedCommunityFeatures[key] : communityFeaturesDefault[key];
+    });
+
+    // Default features for postal-level
+    Object.keys(postalFeaturesDefault).forEach((key) => {
+      postalFeaturesState[key] = loadedPostalFeatures[key] !== undefined ? loadedPostalFeatures[key] : postalFeaturesDefault[key];
+    });
+
+    setCommunityFeatures({...communityFeaturesState});
+    setPostalFeatures({...postalFeaturesState});
+    setMLclusterCount(communityFeaturesState["n_clusters"]);
+  }, []);
 
   return (
     <div>
@@ -831,7 +861,7 @@ function Maps() {
             <h3>Number of Clusters (Categories):</h3>
             <Box sx={{}}>
               <Slider
-                defaultValue={3}
+                defaultValue={MLclusterCount}
                 getAriaValueText={valuetext}
                 valueLabelDisplay="auto"
                 shiftStep={1}
