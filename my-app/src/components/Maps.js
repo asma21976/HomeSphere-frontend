@@ -64,12 +64,7 @@ function Maps() {
         ? communityFeatures
         : postalFeatures;
 
-    const dflt =
-      selectedMLOption === "community-level"
-        ? communityFeaturesDefault
-        : postalFeaturesDefault;
-
-    return Object.keys(dflt).every((key) => features[key] === dflt[key]);
+    return !Object.values(features).includes(true);
   };
 
   const handleRequestSort = (event, property) => {
@@ -939,7 +934,7 @@ function Maps() {
           <div>{getFeatures()}</div>
           <div className="all-ml-btns">
             <div id="ml-run-btn" className="ml-btn">
-              <button onClick={runML} disabled={isNothingSelected}>
+              <button onClick={runML} disabled={isNothingSelected()}>
                 Run
               </button>
             </div>
