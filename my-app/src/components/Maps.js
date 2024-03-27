@@ -245,8 +245,8 @@ function Maps() {
 
   const handleMLOptionChange = (event) => {
     console.log("New ML option selected:", event.target.value);
-
     setSelectedMLOption(event.target.value);
+    setMLclusterCount(getClusterCount(event.target.value));
   };
 
   const isChecked = (event) => {
@@ -296,6 +296,7 @@ function Maps() {
       }));
       localStorage.setItem("postalFeatures", JSON.stringify({ ...postalFeatures, n_clusters: numClusters }));
     }
+    setMLclusterCount(numClusters);
 
     console.log(features);
     console.log(numClusters);
@@ -308,6 +309,16 @@ function Maps() {
       }
     }
     return null;
+  }
+
+  function getClusterCount (MLOption) {
+    const loadedCommunityFeatures = JSON.parse(localStorage.getItem("communityFeatures")) || {};
+    const loadedPostalFeatures = JSON.parse(localStorage.getItem("postalFeatures")) || {};
+
+    const cnt = MLOption === "community-level"
+      ? loadedCommunityFeatures !== undefined && loadedCommunityFeatures["n_clusters"] !== undefined ? loadedCommunityFeatures["n_clusters"] : 5
+      : loadedPostalFeatures !== undefined && loadedPostalFeatures["n_clusters"] !== undefined ? loadedPostalFeatures["n_clusters"] : 5;
+    return cnt;
   }
 
   function getFeatures() {
@@ -522,6 +533,30 @@ function Maps() {
     window.URL.revokeObjectURL(url);
   }
 
+  function getLocalStorageData () {
+    // Load features and cluster count from localStorage on initial render
+    const loadedCommunityFeatures = JSON.parse(localStorage.getItem("communityFeatures")) || {};
+    const loadedPostalFeatures = JSON.parse(localStorage.getItem("postalFeatures")) || {};
+
+    const communityFeaturesState = {};
+    const postalFeaturesState = {};
+
+    // Default features for community-level
+    Object.keys(communityFeaturesDefault).forEach((key) => {
+      communityFeaturesState[key] = loadedCommunityFeatures[key] !== undefined ? loadedCommunityFeatures[key] : communityFeaturesDefault[key];
+    });
+
+    // Default features for postal-level
+    Object.keys(postalFeaturesDefault).forEach((key) => {
+      postalFeaturesState[key] = loadedPostalFeatures[key] !== undefined ? loadedPostalFeatures[key] : postalFeaturesDefault[key];
+    });
+
+    setCommunityFeatures({...communityFeaturesState});
+    setPostalFeatures({...postalFeaturesState});
+    selectedMLOption === "community-level" ? setMLclusterCount(communityFeaturesState["n_clusters"]) :  setMLclusterCount(postalFeaturesState["n_clusters"]);
+  }
+
+
   const communityFeaturesDefault = {
     count_of_population_in_private_households: false,
     median_household_income: false,
@@ -615,10 +650,9 @@ function Maps() {
     ],
   };
 
-  // useEffect(() => {
-  //   setCommunityFeatures({ ...communityFeaturesDefault });
-  //   setPostalFeatures({ ...postalFeaturesDefault });
-  // }, [selectedMLOption]);
+  useEffect(() => {
+    getLocalStorageData();
+  }, [selectedMLOption]);
 
   useEffect(() => {
     handleLinkClick();
@@ -688,26 +722,7 @@ function Maps() {
   }, [mapType]);
 
   useEffect(() => {
-    // Load features and cluster count from localStorage on initial render
-    const loadedCommunityFeatures = JSON.parse(localStorage.getItem("communityFeatures")) || {};
-    const loadedPostalFeatures = JSON.parse(localStorage.getItem("postalFeatures")) || {};
-
-    const communityFeaturesState = {};
-    const postalFeaturesState = {};
-
-    // Default features for community-level
-    Object.keys(communityFeaturesDefault).forEach((key) => {
-      communityFeaturesState[key] = loadedCommunityFeatures[key] !== undefined ? loadedCommunityFeatures[key] : communityFeaturesDefault[key];
-    });
-
-    // Default features for postal-level
-    Object.keys(postalFeaturesDefault).forEach((key) => {
-      postalFeaturesState[key] = loadedPostalFeatures[key] !== undefined ? loadedPostalFeatures[key] : postalFeaturesDefault[key];
-    });
-
-    setCommunityFeatures({...communityFeaturesState});
-    setPostalFeatures({...postalFeaturesState});
-    setMLclusterCount(communityFeaturesState["n_clusters"]);
+    getLocalStorageData();
   }, []);
 
   return (
@@ -861,7 +876,8 @@ function Maps() {
             <h3>Number of Clusters (Categories):</h3>
             <Box sx={{}}>
               <Slider
-                defaultValue={MLclusterCount}
+                defaultValue={getClusterCount(selectedMLOption)}
+                value={MLclusterCount}
                 getAriaValueText={valuetext}
                 valueLabelDisplay="auto"
                 shiftStep={1}
