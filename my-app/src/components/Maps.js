@@ -4,7 +4,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import "../components/styles/Maps.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Popup from "./Popup.js";
-import { Tooltip } from 'react-tooltip';
+import { Tooltip } from "react-tooltip";
 import {
   faArrowUpRightDots,
   faDollarSign,
@@ -57,6 +57,20 @@ function Maps() {
   const [MLclusterCount, setMLclusterCount] = useState(3);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const isNothingSelected = () => {
+    const features =
+      selectedMLOption === "community-level"
+        ? communityFeatures
+        : postalFeatures;
+
+    const dflt =
+      selectedMLOption === "community-level"
+        ? communityFeaturesDefault
+        : postalFeaturesDefault;
+
+    return Object.keys(dflt).every((key) => features[key] === dflt[key]);
+  };
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -263,13 +277,19 @@ function Maps() {
         ...prevFeatures,
         [featureKey]: isChecked,
       }));
-      localStorage.setItem("communityFeatures", JSON.stringify({...communityFeatures, [featureKey]: isChecked}));
+      localStorage.setItem(
+        "communityFeatures",
+        JSON.stringify({ ...communityFeatures, [featureKey]: isChecked })
+      );
     } else {
       setPostalFeatures((prevFeatures) => ({
         ...prevFeatures,
         [featureKey]: isChecked,
       }));
-      localStorage.setItem("postalFeatures", JSON.stringify({...postalFeatures, [featureKey]: isChecked}));
+      localStorage.setItem(
+        "postalFeatures",
+        JSON.stringify({ ...postalFeatures, [featureKey]: isChecked })
+      );
     }
 
     console.log(features);
@@ -288,13 +308,19 @@ function Maps() {
         ...prevFeatures,
         n_clusters: numClusters,
       }));
-      localStorage.setItem("communityFeatures", JSON.stringify({ ...communityFeatures, n_clusters: numClusters}));
+      localStorage.setItem(
+        "communityFeatures",
+        JSON.stringify({ ...communityFeatures, n_clusters: numClusters })
+      );
     } else {
       setPostalFeatures((prevFeatures) => ({
         ...prevFeatures,
         n_clusters: numClusters,
       }));
-      localStorage.setItem("postalFeatures", JSON.stringify({ ...postalFeatures, n_clusters: numClusters }));
+      localStorage.setItem(
+        "postalFeatures",
+        JSON.stringify({ ...postalFeatures, n_clusters: numClusters })
+      );
     }
     setMLclusterCount(numClusters);
 
@@ -311,13 +337,22 @@ function Maps() {
     return null;
   }
 
-  function getClusterCount (MLOption) {
-    const loadedCommunityFeatures = JSON.parse(localStorage.getItem("communityFeatures")) || {};
-    const loadedPostalFeatures = JSON.parse(localStorage.getItem("postalFeatures")) || {};
+  function getClusterCount(MLOption) {
+    const loadedCommunityFeatures =
+      JSON.parse(localStorage.getItem("communityFeatures")) || {};
+    const loadedPostalFeatures =
+      JSON.parse(localStorage.getItem("postalFeatures")) || {};
 
-    const cnt = MLOption === "community-level"
-      ? loadedCommunityFeatures !== undefined && loadedCommunityFeatures["n_clusters"] !== undefined ? loadedCommunityFeatures["n_clusters"] : 5
-      : loadedPostalFeatures !== undefined && loadedPostalFeatures["n_clusters"] !== undefined ? loadedPostalFeatures["n_clusters"] : 5;
+    const cnt =
+      MLOption === "community-level"
+        ? loadedCommunityFeatures !== undefined &&
+          loadedCommunityFeatures["n_clusters"] !== undefined
+          ? loadedCommunityFeatures["n_clusters"]
+          : 5
+        : loadedPostalFeatures !== undefined &&
+          loadedPostalFeatures["n_clusters"] !== undefined
+        ? loadedPostalFeatures["n_clusters"]
+        : 5;
     return cnt;
   }
 
@@ -332,10 +367,15 @@ function Maps() {
         <React.Fragment>
           {getHeader(feature)}
           <div key={feature} className="checkbox-container">
-            <input 
-              type="checkbox" id={feature} 
-              checked={selectedMLOption === "community-level" ? communityFeatures[feature] : postalFeatures[feature]} 
-              onChange={isChecked} 
+            <input
+              type="checkbox"
+              id={feature}
+              checked={
+                selectedMLOption === "community-level"
+                  ? communityFeatures[feature]
+                  : postalFeatures[feature]
+              }
+              onChange={isChecked}
             />
             <label htmlFor={feature} className="checkbox-label">
               {feature
@@ -533,29 +573,38 @@ function Maps() {
     window.URL.revokeObjectURL(url);
   }
 
-  function getLocalStorageData () {
+  function getLocalStorageData() {
     // Load features and cluster count from localStorage on initial render
-    const loadedCommunityFeatures = JSON.parse(localStorage.getItem("communityFeatures")) || {};
-    const loadedPostalFeatures = JSON.parse(localStorage.getItem("postalFeatures")) || {};
+    const loadedCommunityFeatures =
+      JSON.parse(localStorage.getItem("communityFeatures")) || {};
+    const loadedPostalFeatures =
+      JSON.parse(localStorage.getItem("postalFeatures")) || {};
 
     const communityFeaturesState = {};
     const postalFeaturesState = {};
 
     // Default features for community-level
     Object.keys(communityFeaturesDefault).forEach((key) => {
-      communityFeaturesState[key] = loadedCommunityFeatures[key] !== undefined ? loadedCommunityFeatures[key] : communityFeaturesDefault[key];
+      communityFeaturesState[key] =
+        loadedCommunityFeatures[key] !== undefined
+          ? loadedCommunityFeatures[key]
+          : communityFeaturesDefault[key];
     });
 
     // Default features for postal-level
     Object.keys(postalFeaturesDefault).forEach((key) => {
-      postalFeaturesState[key] = loadedPostalFeatures[key] !== undefined ? loadedPostalFeatures[key] : postalFeaturesDefault[key];
+      postalFeaturesState[key] =
+        loadedPostalFeatures[key] !== undefined
+          ? loadedPostalFeatures[key]
+          : postalFeaturesDefault[key];
     });
 
-    setCommunityFeatures({...communityFeaturesState});
-    setPostalFeatures({...postalFeaturesState});
-    selectedMLOption === "community-level" ? setMLclusterCount(communityFeaturesState["n_clusters"]) :  setMLclusterCount(postalFeaturesState["n_clusters"]);
+    setCommunityFeatures({ ...communityFeaturesState });
+    setPostalFeatures({ ...postalFeaturesState });
+    selectedMLOption === "community-level"
+      ? setMLclusterCount(communityFeaturesState["n_clusters"])
+      : setMLclusterCount(postalFeaturesState["n_clusters"]);
   }
-
 
   const communityFeaturesDefault = {
     count_of_population_in_private_households: false,
@@ -735,109 +784,107 @@ function Maps() {
       >
         <div className="HomeSphere-Title">
           <h1>HOMESPHERE</h1>
-          <h2>
-            {title}
-          </h2>
+          <h2>{title}</h2>
           <div className="icon-container">
             <span className="icon-tooltip">{description}</span>
             <FontAwesomeIcon icon={faInfoCircle} className="info-icon" />
           </div>
 
           <div id="buttons-container">
-          <Link
-          to="/maps/congestion"
-          onClick={() => handleLinkClick("Community Population Map")}
-        >
-          <button
-            id="population-button"
-            className={`menu-button ${
-              isSelected("congestion") ? "selected" : "map-feature-button"
-            }`}
-          >
-            <FontAwesomeIcon
-              icon={faArrowUpRightDots}
-              title="The Congestion Heatmap delves into the human factors influencing housing choices. This feature paints a comprehensive picture of congestion based on population."
-              className="fa-svg-icon"
-            />
-          </button>
-        </Link>
-          <Link
-            to="/maps/vacancy_per_community"
-            onClick={() => handleLinkClick("Land Vacancy Map")}
-          >
-            <button
-              id="vacancy-button"
-              className={`menu-button ${
-                isSelected("vacancy_per_community")
-                  ? "selected"
-                  : "map-feature-button"
-              }`}
+            <Link
+              to="/maps/congestion"
+              onClick={() => handleLinkClick("Community Population Map")}
             >
-              <FontAwesomeIcon
-                icon={faMapMarkerAlt}
-                title="Land Vacancy"
-                className="fa-svg-icon"
-              />
-            </button>
-          </Link>
-          <Link
-            to="/maps/housing_development_zone"
-            onClick={() => handleLinkClick("Building Permits Map")}
-          >
-            <button
-              id="permits-button"
-              className={`menu-button ${
-                isSelected("housing_development_zone")
-                  ? "selected"
-                  : "map-feature-button"
-              }`}
+              <button
+                id="population-button"
+                className={`menu-button ${
+                  isSelected("congestion") ? "selected" : "map-feature-button"
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faArrowUpRightDots}
+                  title="The Congestion Heatmap delves into the human factors influencing housing choices. This feature paints a comprehensive picture of congestion based on population."
+                  className="fa-svg-icon"
+                />
+              </button>
+            </Link>
+            <Link
+              to="/maps/vacancy_per_community"
+              onClick={() => handleLinkClick("Land Vacancy Map")}
             >
-              <FontAwesomeIcon
-                icon={faScroll}
-                title="Building Permits"
-                className="fa-svg-icon"
-              />
-            </button>
-          </Link>
-          <Link
-            to="/maps/property_value_per_community"
-            onClick={() => handleLinkClick("House Prices Map")}
-          >
-            <button
-              id="pricing-button"
-              className={`menu-button ${
-                isSelected("property_value_per_community")
-                  ? "selected"
-                  : "map-feature-button"
-              }`}
+              <button
+                id="vacancy-button"
+                className={`menu-button ${
+                  isSelected("vacancy_per_community")
+                    ? "selected"
+                    : "map-feature-button"
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faMapMarkerAlt}
+                  title="Land Vacancy"
+                  className="fa-svg-icon"
+                />
+              </button>
+            </Link>
+            <Link
+              to="/maps/housing_development_zone"
+              onClick={() => handleLinkClick("Building Permits Map")}
             >
-              <FontAwesomeIcon
-                icon={faDollarSign}
-                title="House Prices"
-                className="fa-svg-icon"
-              />
-            </button>
-          </Link>
-          <Link
-            to="/maps/algorithm"
-            onClick={() => handleLinkClick("Machine Learning Map")}
-          >
-            <button
-              id="machine-learning-button"
-              className={`menu-button ${
-                isSelected("algorithm") ? "selected" : "map-feature-button"
-              }`}
+              <button
+                id="permits-button"
+                className={`menu-button ${
+                  isSelected("housing_development_zone")
+                    ? "selected"
+                    : "map-feature-button"
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faScroll}
+                  title="Building Permits"
+                  className="fa-svg-icon"
+                />
+              </button>
+            </Link>
+            <Link
+              to="/maps/property_value_per_community"
+              onClick={() => handleLinkClick("House Prices Map")}
             >
-              <FontAwesomeIcon
-                icon={faSquarePollVertical}
-                title="Machine Learning Housing Analysis"
-                className="fa-svg-icon"
-              />
-            </button>
-          </Link>
+              <button
+                id="pricing-button"
+                className={`menu-button ${
+                  isSelected("property_value_per_community")
+                    ? "selected"
+                    : "map-feature-button"
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faDollarSign}
+                  title="House Prices"
+                  className="fa-svg-icon"
+                />
+              </button>
+            </Link>
+            <Link
+              to="/maps/algorithm"
+              onClick={() => handleLinkClick("Machine Learning Map")}
+            >
+              <button
+                id="machine-learning-button"
+                className={`menu-button ${
+                  isSelected("algorithm") ? "selected" : "map-feature-button"
+                }`}
+              >
+                <FontAwesomeIcon
+                  icon={faSquarePollVertical}
+                  title="Machine Learning Housing Analysis"
+                  className="fa-svg-icon"
+                />
+              </button>
+            </Link>
+          </div>
         </div>
-        </div>
-      
+
         <div
           id="machine-learning-window"
           className={`${showMLWindow ? "machine-learning-window " : "hidden"}`}
@@ -892,7 +939,9 @@ function Maps() {
           <div>{getFeatures()}</div>
           <div className="all-ml-btns">
             <div id="ml-run-btn" className="ml-btn">
-              <button onClick={runML}>Run</button>
+              <button onClick={runML} disabled={isNothingSelected}>
+                Run
+              </button>
             </div>
 
             <div
@@ -985,10 +1034,7 @@ function Maps() {
           <p>{error}</p>
         </div>
       )}
-      <div
-        id="featureMap"
-        className="featureMap"
-      >
+      <div id="featureMap" className="featureMap">
         {mapData && (
           <Plot
             data={mapData.data}
