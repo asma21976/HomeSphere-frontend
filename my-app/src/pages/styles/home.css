@@ -98,11 +98,14 @@ body h1 {
   background-image: linear-gradient(#fff, #fff);
   background-repeat: no-repeat;
   -webkit-background-clip: text;
-  background-position: -1250px, 0;
+  /* starting point */
+  background-position: -1400px, 0;
   animation: bgcolor 5s linear infinite alternate;
   font-family: "Poppins";
 
 }
+
+/* ending point */
 
 @keyframes bgcolor {
   100%{
