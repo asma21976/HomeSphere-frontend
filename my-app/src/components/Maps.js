@@ -941,9 +941,7 @@ function Maps() {
       )}
       <div
         id="featureMap"
-        style={{
-          height: "100vh",
-        }}
+        className="featureMap"
       >
         {mapData && (
           <Plot
